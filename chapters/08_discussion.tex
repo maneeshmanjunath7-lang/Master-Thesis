@@ -1,0 +1,112 @@
+\section{Interpretation Strategy}
+
+The main interpretation is conditional: architecture performance is produced jointly by orbital geometry, central-node fraction, link topology, routing limits, task distribution, ground availability, and the chosen mission objective. A central-node percentage is therefore not an isolated physical constant with a universal optimum.
+
+The two evidence layers answer different parts of the research programme. The earlier nominal layer establishes that architecture ordering and mean outcomes differ between California and India. Fresh V2 California explains those outcomes more deeply through policy, load, failure, and objective-weight replays. Where Fresh V2 India or observation-radius evidence is missing, the answer is explicitly partial.
+
+\section{RQ1: Adapting Distributed Allocation to Real Wildfire Tasks}
+
+The framework was adapted by inserting a traceable task-generation pipeline before the physical and allocation layers. Sentinel-3 SLSTR fire products are discovered, geolocated, quality/intensity filtered, spatially clustered, scored, de-duplicated, and exported into a stable CSV. FIRMS supports rapid event screening and independent contextual confirmation, while the frozen campaign tasks originate from Sentinel-3 processing.
+
+California contributes 32 tasks and India 773. The simulation preserves release epoch, location, priority, deadline, message size, and provenance. Ground learns a task only at release; satellites may forward it only after full receipt; and follow-up success requires observation after reception and before the deadline. The outcome is a reproducible bridge between real detections and architecture-level information-flow analysis. The contribution is not a new wildfire classifier and the task table is not a labelled detection-accuracy benchmark.
+
+\section{RQ2: Workload, Priority, and Region}
+
+The earlier nominal campaign demonstrates that region/event choice changes the result. Across the same 891 identifiers, mean observation fulfilment is 47.468 percent in California and 55.066 percent in India. Rank agreement is moderate for observation, higher for some network-oriented metrics, and low for strict useful completion. This supports the claim that a design selected in one event does not automatically transfer as the optimum in another.
+
+Fresh V2 California explains one mechanism: short-deadline urgent tasks are much harder under the same architecture population. Nominal observation ranges from 8.20 percent for the single Critical task to 89.90 percent for Low tasks; unlimited routing narrows but does not remove the gap. These class means combine priority, packet size, location, release time, and geometry. They are not causal estimates of confidence or fire intensity.
+
+The regional-density part remains provisional in Fresh V2. India is the high-load case and must pass the same 539-scenario contract. Even then, California--India differences will combine geography, epoch, task density, priority mix, and fire characteristics; per-task normalization and paired identifiers can control scale, not all confounding.
+
+\section{RQ3: Effect of the Central-Node Fraction}
+
+Fresh V2 provides the clearest answer. Under the bounded nominal policy, moving from CN0 to CN10 more than doubles mean observation fulfilment, but higher fractions do not monotonically improve all metrics. Observation peaks at an intermediate fraction and falls at CN100; strict dissemination and useful coverage peak earlier. This pattern arises because central-only CN0 has no inter-satellite links, while high fractions interact with copy limits, target selection, and available observer roles.
+
+When copy and hop limits are removed, dissemination increases and then saturates: \Suseful\ is 74.34 percent at CN20, 83.40 percent at CN40, and 88.95 percent at CN100. Traffic grows from roughly 1,152 to 3,581 Mbit per case across the same interval. Thus, the last 14.6 points of strict completion require about 211 percent more transferred data. The meaningful conclusion is an intermediate operating region, not ``more CN is always better.''
+
+Latency must be named carefully. Fresh V2 supports P100 full-dissemination time and conditional observation latency. Its canonical table does not expose separate first-reception latency. P100 $T_{100}$ therefore cannot be used as a substitute. First-reception claims in Chapter~6 belong only to the earlier nominal evidence.
+
+\section{RQ4: Best Performance--Complexity--Robustness Trade-Off}
+
+California has no unique multi-objective winner. Exact Pareto filtering preserves 48 cases under the original vector and 108 when timeliness and transfer-event burden are added. Three architectures illustrate the trade:
+
+\begin{itemize}
+\item \texttt{T060\_P10\_H0800\_I0986\_CN040\_F1} achieves 96.875 percent observation, 100 percent \Suseful\ and coverage, P100 $T_{100}=66.10$ minutes, and 888.5 Mbit with 60 satellites and 24 central nodes;
+\item \texttt{T060\_P05\_H0800\_I0800\_CN070\_F1} achieves 100 percent on all three performance fractions and $T_{100}=56.20$ minutes at 1,422 Mbit; and
+\item \texttt{T180\_P10\_H0800\_I0800\_CN100\_F1} reduces $T_{100}$ to 33.59 minutes but uses 180 central nodes and 5,670 Mbit.
+\end{itemize}
+
+Under balanced performance/resource weighting, the first is the recommended California compromise. It wins over a broad weight interval and in 41.79 percent of randomized draws. ``Cost'' here is only resource burden; no euro-valued lifecycle claim is made.
+
+Robustness changes the design emphasis. The recommended case tolerates 30-percent random satellite and CN failures with moderate mean loss, but ground-station outage is much more damaging. The campaign has one Munich station, so ground diversity is a stronger immediate mitigation than maximizing centralization. A final spacecraft architecture recommendation should therefore include a ground-segment requirement.
+
+\section{RQ5: Stability under Assumptions and Weights}
+
+The preferred intermediate fraction is stable across a meaningful, but not complete, set of perturbations. The 40-percent candidate wins from high-level performance weight 0.31 to 0.78. A resource-dominant profile selects a 30-percent case; stronger performance emphasis moves the solution toward 70 and 100 percent. Randomized weights confirm broad support for the 40-percent case but also expose alternative winners.
+
+Task size weakens performance. Across the whole archive, quadrupling messages lowers observation from 77.62 to 69.48 percent and \Suseful\ from 74.69 to 60.10 percent. Failure mode matters even more: ground-station outage dominates tested node and capacity degradations. The observation-radius component remains unanswered because all Fresh V2 cases use \SI{700}{\kilo\metre}. RQ5 is therefore partially, not completely, answered.
+
+\section{Why the Objective Weights Are Defensible but Not ``Discovered''}
+
+The weight method is designed for transparency and sensitivity, not to assert a universal preference. Equal 0.25 weights inside the performance pillar prevent one of observation, completion, coverage, or timeliness from being privileged without stakeholder evidence. Within the resource pillar, satellite count receives 0.40 because fleet scale is the broadest hardware proxy; central-node count, data volume, and transfer-event count receive 0.20 each. These coefficients are engineering assumptions, not values estimated by regression or a literature-wide consensus.
+
+Four safeguards make the method defensible:
+
+\begin{enumerate}
+\item raw metrics and units remain visible;
+\item all normalization bounds come from the complete eligible population rather than only preferred cases;
+\item Pareto efficiency is recomputed using every metric that later receives weight; and
+\item deterministic profiles, a continuous high-level sweep, and randomized internal weights reveal when the selected case changes.
+\end{enumerate}
+
+Stakeholder elicitation could replace the declared weights using swing weighting, analytic hierarchy process, or a value-focused workshop. Until that occurs, the sensitivity envelope is more important than the single 50/50 score.
+
+\section{Policy, Geometry, and Objective Co-Design}
+
+The divergence between observation, useful coverage, and \Suseful\ follows directly from mission semantics. One informed satellite with a suitable access can satisfy follow-up observation, whereas strict completion requires every useful recipient. Copy-limited targeted routing can therefore achieve mission action with low broadcast coverage. Unlimited routing raises dissemination but consumes much more traffic and uses deeper paths.
+
+This is not merely a communication result. Plane count has an effect on observation comparable to CN fraction in the unadjusted analysis, and the highest-performing alternatives use different inclinations and plane counts. Architecture selection should jointly specify orbit, topology, copy policy, task size, ground segment, and success definition. Optimizing CN percentage alone would hide the controlling mechanism.
+
+\section{Threats to Validity}
+
+\subsection{Construct validity}
+
+The \SI{700}{\kilo\metre} radius approximates observation opportunity, not instrument feasibility. Priority is an engineering score, not an emergency-service severity label. Task-message size is not image volume. \Suseful\ refers to simulator-defined useful recipients, not automatically every satellite. P100 $T_{100}$ is full completion, not first reception. Resource burden is non-monetary.
+
+\subsection{Internal validity}
+
+The full factorial grid controls declared architecture variables, but placement is one deterministic balanced rule. The greedy router, whole-message transfer, copy limits, and central boost are part of the treatment. Marginal means pool interactions. Resume duplicates were removed deterministically, and the incomplete case was excluded from complete comparisons; neither is hidden.
+
+\subsection{External validity}
+
+Fresh V2 currently covers one California event and one Munich ground station. Cloud, smoke, pointing, energy, storage, interference, simultaneous links, image downlink, alert distribution, and human response are outside scope. The current central-node label does not price or model a distinct relay subsystem. Generalization beyond time-critical Earth-observation task messages requires a new task utility and validation.
+
+\subsection{Statistical conclusion validity}
+
+Thirty stochastic replicates characterize the implemented randomization but do not cover every possible failure. Conditional latency can favour easy cases, so censoring is reported. Winner frequency depends on the chosen weight distributions and is not a confidence level. No causal significance is assigned to Spearman correlation or unadjusted $\eta^2$.
+
+\section{Supervisor-Requirement Traceability}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Status of the agreed analysis requirements.}
+\label{tab:supervisor_trace}
+\begin{tabularx}{\textwidth}{L{0.07\textwidth}Y L{0.28\textwidth}}
+\toprule
+No. & Requirement & Current evidence \\
+\midrule
+1 & Relate architecture parameters to performance & Full-factorial marginal effects, rank correlation, and paired CN sweeps \\
+2 & Identify a suitable degree of decentralization & Exact Pareto set and conditional 40-percent California recommendation \\
+3 & Test objective-weight sensitivity & Profiles, continuous sweep, and 10,000 seeded random draws \\
+4 & Evaluate task/load sensitivity & Four controlled task-size levels in Fresh V2 California \\
+5 & Evaluate random and targeted failure & Node, link, ground, capacity, and combined replay; ground outage dominates \\
+6 & Compare the two study regions & Earlier nominal layer complete; Fresh V2 India pending \\
+7 & Test observation-radius sensitivity & Pending; fixed at \SI{700}{\kilo\metre} in Fresh V2 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Implications for Thesis Completion}
+
+The California evidence is sufficient to support a detailed case-study conclusion about the implemented architecture and policy. Together with the earlier validated two-region baseline and completed literature review, it provides a coherent thesis contribution. A stronger final thesis requires the India Fresh V2 validation and a controlled observation-radius sweep or an agreed decision to move that item to future work. Neither missing item justifies rerunning the already validated California campaign.

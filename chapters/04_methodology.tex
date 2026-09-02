@@ -1,0 +1,180 @@
+\section{Methodological Overview}
+
+The final workflow converts frozen wildfire detections into time-dependent tasks, evaluates a factorial Walker-constellation design space, and replays each architecture under nominal, policy, load, and failure scenarios. The workflow deliberately separates four layers: task data, physical opportunities, allocation logic, and evaluation. This separation makes it possible to change a routing policy or inject a failure without silently changing the task set or orbital geometry.
+
+Figure~\ref{fig:method_workflow} shows the dependency chain. A task cannot be sent before release, a transfer cannot exceed a contact-window capacity, and an observation is successful only if an observing satellite already holds the task and acts before the deadline.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small}, box/.style={draw=TUMBlue,rounded corners,fill=TUMBlue!5,minimum height=0.95cm,text width=2.35cm,align=center}, arr/.style={->,thick,TUMBlue}]
+\node[box] (tasks) at (0,2.8) {Freeze regional wildfire tasks};
+\node[box] (arch) at (3.2,2.8) {Generate Walker architecture};
+\node[box] (states) at (6.4,2.8) {Propagate states and label CNs};
+\node[box] (windows) at (6.4,1.4) {Build link and observation windows};
+\node[box] (scenario) at (3.2,1.4) {Apply scenario transformations};
+\node[box] (route) at (0,1.4) {Replay temporal routing};
+\node[box] (eval) at (0,0) {Evaluate reception and observation};
+\node[box] (export) at (3.2,0) {Checkpoint typed Parquet tables};
+\node[box] (post) at (6.4,0) {Validate, aggregate, and rank};
+\draw[arr] (tasks)--(arch); \draw[arr] (arch)--(states); \draw[arr] (states)--(windows);
+\draw[arr] (windows)--(scenario); \draw[arr] (scenario)--(route); \draw[arr] (route)--(eval);
+\draw[arr] (eval)--(export); \draw[arr] (export)--(post);
+\end{tikzpicture}
+\caption{Fresh Full891 V2 simulation and post-processing workflow.}
+\label{fig:method_workflow}
+\end{figure}
+
+\section{Task Input and Temporal Horizon}
+
+The campaign consumes a deterministic CSV rather than querying a live service during simulation. The file contains 805 frozen tasks: 32 for California and 773 for India. Each row supplies a stable identifier, region, position, release epoch, priority, deadline, task-message size, and source provenance. Chapter~3 describes the upstream Sentinel-3 processing and the supporting FIRMS screening.
+
+The original UTC epochs are retained. For each region, the simulation duration is
+
+\begin{equation}
+T_{\mathrm{sim}}=\max\left(72\ \mathrm{h},\;d_{\max}-r_{\min}+6\ \mathrm{h}\right),
+\end{equation}
+
+where $r_{\min}$ is the first release and $d_{\max}$ is the latest deadline. This gives approximately 73.134 hours for California and 73.659 hours for India in Fresh V2. Priority-dependent deadlines are 30, 60, 180, and 360 minutes for Critical, High, Medium, and Low tasks. The associated nominal messages are 2.0, 1.5, 1.0, and 0.5 Mbit. These are simulated task descriptions, not downloaded sensor-image volumes.
+
+\section{Walker Constellation and Central-Node Assignment}
+
+An architecture is represented by total satellite count $T$, plane count $P$, altitude $H$, inclination $I$, central-node fraction $C$, and phasing $F=1$. The complete grid is
+
+\begin{equation}
+\{60,120,180\}\!\times\!\{3,5,10\}\!\times\!\{500,800,1000\}
+\!\times\!\{60,80,98.6\}\!\times\!\{0,10,\ldots,100\},
+\end{equation}
+
+which gives $3^4\times11=891$ cases per region. For example,
+
+\begin{equation}
+\texttt{T060\_P10\_H0800\_I0986\_CN040\_F1}
+\end{equation}
+
+denotes 60 spacecraft in 10 planes at \SI{800}{\kilo\metre}, \SI{98.6}{\degree} inclination, with 40 percent (24) assigned the central-node role.
+
+The nodes share the same orbital and sensing model; ``central'' denotes a communication and routing role, not a separate relay shell or a fully costed hardware class. Central nodes are spread across planes as evenly as integer constraints permit and then spaced within each plane. This deterministic placement prevents arbitrary clustering from confounding a fraction sweep. It is a reproducible baseline rather than a placement optimum.
+
+\section{Orbit and Observation Opportunity Model}
+
+The orbital layer uses circular two-body propagation on a spherical rotating Earth, consistent with the integrated TAT-C-based workflow \citep{TATC}. Fresh V2 uses $R_E=\SI{6378.137}{\kilo\metre}$, $\mu=\SI{398600.4418}{\kilo\metre\cubed\per\second\squared}$, Earth rotation $7.2921159\times10^{-5}$ rad/s, and a \SI{60}{\second} time step. Walker plane population and phasing are validated for every generated case.
+
+An observation opportunity exists when the satellite--task ground distance is within the fixed \SI{700}{\kilo\metre} access radius. Let $O_{is}$ be candidate times for task $i$ and satellite $s$, $r_i$ the release time, $d_i$ the deadline, and $a_{is}$ the time at which $s$ receives the task. A valid follow-up time is
+
+\begin{equation}
+t^{\mathrm{obs}}_i=\min_s\{t\in O_{is}:t\geq\max(r_i,a_{is})\ \land\ t\leq d_i\}.
+\label{eq:valid_observation}
+\end{equation}
+
+The access radius is a mission-level approximation. It does not model cloud, smoke, lighting, field of view, slew, image quality, energy, storage, or conflicts between simultaneous observations. No Fresh V2 observation-radius sweep is presently available.
+
+\section{Communication Opportunities and Link Capacity}
+
+All unordered satellite pairs are first tested for physical contact; scenario topology rules are applied later. The ground segment contains the Munich station with a \SI{10}{\degree} minimum elevation. Each communication window stores endpoints, type, start and end time, effective data rate, usable duration, and capacity.
+
+Satellite-to-satellite capacity is calculated by the active V19 UHF link-budget implementation, using a \SI{2}{\watt}, \SI{437}{\mega\hertz}, \SI{9.6}{\kilo\hertz} channel and 9.6~ksymbol/s signal together with the configured gains, losses, sensitivity, and a 1.5 central-node link-budget boost. The resulting effective rate is capped near \SI{19.2}{\kilo\bit\per\second}. A legacy configuration field named \path{sat_sat_data_rate_bps} contains 250,000 bit/s but is not consumed by the active calculation and is therefore not used as a scientific claim. Satellite-to-ground windows use \SI{100}{\kilo\bit\per\second}.
+
+For window $w$ of usable duration $\Delta t_w$, utilization factor $\eta_w$, and effective rate $R_w$, the capacity is
+
+\begin{equation}
+B_w=\frac{R_w\Delta t_w\eta_w}{10^6}\quad[\mathrm{Mbit}].
+\label{eq:window_capacity}
+\end{equation}
+
+Fresh V2 sets $\eta_w=1$. A window records potential capacity; a transfer event records actual use. These quantities are never treated as interchangeable.
+
+\section{Topology and Temporal Routing}
+
+Three topology-policy variants are replayed:
+
+\begin{description}[leftmargin=3.0cm,style=nextline]
+\item[Central-only] An inter-satellite link is usable only when at least one endpoint is central. CN0 therefore has no inter-satellite link and relies on ground uplink; it is not a peer-to-peer baseline.
+\item[Peer-only] All feasible inter-satellite links are usable and routing does not privilege the central label.
+\item[Hybrid] All feasible links are usable and the selection order prefers central-node forwarding.
+\end{description}
+
+Ground initially knows each task at release. The evaluator traverses communication windows in time order and transmits whole messages only: fragmentation is not implemented. A node can forward a task only after full reception; duplicate reception does not increase coverage. Candidate messages are ordered by priority, deadline, central-node preference, and target utility, then admitted only when residual window capacity and policy limits allow.
+
+The nominal-original scenario uses the central-only/targeted policy, useful-recipient and deadline targeting, at most three forwarding hops, three observer copies, and five central-node copies. The \emph{unlimited useful-deadline} diagnostic retains the useful-recipient and deadline definition but removes these hop and copy limits. It reveals latent architecture capability and must not be confused with the implementable nominal policy.
+
+Accepted transfers retain task, sender, receiver, time, link type, message size, and hop depth. The algorithm is greedy and causal; it is not a globally optimized temporal multicommodity-flow solution.
+
+\section{Scenario Transformations}
+
+Fresh V2 evaluates 539 declared scenarios per case. Deterministic policy and task-size scenarios are complemented by repeated stochastic failures. A replicate is an independent rerun of the same architecture and severity with a different deterministic random seed; it measures variability due to which satellite, central node, link window, or outage interval is selected.
+
+Random satellite and random central-node failures remove selected nodes, their incident links, and their observation opportunities. Targeted central-node failure removes nodes ranked by incident capacity and degree. Link-window outage removes selected window rows. Ground-station outage disables a sampled interval. Capacity degradation scales communication capacity. Combined stress varies task size and satellite failure together. Every transformed scenario reruns routing and observation evaluation; graph statistics alone are not accepted as robustness evidence.
+
+The random seed is derived from the campaign seed, case identifier, scenario identifier, and replicate number using SHA-256. The first eight digest bytes define the numeric seed. Consequently, scenario outcomes are invariant to worker count and completion order.
+
+\section{Outcome and Resource Metrics}
+
+Observation fulfilment for $N$ tasks is
+
+\begin{equation}
+F_{\mathrm{obs}}=\frac{100}{N}\sum_{i=1}^{N}\mathbb{I}[t_i^{\mathrm{obs}}\le d_i].
+\end{equation}
+
+Let $E_i$ be the useful-recipient set after the active failure transformation and $R_i(d_i)$ the unique useful recipients reached by deadline. Mean useful coverage uses
+
+\begin{equation}
+Q_i=100\frac{|R_i(d_i)|}{|E_i|},
+\end{equation}
+
+and strict dissemination is
+
+\begin{equation}
+S^{\mathrm{useful}}_{100,i}=\mathbb{I}[E_i\neq\emptyset\ \land\ R_i(d_i)=E_i].
+\end{equation}
+
+The campaign stores original and surviving denominators separately so that failed nodes cannot create an artificial improvement. If complete dissemination occurs, $T_{100,i}$ is the release-to-last-useful-reception time. The reported P100 $T_{100}$ is the worst completed task in the case; it is censored when any required completion is unavailable. It is not first-reception latency. The Fresh V2 canonical case table does not expose a separate first-reception field, so this report does not relabel $T_{100}$ as first reception.
+
+Communication burden is reported with transferred Mbit, transfer-event count, used-capacity percentage, central-node traffic share, peak node load, and a Gini coefficient over node-sent data. Performance and burden are reported as separate raw metrics before any composite score is introduced.
+
+\section{Checkpointing, Parquet Output, and Deterministic Resume}
+
+Each base architecture is one worker job that evaluates its eleven central-node cases. Scenario rows are written in batches of 20 to temporary files and atomically renamed when complete. On restart, the runner reads completed scenario identifiers and evaluates only the missing set. A \path{_SUCCESS.json} marker is created only after all expected scenario identifiers are present; exceptions create a \path{_FAILED.json} marker.
+
+The tables are stored in Apache Parquet: a typed, columnar format with Zstandard compression. Parquet is intended for reliable analytical reading by Python, R, DuckDB, Spark, or similar tools rather than manual editing in a text editor. It preserves numeric types, compresses repeated columns efficiently, and allows column-selective reads. The principal case products are scenario metrics, task metrics, transfer events, central-node distribution, constellation nodes, manifests, and validation records.
+
+Worker count is limited by the minimum of the configured maximum, operating-system CPU availability, and an available-memory estimate of approximately \SI{3}{\gibi\byte} per worker. Changing 8 workers to 16 or 25 alters wall-clock time and the recorded execution fingerprint, but not the scientific seed or case definition. Scientific changes require a new output root; worker-only changes may safely resume the same root.
+
+\section{Validation before Inference}
+
+Post-processing follows a fixed gate sequence: read-only inventory, schema and traceability, completeness, independent metric recomputation, effect summaries, exact Pareto analysis, objective-weight sensitivity, robustness, and limitations. Duplicate scenario keys produced by interrupted resume are resolved deterministically before aggregation. Failed and censored observations remain visible rather than being silently dropped.
+
+No ranking is performed until the relevant validation gates pass. The California Fresh V2 archive contains one incomplete case, which is excluded from comparisons that require all 539 scenarios. The integrity evidence is reported in Chapter~7 and Appendix~C.
+
+\section{Pareto and Objective-Weight Method}
+
+The preferred architecture is treated as a decision conditional on mission priorities. First, exact dominance is evaluated on raw benefits and burdens. A case is Pareto efficient if no other case is at least as good on every objective and strictly better on one.
+
+For the weight-consistent analysis, the performance pillar is
+
+\begin{equation}
+P=0.25\widetilde F_{\mathrm{obs}}+0.25\widetilde S_{100}
++0.25\widetilde Q+0.25\widetilde T,
+\end{equation}
+
+where $\widetilde T$ is inverse min--max P100 $T_{100}$ and censored cases receive zero timeliness benefit rather than being removed. The resource-efficiency pillar is
+
+\begin{equation}
+R=0.40(1-\widetilde N_{\mathrm{sat}})+0.20(1-\widetilde N_{\mathrm{CN}})
++0.20(1-\widetilde B)+0.20(1-\widetilde E),
+\end{equation}
+
+where $B$ is transferred data and $E$ transfer-event count. The 40/20/20/20 split is a declared engineering preference: fleet size receives twice the weight of each remaining burden. It is not inferred from prices or claimed as universally correct.
+
+The high-level utility is
+
+\begin{equation}
+U(\lambda)=\lambda P+(1-\lambda)R,\qquad 0\le\lambda\le1.
+\end{equation}
+
+Sensitivity uses 10,000 reproducible draws with seed 20260825: $\lambda\sim\mathrm{Uniform}(0,1)$, performance weights from Dirichlet$(1,1,1,1)$, and resource weights from Dirichlet$(4,2,2,2)$. Winner frequency is a stability diagnostic over a declared preference distribution, not a probability that an architecture is objectively correct.
+
+\section{Implementation Ownership and Method Boundaries}
+
+Vincenzo Messina supplied the communication-model and TAT-C basis. The author implemented the wildfire-task processing, simulator integration, central-node placement, scenario runner, checkpoint/resume controls, validation, post-processing, statistical analysis, figures, and report.
+
+The method evaluates task-message dissemination and follow-up opportunity under simplified orbit, sensing, and communications assumptions. It does not model image downlink, emergency alert delivery, operational response, monetary lifecycle cost, or a hardware-differentiated central-node subsystem. Conclusions therefore apply to the implemented communication/routing role and the tested task sets.

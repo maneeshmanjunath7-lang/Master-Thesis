@@ -1,0 +1,138 @@
+\section{Distributed Satellite Systems}
+
+A distributed satellite system (DSS) consists of multiple space assets that cooperate to achieve mission objectives that would otherwise be executed by an individual spacecraft or a centrally planned constellation. Distribution can occur across sensing, processing, communication, decision-making, and operations. The design space therefore spans tightly coordinated constellations, federated systems that share resources across mission owners, and autonomous networks that allocate observations onboard \citep{Golkar2015,Scrocciolani2024}. These categories should not be treated as interchangeable. A constellation describes an orbital and mission organization, whereas federation and decentralization describe how capabilities, information, and authority are shared.
+
+Automation becomes increasingly important as the number of assets and requests grows. Reviews of large DSS operations identify a shift away from spacecraft-by-spacecraft commanding toward goal-based planning, automated monitoring, and coordination mechanisms that scale with the system rather than with the number of human operators \citep{BenLarbi2021}. This operational perspective is directly relevant to time-critical Earth observation: a constellation may have adequate geometric coverage, yet still respond too slowly if every new request must travel through a remote planning loop before any spacecraft can act.
+
+Centralized coordination has two main advantages: global information can be combined into a coherent decision, and policy enforcement is comparatively simple. Its weaknesses are latency to the decision point, dependence on ground contact or a coordinating node, and scaling difficulty as task and asset counts increase. Fully decentralized coordination can improve local responsiveness and remove a single decision bottleneck, but may require repeated message exchange and may produce inconsistent local views under intermittent connectivity. Recent work consequently motivates decentralized satellite networking and onboard decision-making, while also recognizing the resulting coordination and protocol challenges \citep{Oh2024}.
+
+Hybrid architectures occupy the space between these endpoints. Selected satellites can be assigned enhanced routing or coordination roles without making one node the permanent controller of the mission. This introduces an architectural design variable: how many enhanced nodes are needed, where they are placed, and what privileges they possess. A hybrid architecture is useful only when those privileges are explicit. Calling a satellite a ``central node'' does not itself improve performance; the effect must arise through defined link access, forwarding eligibility, processing capacity, storage, or coordination rules.
+
+\section{Task Allocation and Observation Scheduling}
+
+Earth-observation scheduling is a constrained resource-allocation problem involving target visibility, time windows, instrument constraints, task value, spacecraft resources, and communication opportunities \citep{Ferrari2025}. A planner must decide not only which requests are valuable but also whether a feasible sequence of observations exists. In a dynamic mission, new requests can arrive after a schedule has already been constructed, so the system must repeatedly trade schedule stability against responsiveness.
+
+Large constellations make a single global optimization increasingly difficult to compute and communicate. Decentralized approaches partition the allocation problem across satellites, allowing agents to exchange local requests, bids, or partial schedules \citep{Parjan2023,Zilberstein2025}. Such methods can reduce dependence on a single planner and permit decisions nearer to the sensing assets. Their benefit, however, depends on the communication model: an allocation algorithm that assumes instantaneous exchange can look effective even when the corresponding messages could not reach the agents before the observation deadline.
+
+It is therefore essential to distinguish decision quality from information availability. A scheduled observation and a disseminated task are different system states:
+
+\begin{description}[leftmargin=4.2cm,style=nextline]
+\item[Task generation] A wildfire event is converted into a request containing location, creation time, priority, deadline, and data-size assumptions.
+\item[Task reception] A satellite has received sufficient task information to act on the request.
+\item[Observation opportunity] Satellite geometry permits sensing the task location within the assumed field of regard or observation radius.
+\item[Observation fulfilment] An opportunity occurs after reception and before the task deadline, and the observation is assigned or executed under the model.
+\item[Data delivery] The resulting observation product is transferred to a ground station or another defined endpoint.
+\end{description}
+
+The separation exposes two different failure modes. A task can miss its deadline because no satellite has a suitable observation opportunity, even though dissemination was immediate. Conversely, a geometrically feasible opportunity can be lost because the task reached the observing satellite too late. Reporting only final observation success hides this distinction and makes it difficult to tell whether an architectural change improved coverage, communication, or both. For that reason, this thesis treats first reception, dissemination extent, observation fulfilment, and latency as separate metrics.
+
+The present work focuses on dissemination of post-injection wildfire tasks and the subsequent observation opportunity. It does not simulate the complete chain from onboard thermal-anomaly detection through image-product downlink. Downlink latency studied in early baseline work remains useful context, but it cannot substitute for communication-aware task-reception metrics unless the mission boundary is explicitly extended.
+
+\section{Time-Varying Satellite Connectivity}
+
+Graph-based representations separate physical contact opportunities from the communication process. Let the time-dependent satellite network be
+\begin{equation}
+G(t) = \left(V,E(t)\right),
+\end{equation}
+where $V$ contains observer satellites, enhanced central nodes, and optionally ground stations, while $E(t)$ contains links available at time $t$. A contact window is a maximal interval over which a specific edge exists. A transfer event is an actual use of that edge to transmit a task. The distinction is important: a system may generate many windows but use only a small fraction of them, or repeatedly use a small number of bottleneck links.
+
+A static snapshot cannot fully characterize such a network. Two nodes that are never connected by an instantaneous end-to-end path may still communicate over a temporal path if intermediate satellites store the task and forward it during later contacts. Delay- and disruption-tolerant networking formalizes this store--carry--forward behavior. Bundle Protocol version 7 is designed for stressed networks with intermittent connectivity and variable delay \citep{Burleigh2022}. For environments in which future contacts are predictable, Contact Graph Routing and the CCSDS Schedule-Aware Bundle Routing standard compute routes from a time-ordered contact plan rather than from a permanently connected topology \citep{Burleigh2008,Araniti2015,CCSDS2019}.
+
+For a contact $e=(i,j,t_s,t_e,r)$, the available data volume is bounded by
+\begin{equation}
+C_e = r\,(t_e-t_s),
+\end{equation}
+where $r$ is the assumed link rate and $[t_s,t_e]$ is the contact interval. A feasible dissemination path must therefore respect contact order, residual capacity, task creation time, and task deadline. Hop count alone is an incomplete proxy: a two-hop temporal path can be slower than a longer path if the second contact occurs much later. Similarly, unlimited copying does not guarantee timely completion when contacts are unavailable or their capacity is exhausted.
+
+Useful structural descriptors include degree, density, connected components, average path length, betweenness centrality, algebraic connectivity, graph energy, and concentration of transfer traffic. In a temporal communication study these descriptors are explanatory variables, not mission outcomes. They can suggest why dissemination changes---for example, shorter temporal paths or a concentration of traffic on a few nodes---but deadline success must still be recomputed from timestamped transfers. This is also why an instantaneous adjacency matrix cannot by itself establish robustness: resilience depends on when a failed node or link was needed, what alternative future contacts existed, and whether remaining storage and capacity were sufficient.
+
+\section{Central Nodes as a Hybrid Architectural Mechanism}
+
+The literature often contrasts a central planner with fully decentralized agents, but a routing-enhanced central node is a more limited mechanism. It can act as a preferred relay, an information broker, or an interface to a restricted communication domain while observation authority remains distributed. This distinction matters because three forms of centralization can otherwise be conflated:
+
+\begin{itemize}
+\item \emph{decision centralization}, in which one agent chooses allocations for the system;
+\item \emph{information centralization}, in which one or more nodes maintain a broader state estimate; and
+\item \emph{communication centralization}, in which forwarding is restricted or preferentially routed through selected nodes.
+\end{itemize}
+
+These forms have different benefits and failure dependencies. Adding relay-eligible nodes may reduce the waiting time to a usable path, yet it may also increase duplicate traffic or concentrate load. A high central-node fraction can therefore exhibit diminishing returns, and in a restrictive policy it can even reduce the number of useful forwarding relationships. Conversely, a small fraction may be valuable if the selected nodes bridge otherwise separated temporal components. The architectural question is not simply whether centralization is ``good'' or ``bad'', but how performance changes as enhanced routing participation is varied under one declared policy.
+
+Network analysis of federated satellite systems supports studying this question across both mission and graph metrics \citep{Scrocciolani2024}. However, correlations between a structural metric and performance do not prove that the structural change caused the outcome. Satellite count, orbital planes, altitude, inclination, and central-node fraction all alter multiple aspects of geometry and load. A defensible trade study therefore combines controlled factor sweeps, architecture-paired comparisons, and explicit resource measures with the network descriptors.
+
+\section{Wildfire Detection from Space}
+
+Satellite active-fire products identify thermal anomalies and report attributes such as acquisition time, location, confidence, and fire radiative power (FRP). FRP expresses the instantaneous rate of radiant energy emitted by a fire and is commonly reported in megawatts. It provides an intensity-related variable that is more informative for task ranking than a detection count alone, although retrieval uncertainty and sensor sampling must be retained when interpreting it \citep{Wooster2012}.
+
+NASA FIRMS distributes active-fire detections from instruments including the Visible Infrared Imaging Radiometer Suite (VIIRS). The VIIRS 375~m product uses the higher spatial resolution imagery bands and was developed to improve the detection and mapping of small fires relative to coarser products \citep{Schroeder2014}. FIRMS is therefore suitable for rapid event screening and for constructing a spatially and temporally resolved task load. It does not, however, provide a list of statistically independent fires: adjacent pixels and repeated overpasses can describe the same evolving event.
+
+Sentinel-3's Sea and Land Surface Temperature Radiometer (SLSTR) provides an independent active-fire and FRP product. Its fire-oriented channels and algorithms were designed and evaluated before launch \citep{WoosterSLSTR2012}, and the operational daytime product was subsequently assessed against MODIS, VIIRS, and Landsat active-fire data \citep{XuWooster2023}. The different spatial sampling, overpass times, spectral response, cloud screening, and confidence conventions mean that SLSTR and VIIRS detections should not be merged row by row. Agreement or disagreement can arise from the observation process as well as from real fire evolution.
+
+\section{From Fire Pixels to Communication Tasks}
+
+Turning remote-sensing detections into simulation requests requires an explicit abstraction layer. First, detections must be filtered to a declared event region and acquisition interval. Second, spatially adjacent or temporally repeated pixels must be clustered or deduplicated so that the simulator does not treat every pixel as an unrelated emergency. Third, a priority, deadline, and message size must be assigned using reproducible rules. Finally, the generated task table must retain provenance to its source product and extraction time.
+
+This transformation is scientifically consequential. A denser task list increases contention for communication windows and observation opportunities; a shorter deadline increases censoring even if the same contacts exist; a larger message consumes more capacity at each forwarding hop. Priority can also become confounded with task size or deadline if all three are derived from FRP. Sensitivity to message size is therefore best measured by applying controlled multipliers to an otherwise fixed task set, rather than by comparing native priority classes and attributing every difference to size.
+
+The two datasets consequently serve different but compatible roles in this thesis:
+
+\begin{table}[H]
+\centering
+\caption{Division of roles between FIRMS VIIRS and Sentinel-3 SLSTR.}
+\label{tab:data_roles}
+\begin{tabularx}{\textwidth}{p{0.19\textwidth}Y Y}
+\toprule
+Aspect & FIRMS VIIRS & Sentinel-3 SLSTR FRP \\
+\midrule
+Primary role & Broad and rapid event screening; task-density construction; near-real-time-compatible extraction. & Independent product comparison; validation of intensity and confidence behavior; sensor-specific case studies. \\
+Native confidence & Categorical values such as low, nominal, and high. & Product-specific numerical confidence fields in the processed dataset. \\
+Strength & Fine active-fire detail and convenient access through FIRMS services. & Dedicated FRP product from an independent observing system. \\
+Risk & Repeated pixels or widespread low-value burning can inflate the apparent task count unless clustered and filtered. & Different sampling and product conventions prevent direct one-to-one comparison without temporal and spatial matching. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The final experiment must state which product generated each simulation task list. Combining products without a matching, deduplication, and provenance rule would risk double counting. A defensible approach is to use one source for the operational task generation and the other for validation or sensitivity analysis.
+
+\section{TAT-C and Supporting Orbital Tools}
+
+The Trade-space Analysis Tool for Constellations (TAT-C) provides mission-level functions for defining spacecraft, instruments, coverage grids, observation access, revisit, and latency \citep{TATC}. In the early project stages, Skyfield was used as an independent orbit and line-of-sight tool, while TAT-C was used for mission-level access and aggregation. The later DSS framework places a custom allocation and communication layer above the orbit and access calculations.
+
+This separation establishes a traceable simulation chain:
+\begin{itemize}
+\item the orbital layer determines where satellites and ground stations are and when geometric access exists;
+\item the communication layer converts geometry into time-bounded link capacity;
+\item the allocation layer selects which task is transmitted over which link;
+\item the observation layer checks whether a receiving satellite can subsequently observe the task; and
+\item the post-processing layer computes completion, latency, cost proxies, and trade-space rankings.
+\end{itemize}
+
+It also prevents one model component from silently compensating for another. For example, widening the observation radius may improve observation success but cannot be interpreted as a networking improvement. Likewise, adding forwarding copies can improve reception but does not change orbital access. Layer-specific metrics are needed before an end-to-end outcome can be explained.
+
+\section{Synthesis of Related Work and Thesis Positioning}
+
+Table~\ref{tab:related_work_positioning} summarizes the literature streams that define the thesis boundary. The relevant gap is their combination, not the absence of research in any one stream.
+
+\begin{table}[H]
+\centering
+\caption{Related-work synthesis and positioning of the thesis.}
+\label{tab:related_work_positioning}
+\small
+\begin{tabularx}{\textwidth}{p{0.21\textwidth}p{0.24\textwidth}Y}
+\toprule
+Literature stream & Primary contribution & Boundary relative to this thesis \\
+\midrule
+Federated and distributed satellite systems \citep{Golkar2015,Scrocciolani2024,BenLarbi2021} & Resource sharing, system organization, network descriptors, and scalable operations. & Does not by itself quantify deadline-aware wildfire-task propagation across a controlled central-node sweep. \\
+Decentralized observation allocation \citep{Parjan2023,Zilberstein2025} & Distributed algorithms for assigning observation requests in large constellations. & Allocation quality must be coupled to a finite-capacity, time-varying communication model to establish when agents actually know a task. \\
+Space DTN and schedule-aware routing \citep{Burleigh2022,Araniti2015,CCSDS2019} & Store--carry--forward communication and routing over scheduled contacts. & Provides the networking concepts, but not the wildfire task abstraction or architecture-level observation trade study. \\
+Satellite active-fire products \citep{Schroeder2014,WoosterSLSTR2012,XuWooster2023} & Detection, confidence, and FRP retrieval from VIIRS and SLSTR. & Sensor detections must be converted into deduplicated requests with explicit deadlines, priorities, and data volumes. \\
+This thesis & Communication-aware wildfire-task dissemination followed by observation, evaluated over a satellite architecture grid and central-node fractions. & Claims are limited to the implemented routing policy, task sets, contact model, and resource proxies; peer-to-peer policy, failure injection, and controlled task-size sweeps require separate experiments. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Research Gap}
+
+Existing work establishes the value of federated satellite resources, decentralized observation scheduling, schedule-aware routing, and satellite active-fire products. Fewer studies connect all four levels in a reproducible architecture experiment. The gap targeted here is the joint analysis of (i) real, heterogeneous wildfire-derived task loads, (ii) a variable fraction of routing-enhanced central nodes, (iii) finite contact duration and message size, (iv) observation only after successful task reception, and (v) architecture performance evaluated together with communication burden and dependency cost.
+
+The scope is deliberately narrower than general autonomous constellation scheduling. The thesis evaluates one implemented communication policy across a declared architecture grid and two event-specific task loads. This supports claims about architectural trade-offs within that model, including conditional latency, dissemination completion, and rank sensitivity. It does not turn a zero-central-node case into a peer-to-peer policy comparison, and nominal outcome failures are not equivalent to robustness under injected node or link outages. Stating these boundaries converts the literature gap into a testable contribution rather than a claim of universal optimality.

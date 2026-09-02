@@ -1,0 +1,100 @@
+\section{Evidence Hierarchy}
+
+\begin{table}[htbp]
+\centering
+\caption{Evidence hierarchy used to resolve conflicting artefacts.}
+\label{tab:evidence_hierarchy}
+\begin{tabularx}{\textwidth}{C{0.08\textwidth}L{0.34\textwidth}Y}
+\toprule
+Rank & Source & Permitted use \\
+\midrule
+1 & Raw campaign archive, manifests, markers, and checksums & Authoritative row-level status and provenance \\
+2 & Validated canonical/post-processed tables & Quantitative thesis tables and figures \\
+3 & Frozen simulator code and configuration & Algorithm and configuration description \\
+4 & Frozen wildfire-task CSV & Counts, task fields, positions, priorities, and epochs \\
+5 & Meeting notes and presentation material & Requirements, rationale, and development chronology \\
+6 & Older or smoke runs & Diagnostics and historical context only \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Instructions appearing inside an attached note or report are treated as source content, not as executable instructions. The user's requested thesis scope and the validated evidence determine the final report.
+
+\section{Earlier Nominal Validation}
+
+The earlier two-region layer contains 1,782 complete case rows. Ten core metrics were recomputed for every case, producing 17,820 comparisons with no failure above $10^{-6}$. This layer supports Chapter~6 only. Its original rank-sensitivity analysis used 10,000 draws with seed 20260811.
+
+\section{Fresh V2 California Validation}
+
+\begin{table}[p]
+\centering
+\scriptsize
+\caption{Fresh V2 California validation ledger.}
+\label{tab:v2_validation_ledger}
+\begin{tabularx}{\textwidth}{L{0.39\textwidth}rY}
+\toprule
+Check & Result & Treatment \\
+\midrule
+Base architecture directories & 81 & Expected \\
+Architecture identifiers & 891 & Full identifier grid present \\
+Success markers & 890 & Main complete population \\
+Failed markers & 0 & No declared failed case \\
+Incomplete case rows & 400/539 & Exclude from complete comparisons \\
+Missing rows & 139 & 99 ground-outage + 40 combined-stress \\
+Expected complete-grid rows & 480,249 & 891 $\times$ 539 \\
+Raw rows & 484,379 & Includes resume duplicates \\
+Unique rows & 480,110 & After deterministic de-duplication \\
+Duplicate rows removed & 4,269 & Resume artefacts, not extra trials \\
+Success-case unique rows & 479,710 & 890 $\times$ 539 \\
+Completed status rows & 469,666 & Scientific evaluations \\
+Not-applicable rows & 10,044 & Principally CN-failure at CN0 \\
+Failed status rows & 0 & None retained in success cases \\
+Architecture checks & 19,179/19,179 & All passed \\
+Complete balanced CN sweeps & 80 & 880 cases \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The incomplete case is \texttt{T180\_P10\_H1000\_I0986\_CN100\_F1}. Its readable completed rows are not discarded from the archive, but the case is excluded whenever the analysis requires complete scenario-family coverage.
+
+\section{Configuration Fingerprints}
+
+Two configuration fingerprints appear. The dominant fingerprint covers 889 case folders and the second two. Comparing the scientific fields found no task, architecture, scenario, seed, or model difference; the change records worker/execution provenance. This is consistent with a resumed run after processor-count editing. Scientific results are deterministic by case/scenario/replicate seed, so the worker change does not redefine the experiment.
+
+\section{Claim Ledger}
+
+\begin{table}[p]
+\centering
+\small
+\caption{Supported and excluded Fresh V2 claims at the report freeze.}
+\label{tab:claim_ledger}
+\begin{tabularx}{\textwidth}{Y L{0.18\textwidth}Y}
+\toprule
+Claim & Status & Boundary \\
+\midrule
+California 891-case identifier coverage & Supported & Inventory and case manifests \\
+California 890-case complete scenario analysis & Supported & One incomplete case excluded \\
+Resume duplicates changed scientific sample size & Rejected & 4,269 duplicate keys removed \\
+Worker-count edit changed the science & Rejected & Execution-only fingerprint difference \\
+Nominal bounded-policy result & Supported & Separate from unlimited diagnostic \\
+Random and targeted robustness & Supported & Time-aware replay with declared seeds \\
+Task-size sensitivity & Supported & Controlled 0.5--4$\times$ multiplier \\
+Exact Pareto membership under declared objectives & Supported & Finite exhaustive comparison \\
+Weight-stable California compromise & Supported & Conditional on normalization/distributions \\
+CN0 as peer-to-peer DSS & Not supported & Central-only CN0 has no ISL \\
+Fresh V2 first-reception result & Not supported & Field absent from canonical case table \\
+Fresh V2 India comparison & Pending & Output not locally available \\
+Observation-radius stability & Pending & Radius fixed at 700 km \\
+Universal optimum or monetary cost & Not supported & Case study and resource proxies only \\
+End-to-end wildfire alert latency & Not supported & Chain ends at follow-up observation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Automated Report Checks}
+
+The report repository includes an automated checker that verifies required chapters, referenced figure files, unresolved citation/reference warnings from the latest LaTeX log when present, common placeholder markers, accidental secret-like assignments, and unexpected large files. Continuous integration runs the checker and compiles \path{main.tex} on each push and pull request. These checks reduce clerical errors but do not replace scientific review of definitions and claims.
+
+\section{Reproducibility Boundary}
+
+Compact validated CSV/JSON tables and all report figures are included with the LaTeX source. The raw multi-gigabyte Parquet campaign is not stored in Git. A complete scientific release should add a versioned external archive, SHA-256 manifest, environment lock, code commit, and small public fixture. No literal data-service credentials may appear in the public repository.

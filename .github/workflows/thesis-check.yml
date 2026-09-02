@@ -1,0 +1,28 @@
+name: Thesis checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check report inputs
+        run: python checks/check_report.py
+      - name: Compile LaTeX report
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: false
+      - name: Upload compiled report
+        uses: actions/upload-artifact@v4
+        with:
+          name: master-thesis-working-draft
+          path: main.pdf

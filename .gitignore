@@ -1,0 +1,43 @@
+# LaTeX build products
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+main.pdf
+report_qc/
+
+# Local environments and caches
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Raw/large simulation products
+outputs/
+*.parquet
+*.zip
+*.7z
+
+# Secrets
+.env
+.env.*
+!.env.example
+*secret*
+*credential*

@@ -1,0 +1,13 @@
+\workingdraft\ for supervisor review, updated on 2 September 2026. This version integrates every locally available validated evidence layer while keeping unfinished work visible. It is not a submission copy.
+
+The report uses two related campaigns that must not be numerically merged:
+\begin{enumerate}
+\item the validated two-region nominal campaign, containing 891 Walker/CN cases for California and 891 for India, is retained for the regional comparison and the historical nominal trade-space result; and
+\item the newer \textit{Full891 Fresh V2} campaign, containing 539 scenario definitions per architecture case, is the authoritative source for the updated simulator, California policy ablation, controlled task-size experiments, injected failures, and revised objective-weight analysis.
+\end{enumerate}
+
+The California Fresh V2 archive contains all 891 architecture identifiers. A total of 890 cases have complete success markers. The remaining case, \path{T180_P10_H1000_I0986_CN100_F1}, contains 400 of 539 expected scenario rows and is excluded from comparisons that require a complete scenario set. After removing 4,269 resume duplicates, 480,110 unique scenario rows remain. All 19,179 recorded architecture-validation checks pass and no completed scientific row has status \texttt{FAILED}.
+
+No completed India Fresh V2 archive was found in the accessible project data at the time of this update. India-specific robustness and controlled-sensitivity values are therefore not inferred from California or from the earlier nominal campaign. The existing two-region nominal results remain identified as a separate evidence layer. Observation-radius sensitivity has not been executed, and Fresh V2 does not retain a separately named first-reception-latency metric in its canonical case table; these limitations are stated wherever they affect a research question.
+
+The official submission date, examiner, declaration, and final repository release tag remain administrative open items. The source and compiled PDF in this repository are intended for transparent supervisor review and automated checking.

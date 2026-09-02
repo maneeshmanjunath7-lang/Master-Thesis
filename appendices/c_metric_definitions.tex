@@ -1,0 +1,66 @@
+\section{Task-Level Times}
+
+For task $j$:
+\begin{align*}
+t_j^0 &: \text{task creation time},\\
+t_{j,s}^{\mathrm{recv}} &: \text{time satellite $s$ receives task $j$},\\
+t_{j,s}^{\mathrm{obs}} &: \text{time satellite $s$ observes task $j$ after reception},\\
+D_j &: \text{task deadline relative to }t_j^0.
+\end{align*}
+
+\section{Dissemination Metrics}
+
+\begin{align}
+L_{j,\mathrm{first}} &= \min_s t_{j,s}^{\mathrm{recv}} - t_j^0,\\
+L_{j,100} &= \max_s t_{j,s}^{\mathrm{recv}} - t_j^0,\\
+I_{j,100} &= \mathbb{1}\left[L_{j,100}\leq D_j\right].
+\end{align}
+
+The percentage of tasks reaching all satellites before deadline is
+\begin{equation}
+P_{100} = \frac{100}{N_T}\sum_{j=1}^{N_T}I_{j,100}.
+\end{equation}
+
+For a dissemination threshold $q$, let $t_{j,q}$ be the first time at which at least fraction $q$ of satellites possess the task.
+
+\section{Observation Metrics}
+
+\begin{align}
+L_{j,\mathrm{obs}} &= \min_s t_{j,s}^{\mathrm{obs}} - t_j^0,\\
+I_{j,\mathrm{obs}} &= \mathbb{1}\left[L_{j,\mathrm{obs}}\leq D_j\right],\\
+P_{\mathrm{obs}} &= \frac{100}{N_T}\sum_{j=1}^{N_T}I_{j,\mathrm{obs}}.
+\end{align}
+
+Urgent-task success is computed on the subset $\mathcal{U}$ of High and Critical tasks:
+\begin{equation}
+P_{\mathrm{obs,urgent}} = \frac{100}{|\mathcal{U}|}
+\sum_{j\in\mathcal{U}} I_{j,\mathrm{obs}}.
+\end{equation}
+
+\section{Communication Metrics}
+
+\begin{align}
+U_e &= \frac{B_e^{\mathrm{transferred}}}{R_e\Delta t_e},\\
+U_{\mathrm{network}} &= \frac{\sum_e B_e^{\mathrm{transferred}}}
+{\sum_e R_e\Delta t_e},\\
+P_{\mathrm{windows,used}} &= \frac{N_{\mathrm{windows,used}}}{N_{\mathrm{windows,total}}}.
+\end{align}
+
+These ratios should be computed only over windows eligible under the active policy. Including physically available but policy-forbidden windows in the denominator can create misleadingly low utilization.
+
+\section{Routing and Dependency}
+
+For each delivered task path $p_j$ with hop count $h_j$:
+\begin{align}
+\bar{h} &= \frac{1}{N_D}\sum_{j\in\mathrm{delivered}} h_j,\\
+B_{\mathrm{node}} &= \max_v \frac{N_{\mathrm{transfers\ through\ }v}}{N_{\mathrm{transfers}}},\\
+D_{\mathrm{CN}} &= \frac{N_{\mathrm{transfers\ involving\ CN}}}{N_{\mathrm{transfers}}}.
+\end{align}
+
+\section{Robustness}
+
+For nominal success $P_0$ and failure-case success $P_f$:
+\begin{equation}
+R_P = 1-\frac{P_0-P_f}{\max(P_0,\epsilon)}.
+\end{equation}
+A value near one indicates limited degradation. Latency metrics require an inverse or relative-increase formulation because lower latency is better.

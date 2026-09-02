@@ -1,0 +1,191 @@
+\section{Role of the Wildfire Dataset}
+
+The task dataset is the interface between fire remote sensing and the DSS experiment. The simulation does not ingest raw radiance. It receives a task table in which each row represents a fire region that may justify a follow-up observation. The data pipeline must therefore reduce repeated pixels and repeated overpasses without erasing physically distinct events, retain traceability to the source products, and transform heterogeneous sensor confidence into an operational ranking variable.
+
+The complementary roles of FIRMS screening and Sentinel-3 task generation are summarized in Table~\ref{tab:data_roles}.
+
+\begingroup\sloppy
+FIRMS was used during development for rapid event-day screening and independent support. Sentinel-3 SLSTR Level-2 FRP products were selected as the primary task source. This separation uses the strengths of each source: FIRMS provides convenient, dense active-fire screening, while Sentinel-3 provides the mission-specific product used to create the final tasks \citep{FIRMS,Sentinel3SLSTR,Schroeder2014,WoosterSLSTR2012,XuWooster2023}.\par
+\endgroup
+
+\section{Event Windows and Regional Roles}
+
+Two three-day event windows were selected before the architecture campaign. The California window covers 3--5 July 2025 and contains the early activity of the Madre Fire. The India window covers 14--16 April 2026 and intersects reported forest-fire activity in the Bihar and Uttar Pradesh region. Both regions are retained because they create complementary experimental conditions.
+
+California is a compact event-validation case. It contains 32 final tasks, including the only Critical task in the dataset and six High-priority tasks. India contains 773 tasks distributed over a much larger area and is therefore a high-load stress case. The regional label consequently represents a combination of geography, event selection, task density, priority mix, and release times. A regional difference must not be interpreted as a pure geographic effect.
+
+Figure~\ref{fig:wildfire_task_map} will show the centroids and priorities of the final tasks. The strong imbalance in point density is not a plotting artifact: it is the workload contrast used in the experiment.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{wildfire_task_map.png}
+\caption{Final de-duplicated Sentinel-3 wildfire-task centroids for California and India, coloured by priority class. The figure is generated directly from the 805-row task input.}
+\label{fig:wildfire_task_map}
+\end{figure}
+
+\section{Processing Pipeline}
+
+Figure~\ref{fig:task_pipeline} summarizes the task-generation workflow. Product discovery and NetCDF extraction are followed by filtering, clustering, scoring, de-duplication, and export. Every transformation has a narrower purpose than the previous one: filtering rejects weak or irrelevant detections, clustering forms candidate fire regions, scoring ranks those regions, and de-duplication determines which candidates become independent DSS tasks.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small}, box/.style={draw=TUMBlue,rounded corners,fill=TUMBlue!5,minimum height=1.05cm,text width=2.35cm,align=center}, arr/.style={->,thick,TUMBlue}]
+\node[box] (search) at (0,1.5) {Product search and download};
+\node[box] (extract) at (3.2,1.5) {SLSTR FRP NetCDF extraction};
+\node[box] (filter) at (6.4,1.5) {Region, date, quality, FRP filtering};
+\node[box] (cluster) at (6.4,0) {DBSCAN fire-region clustering};
+\node[box] (score) at (3.2,0) {Priority score and deadline};
+\node[box] (dedup) at (0,0) {Product, hotspot, and task de-duplication};
+\node[box] (export) at (3.2,-1.5) {DSS-ready task CSV};
+\draw[arr] (search)--(extract); \draw[arr] (extract)--(filter); \draw[arr] (filter)--(cluster);
+\draw[arr] (cluster)--(score); \draw[arr] (score)--(dedup); \draw[arr] (dedup.south) |- (export.west);
+\end{tikzpicture}
+\caption{Sentinel-3 wildfire-task generation and export workflow.}
+\label{fig:task_pipeline}
+\end{figure}
+
+\subsection{Product and NetCDF selection}
+
+A downloaded \texttt{.SEN3} directory corresponds to one SLSTR Level-2 FRP product granule. The product name contains the sensing interval, while a later timestamp records product generation. The region of interest is applied after reading the geolocated fire pixels because the product is not intrinsically limited to California or India.
+
+The first pipeline version successfully automated search, download, extraction, and scoring but read repeated product content. The second version corrected invalid confidence values and exact duplicates. The third version, used for the final task input, introduced four de-duplication levels:
+
+\begin{enumerate}
+\item \textbf{product level:} each \texttt{.SEN3} product is read once;
+\item \textbf{NetCDF level:} the primary FRP file is selected instead of indiscriminately reading support files;
+\item \textbf{hotspot level:} exact and near-duplicate detections are removed using rounded position, time, and FRP; and
+\item \textbf{task level:} nearby candidates representing the same fire region on the same day are merged, retaining the highest-priority representative.
+\end{enumerate}
+
+The fall in regional total FRP between versions is therefore an expected consequence of removing repeated observations, not a loss of physical signal. Table~\ref{tab:sentinel_versions} records this development history. The values are included to document why the third version is used and are not architecture results.
+
+\begin{table}[htbp]
+\centering
+\caption{Sentinel-3 pipeline refinement and regional total FRP reported during development.}
+\label{tab:sentinel_versions}
+\begin{tabularx}{\textwidth}{C{0.08\textwidth}Y r r}
+\toprule
+Version & Main change & California FRP (MW) & India FRP (MW) \\
+\midrule
+v1 & Initial automated search, extraction, and scoring; repeated reading remained & 137,753 & 323,677 \\
+v2 & Revised confidence handling and exact hotspot de-duplication & 68,876 & 161,811 \\
+v3 & Product-, NetCDF-, hotspot-, and task-level de-duplication & 22,686 & 34,595 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{FRP threshold and clustering}
+
+Fire radiative power is used as an intensity variable because it is related to active biomass combustion and is more informative than an unweighted detection count \citep{Wooster2012}. Development experiments applied an FRP threshold of \SI{10}{\mega\watt} before clustering. This threshold removes weak thermal detections from task generation while retaining operationally meaningful active-fire signals.
+
+DBSCAN groups detections using spatial density rather than a pre-declared number of clusters. Radius and minimum-sample sweeps were used during development to avoid the two extremes of treating every pixel as a separate task or merging geographically distant fires. A 10 km radius and \texttt{min\_samples}=3 were used in the documented FIRMS screening work; the Sentinel-3 task output retains the cluster centroid, approximate radius, number of detections, and product provenance. Isolated detections are preserved or rejected according to the pipeline rules rather than silently folded into the nearest cluster.
+
+\section{Confidence Harmonization}
+
+FIRMS and Sentinel-3 expose confidence differently. Sentinel-3 provides a numerical MWIR confidence percentage, which is divided by 100. FIRMS VIIRS provides categorical values that were mapped to 0.33, 0.66, and 1.00 for low, nominal, and high confidence. The harmonized value is a relative ranking variable, not a calibrated probability that a detection is a wildfire.
+
+For Sentinel-3, invalid values such as $-1$ are not interpreted as zero confidence. They receive a neutral score of 0.50 and are flagged as missing. This prevents an unavailable field from suppressing a task while retaining transparency for later filtering. The task table also records the missing-confidence fraction and the minimum, maximum, and dominant confidence information of the contributing detections.
+
+\section{Priority Score}
+
+The task-priority score combines fire intensity, confidence, and cluster size. The FRP component first combines normalized total and maximum FRP:
+
+\begin{equation}
+S_{\mathrm{FRP}} = 0.60\,\mathcal{N}\!\left(\log(1+\mathrm{FRP}_{\mathrm{total}})\right)
++0.40\,\mathcal{N}\!\left(\log(1+\mathrm{FRP}_{\mathrm{max}})\right),
+\label{eq:frp_score}
+\end{equation}
+
+where $\mathcal{N}(\cdot)$ denotes the declared normalization within the scoring dataset. The logarithm prevents a small number of extreme fires from determining the entire range. The final score is
+
+\begin{equation}
+S_{\mathrm{task}} = 0.50S_{\mathrm{FRP}}+0.30S_{\mathrm{conf}}+0.20S_{\mathrm{cluster}}.
+\label{eq:task_score}
+\end{equation}
+
+Equation~\ref{eq:task_score} gives FRP the largest weight because it represents energetic strength. Confidence acts as a reliability modifier, and cluster size represents local spatial extent or density. The weights are an engineering model, not a learned clinical or civil-protection severity scale. This limitation is important because agricultural burning and industrial heat sources may still receive a high score if their physical inputs are large.
+
+\section{Final Task Population}
+
+Table~\ref{tab:task_population} describes the final task population. The India event contributes 96.0\% of the tasks, but California contains a greater fraction of urgent tasks. This is why regional totals are normalized per task before communication burden is compared.
+
+\begin{table}[htbp]
+\centering
+\caption{Final de-duplicated Sentinel-3 task population used by the nominal campaign.}
+\label{tab:task_population}
+\begin{tabular}{lrrrrr}
+\toprule
+Region & Critical & High & Medium & Low & Total \\
+\midrule
+California & 1 & 6 & 16 & 9 & 32 \\
+India & 0 & 11 & 395 & 367 & 773 \\
+\midrule
+Total & 1 & 17 & 411 & 376 & 805 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:priority_distribution} presents both absolute counts and within-region shares. The left panel makes the communication-load difference explicit, while the right panel shows that California has a markedly larger urgent-task share. Reporting both views avoids letting the India count dominate the visual interpretation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{priority_distribution.png}
+\caption{Absolute regional workload and priority composition of the final task set.}
+\label{fig:priority_distribution}
+\end{figure}
+
+Priority determines both the response deadline and nominal packet size as shown in Table~\ref{tab:priority_model}. These packet sizes represent the task-allocation message carried by the simulated network, not raw imagery. Therefore, the nominal communication results concern dissemination of observation requests rather than transfer of full SLSTR products.
+
+\begin{table}[htbp]
+\centering
+\caption{Priority-dependent response deadlines and task packet sizes in the final nominal campaign.}
+\label{tab:priority_model}
+\begin{tabular}{lrrl}
+\toprule
+Priority & Deadline (min) & Packet size (Mbit) & Operational interpretation \\
+\midrule
+Critical & 30 & 2.0 & Immediate high-severity follow-up request \\
+High & 60 & 1.5 & Urgent follow-up request \\
+Medium & 180 & 1.0 & Time-sensitive routine request \\
+Low & 360 & 0.5 & Lower-urgency monitoring request \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Because priority changes simultaneously with size and deadline, the nominal campaign is not a controlled task-size experiment. A comparison between Critical and Low packets would mix data volume, urgency, geography, and fire severity. Chapter~7 therefore defines a separate task-size sweep that holds task identity and deadline constant while applying controlled multipliers.
+
+\section{DSS Task Schema}
+
+The source and simulator fields are summarized in Table~\ref{tab:task_schema}. Every field shown is either present in the de-duplicated CSV or created deterministically by the task loader. The complete schema is retained in the appendix and software release.
+
+\begin{table}[htbp]
+\centering
+\caption{Core task fields transferred from the Sentinel-3 pipeline to the DSS simulator.}
+\label{tab:task_schema}
+\begin{tabularx}{\textwidth}{L{0.27\textwidth}L{0.15\textwidth}Y}
+\toprule
+Field & Unit/type & Meaning \\
+\midrule
+\path{task_id} & string & Stable task identifier within the source table \\
+\path{region}, \path{date} & category/date & Event-region membership and source day \\
+\path{timestamp_utc} & UTC time & Task release time before deadline construction \\
+\path{centroid_lat/lon} & degrees & Representative fire-region position \\
+\path{num_detections} & count & Detections supporting the clustered task \\
+\path{approx_radius_km} & km & Approximate spatial radius of the task cluster \\
+\path{mean/max/total_frp_mw} & MW & Fire-radiative-power summaries \\
+\path{confidence_score} & 0--1 & Harmonized relative confidence score \\
+\path{task_priority_score} & 0--1 & Composite score from Equation~\ref{eq:task_score} \\
+\path{priority_class} & category & Critical, High, Medium, or Low \\
+\path{required_response_time_min} & min & Deadline offset from task release \\
+\path{task_size_mbits} & Mbit & Simulator-assigned packet size \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Validation and Limitations of the Task Dataset}
+
+The strongest event-level validation is the Madre Fire. Both Sentinel-3 and FIRMS produced high-priority tasks near the reported event location during the California window. The India task set has broader regional support but weaker named-incident traceability. The data are consequently appropriate for architecture stress testing and selected event validation, but they are not a labelled benchmark for wildfire classification accuracy.
+
+Several limitations remain. Bounding-box filtering can retain points outside the political region unless a polygon mask is applied. Cloud, smoke, and overpass time change the detections available to each sensor. FIRMS and Sentinel-3 cannot be compared by regional FRP alone because their sensing, sampling, and de-duplication differ. A more defensible agreement study would match tasks in space and time and report centroid distance, priority-class agreement, FRP ratio, and unmatched counts.
+
+For this thesis, the final task table is frozen before architecture evaluation. All 891 cases within a region use the same task source and row count, which prevents architecture comparisons from being contaminated by changing wildfire inputs. The remaining uncertainty belongs to external validity: the preferred architecture could differ for another season, sensor, region, or priority model.

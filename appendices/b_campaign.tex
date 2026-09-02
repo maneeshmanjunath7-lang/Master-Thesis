@@ -1,0 +1,118 @@
+\section{Case Identifier Grammar}
+
+\begin{lstlisting}
+T{satellites:03d}_P{planes:02d}_H{altitude_km:04d}_
+I{inclination_x10:04d}_CN{fraction:03d}_F1
+\end{lstlisting}
+
+\begin{table}[htbp]
+\centering
+\caption{Example case identifiers.}
+\label{tab:id_examples}
+\begin{tabularx}{\textwidth}{L{0.50\textwidth}Y}
+\toprule
+Identifier & Interpretation \\
+\midrule
+\texttt{T060\_P03\_H0500\_I0600\_CN000\_F1} & 60 satellites, 3 planes, 500 km, 60 deg, no central nodes \\
+\texttt{T120\_P10\_H0800\_I0986\_CN030\_F1} & 120 satellites, 10 planes, 800 km, 98.6 deg, 30\% CN \\
+\texttt{T180\_P10\_H1000\_I0600\_CN100\_F1} & 180 satellites, 10 planes, 1000 km, 60 deg, all nodes central \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Fresh V2 Frozen Controls}
+
+\begin{table}[htbp]
+\centering
+\caption{Core Fresh V2 physical and operational controls.}
+\label{tab:fresh_controls_appendix}
+\begin{tabularx}{\textwidth}{L{0.38\textwidth}L{0.25\textwidth}Y}
+\toprule
+Control & Value & Note \\
+\midrule
+Campaign seed & 20260811 & Scenario seeds derived by SHA-256 \\
+Orbital time step & 60 s & Discrete opportunity evaluation \\
+Observation radius & 700 km & Fixed; no Fresh V2 radius sweep \\
+Ground station & Munich & 10-deg minimum elevation \\
+Sat--sat rate & V19 UHF calculation & Effective cap near 19.2 kbit/s \\
+Sat--ground rate & 100 kbit/s & Fixed window rate \\
+Central link-budget boost & 1.5 & Physical-rate multiplier in link calculation \\
+Nominal topology & \texttt{central\_only} & CN0 has ground uplink but no ISL \\
+Nominal routing & targeted useful/deadline & Greedy temporal replay \\
+Nominal hop/copy limits & 3 / 3 observer / 5 CN & Removed in unlimited diagnostic \\
+Window utilization & 1.0 & Capacity multiplier before failure \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The legacy field \path{sat_sat_data_rate_bps=250000} is present in configuration provenance but is not used by the active V19 link-budget calculation. It must not be reported as the Fresh V2 satellite-to-satellite rate.
+
+\section{Scenario Counts}
+
+\begin{table}[htbp]
+\centering
+\caption{Scenario rows per architecture.}
+\label{tab:scenario_counts_appendix}
+\begin{tabular}{lrrr}
+\toprule
+Family & Levels & Replicates/level & Rows \\
+\midrule
+Core/policy/unlimited & 7 & 1 & 7 \\
+Task size & 4 & 1 & 4 \\
+Random satellite failure & 4 & 30 & 120 \\
+Random central-node failure & 4 & 30 & 120 \\
+Link-window outage & 4 & 30 & 120 \\
+Ground-station outage & 4 & 30 & 120 \\
+Targeted CN failure & 4 & 1 & 4 \\
+Capacity degradation & 4 & 1 & 4 \\
+Combined stress & 4 & 10 & 40 \\
+\midrule
+Total & & & 539 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Seed Derivation}
+
+For every stochastic row, the seed material is the UTF-8 concatenation
+
+\begin{lstlisting}
+campaign_seed|case_id|scenario_id|replicate
+\end{lstlisting}
+
+The SHA-256 digest is calculated and its first eight bytes define the numeric random seed. This makes each replicate stable even when worker count, job order, or resume timing changes.
+
+\section{Checkpoint and Completion Rules}
+
+Scenario metrics are flushed in 20-row Parquet batches. A temporary path is atomically renamed only after its batch write finishes. Resuming reads the declared scenario keys already present and evaluates only missing keys. Duplicate keys can still arise when interruption occurs near a completion boundary; post-processing applies deterministic key-level de-duplication before validation.
+
+A case is complete only when its \path{_SUCCESS.json} exists and all expected scenario identifiers are accounted for as completed or explicitly not applicable. A case without the marker is not promoted to the complete analytical population, even if many rows are readable.
+
+\section{Representative Parquet Reading Commands}
+
+Python with pandas and PyArrow can inspect a partition without conversion:
+
+\begin{lstlisting}
+from pathlib import Path
+import pandas as pd
+
+case_dir = Path("outputs/full891_fresh_complete/runs/California") / CASE_ID
+metrics = pd.concat(
+    [pd.read_parquet(p) for p in sorted(case_dir.glob("case_metrics_part_*.parquet"))],
+    ignore_index=True,
+)
+print(metrics.shape)
+print(metrics[["scenario_id", "status",
+               "observation_success_percent"]].head())
+\end{lstlisting}
+
+DuckDB provides an interactive alternative:
+
+\begin{lstlisting}
+SELECT scenario_id, status, observation_success_percent
+FROM read_parquet('case_metrics_part_*.parquet')
+ORDER BY scenario_id
+LIMIT 20;
+\end{lstlisting}
+
+The compact CSV tables in this report package are intended for quick inspection and plotting. They are derived evidence and do not replace the raw Parquet archive.
