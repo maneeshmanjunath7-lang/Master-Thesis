@@ -1,0 +1,50 @@
+\section{Software and Evidence Release}
+
+The complete thesis release is archived at:
+
+\begin{center}
+\url{https://github.com/maneeshmanjunath7-lang/Master-Thesis/releases/tag/v1.0-thesis}
+\end{center}
+
+Release \texttt{v1.0-thesis} contains the simulator, post-processing code, figure-generation code, compact validated result tables, a formatted Excel results workbook, the LaTeX report source, and the furnished PDF. The tag fixes the version used for this thesis independently of later repository changes.
+
+\section{Repository Layout}
+
+\begin{lstlisting}
+Master-Thesis/
+|-- simulation/          # Full891 simulator and tests
+|-- postprocessing/      # Final and reusable analysis code
+|-- figure_generation/   # Report-figure generator and map data
+|-- results/             # Canonical compact CSV/JSON/Parquet evidence
+|-- figures/             # Generated thesis figures
+|-- thesis/
+|   |-- latex/           # Complete TUM LaTeX source
+|   +-- Master_Thesis_Maneesh_Manjunath_2026.pdf
+|-- checks/              # Evidence-manifest and release checks
+|-- environment/requirements.txt
+|-- REPRODUCIBILITY.md
++-- CITATION.cff
+\end{lstlisting}
+
+\section{Reproducing the Analyses}
+
+After creating a Python environment and installing \path{environment/requirements.txt}, the main post-processing command is:
+
+\begin{lstlisting}
+python postprocessing/complete/postprocess_complete.py \
+  --region /path/to/California.zip \
+  --region /path/to/India.zip \
+  --output reproduced_results
+\end{lstlisting}
+
+The simulator and each post-processing package include focused tests. The repository workflow repeats the release checks and tests on pushes and pull requests. \path{REPRODUCIBILITY.md} gives the Windows and Linux command sequences, expected inputs, evidence boundaries, and verification procedure.
+
+\section{Evidence Included}
+
+The machine-readable evidence is under \path{results}. The confirmatory California--India 60/120-satellite analysis is under \path{results/final_results}. The separate 282-case India 180-satellite analysis is under \path{results/option2_exploratory_180}. The latter is an official exploratory result for its internally consistent 741-task population; it is not pooled with the 773-task confirmatory India population to claim a pure fleet-size coefficient. The formatted workbook \path{results/Thesis_Result_Tables.xlsx} provides a reader-oriented view of the main tables while retaining the source CSV path on every sheet.
+
+The compact release allows a reviewer to audit every numerical value used in the report without downloading the multi-gigabyte raw case archive. It does not contain the raw transfer-event partitions required to reconstruct every simulated link event. Those large archives remain external project artefacts and are identified by provenance and checksum records in the compact evidence.
+
+\section{Integrity, Security, and Reuse}
+
+\path{checks/build_evidence_manifest.py} creates SHA-256 checksums for the published evidence, and \path{checks/verify_release.py} checks required files, oversized artefacts, result scope, and common credential patterns. API credentials, local virtual environments, raw downloads, temporary output, and VM-specific files are excluded. Original project code is released under the MIT License; third-party TUM classes, data, and dependencies retain their own notices and terms. The citation metadata in \path{CITATION.cff} provides the preferred software citation.

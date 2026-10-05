@@ -1,6 +1,11 @@
-# Evidence hashes protect exact bytes; never rewrite their line endings on checkout.
-data/** -text
-
-# Binary report and figure assets must also remain byte-for-byte stable.
-*.pdf -text
-*.png -text
+* text=auto
+*.csv text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.tex text eol=lf
+*.parquet binary
+*.png binary
+*.pdf binary
+*.xlsx binary
+*.zip binary

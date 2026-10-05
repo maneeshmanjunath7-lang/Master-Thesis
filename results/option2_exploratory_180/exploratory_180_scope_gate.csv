@@ -1,0 +1,9 @@
+check,observed,reference,suitable_for_option2_scope,status
+computational_case_directories,282,282,True,PASS
+scenario_rows,151998,151998,True,PASS
+cases_with_539_scenarios,282,282,True,PASS
+failed_cases,0,0,True,PASS
+observed_tasks_per_case,741,741,True,PASS
+observed_vs_intended_india_tasks_per_case,741,773,False,REVIEW
+cases_passing_773_task_contract,0,282,False,FAIL_TASK_CONTRACT
+balanced_30_to_100_cn_cases,216,216,True,PASS

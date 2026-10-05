@@ -1,0 +1,68 @@
+\section{Distributed Satellite Systems and Coordination}
+A distributed satellite system (DSS) is a set of space assets that share mission resources, information, or decision functions. The assets may form one coordinated constellation, cooperate across missions, or participate in a federation \citep{Golkar2015,Scrocciolani2024}. These descriptions overlap but are not interchangeable. A constellation primarily describes orbital organization. Federation describes the sharing of capabilities across assets or owners. Decentralization describes where information and decision authority reside.
+
+Large DSS operations are moving away from spacecraft-by-spacecraft commanding toward goal-based planning, automated monitoring, and coordination mechanisms that do not grow linearly with fleet size \citep{BenLarbi2021}. For time-critical observation, this is also a communication problem. A constellation may have sufficient geometric coverage and still respond too late if every new request waits for a ground-centered planning cycle.
+
+Centralized and decentralized coordination make different compromises. A central planner can apply one global objective and use a common system view, but it depends on timely communication with the assets. Local planning reduces reliance on a single decision point, but each satellite works with partial information. Decentralized allocation methods therefore still require message exchange for bids, requests, or schedule updates \citep{Parjan2023,Zilberstein2025}. Assuming that exchange is instantaneous can make an allocation appear feasible even when the assigned satellite learns about the request after its access has passed.
+
+The central nodes in this thesis provide a hybrid communication mechanism. They are selected satellites with a preferred relay role, similar to information-sharing nodes in collaborative and federated concepts \citep{Scrocciolani2024,Messina2025}. They are not global schedulers. This distinction keeps the experiment focused on communication centralization rather than combining routing, sensing, and decision authority into one undefined label.
+
+\section{From Task Release to Observation}
+Earth-observation scheduling normally considers visibility, timing, instrument availability, storage, energy, and communication \citep{Ferrari2025}. The present work isolates one part of that broader problem: whether a released follow-up request reaches a spacecraft before a useful access. Four states are retained:
+
+\begin{enumerate}
+\item \textbf{Task release:} a wildfire-derived request enters the simulated ground node.
+\item \textbf{Task reception:} a satellite has received the complete request.
+\item \textbf{Observation opportunity:} geometry places the satellite within the assumed access radius of the target.
+\item \textbf{Observation fulfilment:} the opportunity occurs after reception and before the task deadline.
+\end{enumerate}
+This sequence distinguishes two mechanisms. A task may be disseminated quickly but have no suitable access, or an access may be lost because the task arrived late. Reception, dissemination breadth, and observation fulfilment must therefore be reported separately. Image downlink is a later mission phase and is outside the experiment.
+
+\section{Time-Varying Connectivity and Space Networking}
+Satellite links are intermittent. A useful network representation is a temporal graph G(t) = (V, E(t)), where V contains satellites and ground stations and E(t) contains the contacts available at time t. A contact window records a physical opportunity. A transfer event records that the routing algorithm used some capacity in that window. Treating these as the same object would overstate network activity.
+
+Store-carry-forward communication allows a task to cross a network without a simultaneous end-to-end path. An intermediate node keeps the data until a later contact. Bundle Protocol 7, Contact Graph Routing, and the CCSDS Schedule-Aware Bundle Routing standard formalize this idea for delay- and disruption-tolerant networks \citep{Burleigh2022,Araniti2015,CCSDS2019}. If a contact e links nodes i and j between times t\_start and t\_end at rate r, its ideal data bound is:
+
+\begin{quote}\texttt{C\_e = r * (t\_end - t\_start).}\end{quote}
+A feasible transfer must also satisfy task release time, packet size, residual contact capacity, and deadline. Hop count alone does not determine delay; a short path can be slow if its next contact occurs much later. Likewise, unlimited copying cannot compensate for missing contacts or insufficient capacity.
+
+Static graph indicators such as degree, density, component count, path length, or betweenness can help explain a result. They are not mission outcomes. A snapshot may remain connected after a failure while all alternative temporal paths occur after the deadline. Robustness therefore has to be evaluated by replaying the mission on the transformed contact opportunities.
+
+\section{Central Nodes as Preferred Relays}
+Centralization can refer to decision authority, information storage, or communication. This thesis implements only the communication form. A central node receives four coupled properties:
+
+\begin{itemize}
+\item eligibility for links used by the central-only topology;
+\item priority in the hybrid forwarding order;
+\item deterministic balanced placement across planes; and
+\item a 1.5 communication-distance factor for each central endpoint.
+\end{itemize}
+The fraction sweep measures this complete package. It cannot, by itself, tell whether an observed effect is caused by link eligibility, forwarding preference, placement, or the range multiplier. A component-level claim would require an ablation that changes one property at a time. This wording is important: the results support a central-node routing role under the tested implementation, not the general superiority of a particular heterogeneous spacecraft design.
+
+Messina and Golkar show how collaborative methods can improve object-detection performance in federated satellite systems \citep{Messina2025}, while Scrocciolani and colleagues connect network structure to federated-system performance \citep{Scrocciolani2024}. The present work extends this line in a narrower direction: it varies the fraction of preferred relays over a full constellation grid and checks whether the information arrives early enough for a later observation.
+
+\section{Active-Fire Products and Workload Construction}
+Active-fire products report thermal anomalies with acquisition time, location, fire radiative power (FRP), and quality information. FRP is the instantaneous radiant-energy release rate and is useful for distinguishing stronger thermal activity from a simple count of detections \citep{Wooster2005}. It does not by itself identify the cause of the anomaly or determine operational severity.
+
+NASA FIRMS provides convenient access to active-fire detections from instruments including VIIRS. The 375 m VIIRS product improves the mapping of relatively small fires compared with coarser products \citep{Schroeder2014}. Sentinel-3 SLSTR supplies a separate active-fire and FRP product with different sampling, overpass timing, channels, and confidence fields \citep{WoosterSLSTR2012,XuWooster2023}. Rows from the two systems are therefore not interchangeable.
+
+The thesis uses the sources in complementary roles. FIRMS supports broad event screening and selected contextual checks. Sentinel-3 SLSTR is the only source used to construct the frozen simulation task table. This avoids double counting one event through two sensor conventions. It also keeps the task population reproducible: every architecture within an event window receives the same rows and release times.
+
+\section{Research Gap and Thesis Position}
+Previous work covers distributed satellite operations, decentralized allocation, scheduled space networking, and satellite active-fire sensing. The missing connection is an architecture experiment that carries wildfire-derived requests through finite temporal contacts, verifies reception before observation, and varies the fraction of preferred relay nodes while retaining both performance and burden.
+
+\begin{table}[htbp]\centering\small
+\caption{Positioning of the thesis relative to the four connected literature areas.}
+\label{tab:literature_position}
+\begin{tabularx}{\textwidth}{XXX}
+\toprule
+\textbf{Literature area} & \textbf{Established contribution} & \textbf{Step taken in this thesis} \\
+\midrule
+Federated and distributed satellite systems \citep{Golkar2015,Scrocciolani2024,Messina2025,BenLarbi2021} & Resource sharing, collaboration, scalable operations & Evaluate a declared central-node relay role over a controlled fraction sweep \\
+Decentralized observation allocation \citep{Parjan2023,Zilberstein2025} & Distributed assignment and onboard decision concepts & Verify when the responsible satellites actually receive each task \\
+Space DTN and scheduled routing \citep{Burleigh2022,Araniti2015,CCSDS2019} & Store-carry-forward over predicted contacts & Couple finite transfers to wildfire deadlines and later access \\
+Active-fire remote sensing \citep{Wooster2005,Schroeder2014,WoosterSLSTR2012,XuWooster2023} & Locations, confidence information, and FRP & Convert repeated detections into traceable requests with size and deadline \\
+\bottomrule
+\end{tabularx}
+\end{table}
+The claim remains deliberately narrow. A zero-central-node case under a central-only topology is not a peer-to-peer baseline. A missed nominal task is not evidence of failure robustness. A correlation between a graph property and observation fulfilment does not prove causation. These boundaries shape the experiment and the language used in the results.

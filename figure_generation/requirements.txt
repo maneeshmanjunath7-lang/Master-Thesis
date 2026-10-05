@@ -1,0 +1,6 @@
+matplotlib>=3.8
+numpy>=1.26
+pandas>=2.2
+pyarrow>=15.0
+pyshp>=2.3
+

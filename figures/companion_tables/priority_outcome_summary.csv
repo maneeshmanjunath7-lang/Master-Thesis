@@ -1,0 +1,9 @@
+scenario_id,priority_class,case_count,tasks_per_case,observation_success_percent_mean,observation_success_percent_p05,observation_success_percent_p95,s100_before_deadline_percent_mean,s100_before_deadline_percent_p05,s100_before_deadline_percent_p95,region
+unlimited_useful_deadline,Critical,891,1.0,29.29292929292929,0.0,100.0,24.579124579124574,0.0,100.0,California
+unlimited_useful_deadline,High,891,6.0,53.79723157500935,0.0,100.0,54.60157126823793,0.0,100.0,California
+unlimited_useful_deadline,Medium,891,16.0,79.6787317620651,50.0,100.0,77.82687991021325,0.0,100.0,California
+unlimited_useful_deadline,Low,891,9.0,95.3111360518768,83.33333333333334,100.0,88.17807706696595,0.0,100.0,California
+unlimited_useful_deadline,Critical,891,0.0,,,,,,,India
+unlimited_useful_deadline,High,891,11.0,48.29099071523313,0.0,100.0,42.63850627486991,0.0,100.0,India
+unlimited_useful_deadline,Medium,891,395.0,70.82782821179445,0.0,100.0,66.50044751310574,0.0,100.0,India
+unlimited_useful_deadline,Low,891,367.0,96.32046923247596,71.2534059945504,100.0,82.65273965953132,0.0,100.0,India

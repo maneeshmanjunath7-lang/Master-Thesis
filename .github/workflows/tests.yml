@@ -1,0 +1,28 @@
+name: Verify thesis release
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r environment/requirements.txt
+          python -m pip install -e simulation
+          python -m pip install -e postprocessing/library
+      - name: Run unit tests
+        run: |
+          python -m pytest simulation/tests
+          python -m pytest postprocessing/library/tests
+          python -m pytest postprocessing/california_results_analysis/tests
+          python -m pytest postprocessing/complete/tests
+      - name: Verify evidence checksums
+        run: python checks/verify_release.py

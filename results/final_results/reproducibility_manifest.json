@@ -1,0 +1,39 @@
+{
+  "status": "STRUCTURALLY_COMPLETE_SCIENTIFICALLY_BLOCKED_BY_TASK_POPULATION_DRIFT",
+  "source_archive": "C:\\Users\\manee\\MasterThesis_DSS\\thesis_full_simulation_v2.zip",
+  "source_archive_bytes": 3233347433,
+  "source_archive_sha256": "b54fabc0278830913ade88aa8fa188dc89de65b2ddaf141370e9396a0905b45f",
+  "thesis_pdf": "C:\\Users\\manee\\MasterThesis_DSS\\Report\\Master_Thesis_Feedback_Revision_2026-09-15.pdf",
+  "formal_completion_gate_passed": true,
+  "scientific_task_population_gate_passed": false,
+  "intended_task_counts": {
+    "California": 32,
+    "India": 773
+  },
+  "india_cases_requiring_rerun": 282,
+  "valid_uniform_subset": {
+    "satellite_levels": [
+      60,
+      120
+    ],
+    "base_architectures_per_region": 54,
+    "cases_per_region": 594
+  },
+  "analysis_parameters": {
+    "bootstrap_draws": 1000,
+    "weight_samples": 10000,
+    "seed": 20260917,
+    "priority_horizons_min": {
+      "Critical": 30,
+      "High": 60,
+      "Medium": 180,
+      "Low": 360
+    }
+  },
+  "method_notes": [
+    "Resampling intervals use base architectures as the resampling unit.",
+    "Exact Pareto membership is independent of illustrative objective weights.",
+    "Priority timing uses censor-aware Kaplan-Meier event probability and RMST.",
+    "The 60/120-satellite subset is a sensitivity layer, not a replacement for the planned full grid."
+  ]
+}

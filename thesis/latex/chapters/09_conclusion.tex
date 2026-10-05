@@ -1,0 +1,53 @@
+\section{Conclusions}
+
+This thesis developed and evaluated a communication-constrained workflow for disseminating time-critical wildfire follow-up tasks through a distributed satellite system. It connects remote-sensing-derived task generation, Walker constellation design, temporal communication, Central Nodes, reception-before-observation logic, explicit failure replay, and multi-objective post-processing.
+
+The final evidence is organized into two scientifically consistent layers. The confirmatory 60/120-satellite layer contains 594 California and 594 India cases and 640,332 case-scenario evaluations. It supports matched event-window effects and the main architecture shortlist. The exploratory India 180-satellite layer contains 282 completed cases and 151,998 case-scenario evaluations on a consistent realized population of 741 tasks. Its principal architecture analysis uses a balanced block of 216 cases at CN30--CN100.
+
+On matched confirmatory architectures, India has 4.66 percentage points higher observation fulfilment than California but 2.98 points lower strict useful completion, 5.95 points lower useful coverage, approximately 175 minutes later worst-case complete dissemination, and 0.041 lower robustness-retention AUC. These simultaneous changes demonstrate why observation, dissemination completeness, timing, and communication burden must remain separate metrics.
+
+Central Nodes are useful but their effect is neither monotonic nor policy-independent. Under bounded routing, high participation can sharply reduce observation; under the unlimited diagnostic, higher participation improves completion while traffic continues to rise. Peer-capable routing improves strict completion relative to central-only routing. Packet growth is strongly detrimental, especially in the India workload. The sole-ground-station outage is the largest tested individual vulnerability, and combined packet growth with satellite failure produces losses that cannot be inferred from nominal performance alone.
+
+The exploratory 180-satellite layer reinforces these conclusions under its declared workload. From CN30 to CN100, unlimited strict completion rises from 88.50\% to 97.04\% and P100 $T_{100}$ falls from 257.08 to 142.03 minutes, but traffic rises from 43,976 to 102,880 Mbit per case. Fourfold packets reduce strict completion by 34.70 points. Ground-station outage retains 76.34\% of baseline strict completion at 30\% severity, while fourfold packets plus 20\% satellite failure retain 56.33\%. The 60-case exact Pareto set and maximum rank-1 acceptability of 27.02\% show that the larger-fleet decision also depends on preferences.
+
+No single architecture dominates the tested objectives. The final engineering result is therefore a main cross-window shortlist plus a separate exploratory 180-satellite portfolio, not a universal winner. The two lists are not merged because their task populations and comparison domains differ.
+
+\section{Answers to the Research Questions}
+
+\paragraph{RQ1.} Central Node fraction and forwarding policy have a coupled, policy-dependent effect. Intermediate fractions are favoured under the bounded package, whereas the unlimited diagnostic benefits from higher fractions at increasing traffic cost. Because eligibility, preference, placement, and link-budget boost are bundled, the result applies to the implemented Central Node routing package rather than to one isolated component.
+
+\paragraph{RQ2.} Workload, packet size, constellation geometry, and injected failures materially affect both performance and architecture order. The India event-window case produces slightly higher observation fulfilment but weaker, later, and less robust complete dissemination on matched 60/120 architectures. Fourfold packets, ground-station outage, and combined packet/failure stress are especially influential. Geometry changes the temporal opportunities, but no single factor level is uniformly best across the grid.
+
+\paragraph{RQ3.} There is no single best Walker configuration across mission, timing, resource, and robustness objectives. Exact Pareto filtering and weight sensitivity identify a five-case confirmatory shortlist and a separate 60-case exploratory 180-satellite Pareto set. The preferred design depends on declared mission priorities, workload, and preference weights.
+
+\section{Scientific and Engineering Contributions}
+
+The thesis contributes:
+
+\begin{enumerate}
+\item a traceable conversion from wildfire detections to prioritized, deadline-constrained satellite tasks;
+\item a temporal simulator that keeps physical access, communication, reception, and follow-up observation logically separate;
+\item a 539-scenario experimental contract with explicit not-applicable states, deterministic duplicate handling, and input-population auditing;
+\item a censor-aware, priority-stratified timing analysis that avoids completed-only latency bias;
+\item paired workload, routing-policy, packet-size, failure, and combined-stress evidence;
+\item a redundancy-aware Pareto and rank-acceptability decision process; and
+\item an empirical demonstration that scientifically valid restart logic must include input hashes, regional and priority counts, and positional-index normalization rather than relying only on completed scenario identifiers.
+\end{enumerate}
+
+The contribution is broader than one architecture recommendation. It is a reproducible run-to-claim chain that states which population supports each result, preserves unsuccessful outcomes, and distinguishes computational completion from scientific comparability.
+
+\section{Recommended Architecture Decision}
+
+For a balanced wildfire-follow-up design across the two event-window cases, the confirmatory evidence supports examining the 60-satellite shortlist before selecting the larger fleet. The CN40 architecture \path{T060_P10_H0800_I0986_CN040_F1} offers strong California rank stability and relatively low India traffic. The 60-satellite CN90/CN100 architectures at 1000~km and 98.6-degree inclination emphasize India completion. The 120-satellite CN100 alternative provides faster India dissemination when that gain justifies approximately twice the traffic of the comparable 60-satellite CN100 design.
+
+The exploratory India-only 180-satellite portfolio begins with \path{T180_P10_H0500_I0986_CN050_F1}, which has 27.02\% rank-1 acceptability under random family weights and combines complete mission metrics with lower traffic than the faster CN90/CN100 candidates. This is not an operational recommendation or a cross-window winner; it is the leading preference-sensitive case within the balanced 741-task exploratory block.
+
+Decision makers should compare raw mission, timing, traffic, fleet, Central Node, and robustness values before applying approved preferences. The weights used here are analyst-defined scenarios, not elicited stakeholder consensus. The sole-ground-station result should motivate a ground-network trade study, not a quantified claim about the benefit of a specific additional station.
+
+\section{Limits and Future Work}
+
+The 180-satellite run does not establish a clean 60-to-120-to-180 scaling law. The confirmatory India layer uses 773 tasks, the exploratory layer uses 741, and the completed selection is unbalanced below CN30. A matched California exploratory rerun under the same task contract would also be required for an 180-satellite event-window contrast.
+
+Further work should test a 500/700/900-km observation-radius sweep, alternative and seeded central-node placements, separate eligibility/preference/link-budget ablations, plausible wildfire-task construction variants, additional ground stations, and replicate convergence for fifth percentiles and rank acceptability. Additional event windows are required before generalizing beyond the two case studies. Stakeholder elicitation and lifecycle-cost modeling could replace the present engineering preferences and resource proxies with an operational value model.
+
+Within the evidence actually analyzed, the thesis establishes that routing participation, task workload, forwarding limits, packet size, constellation geometry, and failure conditions jointly shape whether information delivery becomes a deadline-complete follow-up opportunity. A transparent portfolio and explicit evidence boundary are therefore more defensible than a universal central-node fraction or fleet-size recommendation.

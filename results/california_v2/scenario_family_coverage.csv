@@ -1,0 +1,14 @@
+family,status,scenario_ids,cases,case_scenario_rows
+capacity_degradation,COMPLETED,4,890,3560
+combined_stress,COMPLETED,40,890,35600
+ground_station_outage,COMPLETED,120,890,106800
+link_window_outage,COMPLETED,120,890,106800
+nominal,COMPLETED,1,890,890
+policy_ablation,COMPLETED,3,890,2670
+random_cn_failure,COMPLETED,120,809,97080
+random_cn_failure,NOT_APPLICABLE,120,81,9720
+random_satellite_failure,COMPLETED,120,890,106800
+targeted_cn_failure,COMPLETED,4,809,3236
+targeted_cn_failure,NOT_APPLICABLE,4,81,324
+task_size,COMPLETED,4,890,3560
+unlimited,COMPLETED,3,890,2670

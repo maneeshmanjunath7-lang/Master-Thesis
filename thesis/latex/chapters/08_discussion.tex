@@ -1,0 +1,95 @@
+\section{Interpretation Strategy}
+
+The final interpretation follows the two analysis populations rather than the directory structure of the simulation archive. The confirmatory 60/120-satellite layer is the basis for matched event-window statements. The India 180-satellite layer is a separate experiment on a consistent 741-task workload. This distinction is more important than whether every job terminated successfully: computational completion cannot make two different input populations scientifically interchangeable.
+
+The interpretation is therefore conditional but complete. No pending number is needed to answer the research questions within the declared scope. The report identifies which statements are confirmatory, which are exploratory, and which would require a new experiment.
+
+\section{Method Contribution}
+
+The communication framework was successfully adapted to a multi-task wildfire use case. Remote-sensing detections were converted into requests carrying location, release time, priority, deadline, and packet size. The simulator enforced the sequence release, reception, and post-reception access before awarding a follow-up observation. This prevents geometric opportunity from being counted when the relevant spacecraft learns about a task too late.
+
+The contribution is a communication-constrained follow-up and dissemination workflow, not a complete wildfire-response chain or a satellite scheduling optimizer. The model begins after creation of a thermal-event task and ends at a modeled follow-up opportunity. Instrument pointing, cloud and smoke screening, image production, downlink of imagery, alert distribution, and human response remain outside the evidence. This boundary aligns the study identity with the implemented mechanism.
+
+\section{Workload Context}
+
+The confirmatory comparison shows that the event-window workloads change both values and architecture order. India has higher observation fulfilment but weaker complete dissemination, lower useful coverage, substantially later P100 $T_{100}$, and lower robustness retention. Observation can remain high when one informed satellite later reaches the target even though full dissemination to all useful recipients is incomplete. The larger India task population also increases absolute traffic and contention.
+
+Priority-stratified results show why pooled latency alone would be misleading. Deadlines and packet sizes are functions of priority, so the censoring process is not independent of task class. Direct deadline attainment, class-specific Kaplan--Meier summaries, and RMST with fixed class horizons therefore form the defensible timing result. Equal-weight class summaries are used when a cross-window aggregate is required.
+
+The words ``California'' and ``India'' identify two selected event-window cases, not random regional samples. Architecture matching controls the spacecraft design but not season, event density, spatial pattern, task composition, or priority mix. The thesis consequently reports a case-study contrast and not a population-level regional effect.
+
+\section{RQ1: Central Node Fraction and Forwarding Policy}
+
+The package response is policy-dependent. In the confirmatory layer, bounded observation rises at low and intermediate fractions and then falls sharply. The exploratory 180-satellite layer reproduces this qualitative interaction: bounded observation declines from 87.73\% at CN30 to 42.47\% at CN100, while the unlimited diagnostic improves observation, strict completion, coverage, and timing toward CN100. Higher participation can therefore help when forwarding is permissive and hurt when routing limits interact with the package.
+
+This result applies to the full implemented treatment. The central label changes link eligibility, forwarding preference, deterministic placement, and link budget together. The experiments do not identify which component causes the high-CN decline. Congestion or routing concentration is a plausible explanation, but it is not established without component ablations and retained trace-level decisions. The text therefore avoids treating ``centralization'' as an isolated causal coefficient.
+
+The exploratory peer-policy result also requires context. Relative to central-only routing, peer and hybrid policies improve strict completion by about one percentage point at 180 satellites but add roughly 28,600 Mbit per case. Mission improvement is not absent, but its marginal value is small relative to the additional communication volume in this particular layer.
+
+\section{RQ2: Sensitivity to Workload, Packet Size, Geometry, and Failures}
+
+The tested context changes both performance values and architecture order. The India event-window workload produces higher observation fulfilment but weaker and later complete dissemination than California on the matched 60/120-satellite grid. Packet size is one of the strongest operational levers: fourfold packets reduce strict completion by 37.02 percentage points in the confirmatory India layer and by 34.70 points in the exploratory 180-satellite block. In the latter block they also increase transferred traffic by approximately 127,203 Mbit per case.
+
+Constellation factors do not provide one independent monotonic rule. Satellite count, plane count, altitude, and inclination change the available temporal contacts and interact with the Central Node fraction and event window. Their marginal plots are descriptive averages over the other grid factors, not isolated causal coefficients. The defensible conclusion is therefore that geometry changes the feasible routing opportunities and the architecture ranking, while the preferred level remains conditional on the rest of the design.
+
+Physical disturbances also change the ranking. Ground-station outage is the most damaging tested individual family in both evidence layers. This identifies the sole-Munich-station baseline as a dominant tested vulnerability; it does not determine how many additional stations are required or where they should be placed. Combined packet growth and satellite failure are especially important: the exploratory worst cell retains only 56.33\% of baseline strict completion. RQ2 is answered for the executed workload, packet, geometry, and disturbance variations, but not for unexecuted observation-radius, placement, task-construction, or component-ablation studies.
+
+\section{RQ3: Architecture Trade-Offs and Decision Stability}
+
+No design dominates all objectives. The confirmatory layer yields large event-window Pareto sets and a five-case cross-window shortlist. The exploratory layer contains 60 exact Pareto cases among 216 balanced candidates, and its highest rank-1 acceptability is only 27.02\%. These results show that the preferred design depends on how mission completion, observation, timing, fleet burden, Central Node count, traffic, and robustness are valued.
+
+The confirmatory shortlist remains the main architecture decision product because it is supported in both event windows with their intended task populations. The exploratory shortlist provides an India-only 180-satellite sensitivity. It shows that a CN40/CN50 design can offer lower traffic, while CN90/CN100 designs give faster complete dissemination at substantially higher communication burden. Combining these lists would hide their different workloads and decision domains.
+
+The preferred Central Node fraction is not invariant across forwarding policy, task size, failure family, event-window workload, or objective weights. Randomized family weights change the winner in both evidence layers. This is decision sensitivity, not proof of stakeholder consensus; the reference coefficients are analyst-defined engineering preferences. The fixed \SI{700}{\kilo\metre} access radius and the task priorities, deadlines, packet sizes, and clustering rules remain declared engineering assumptions.
+
+\section{Interpretation of the Exploratory 180-Satellite Layer}
+
+The exploratory layer is not discarded and is not mislabelled as corrected. All 282 cases are computationally complete, use the same 741-task population, and contain the expected 539 scenarios. The layer therefore supplies reproducible within-population evidence. Restricting aggregate inference to the balanced CN30--CN100 block also removes unequal base weighting from its principal curves and rankings.
+
+The layer cannot supply a clean fleet-size effect because the confirmatory India analysis uses 773 tasks, the exploratory layer uses 741, and 15 low-CN base--fraction cells are absent from the completed selection. It also cannot support an 180-satellite California--India contrast because no matched California exploratory rerun was analyzed under the same population contract. These are boundaries of inference, not reasons to hide the output.
+
+The task inconsistency adds a reproducibility lesson. Resume and normalization logic must bind every output not only to scenario identifiers but also to input hashes, regional counts, priority counts, and a reset positional index. A successful job marker is necessary for computational integrity, but scientific restart validity requires proof that retained and newly generated partitions used identical inputs.
+
+\section{Expected-Relationship and Objective Assessment}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Assessment of the three literature-motivated relationships stated in the introduction.}
+\label{tab:hypothesis_assessment}
+\begin{tabularx}{\textwidth}{L{0.12\textwidth}L{0.19\textwidth}Y}
+\toprule
+Relationship & Assessment & Evidence \\
+\midrule
+E1 & Supported conditionally & Central Nodes create useful temporal paths, but gains saturate or reverse under the bounded policy; the unlimited diagnostic continues to improve at increasing traffic cost. \\
+E2 & Supported & Faster and broader dissemination generally requires more transferred data and, at high Central Node fractions, more differentiated nodes. \\
+E3 & Supported & Matched event-window effects, packet sensitivity, robustness, Pareto membership, and architecture ranks differ with workload and preference assumptions. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Objective 1 is met by the traceable task pipeline. Objective 2 is met by the temporal simulation and reception-before-observation logic. Objective 3 is met by the separate mission, burden, and robustness comparisons. Objective 4 is met by exact Pareto filtering and preference-sensitive shortlists. No objective is claimed for radius, placement, task-model, component-ablation, multi-station, or replicate-extension questions that were not simulated.
+
+\section{Threats to Validity}
+
+\subsection{Construct validity}
+
+Observation is a geometric \SI{700}{\kilo\metre} access proxy rather than a sensor-quality or imaging-feasibility model. Packet sizes describe task messages, not imagery. The Central Node role is a bundled communication treatment rather than a separately costed spacecraft class. P100 $T_{100}$ measures complete useful-recipient dissemination, not first awareness or end-to-end alert latency.
+
+\subsection{Internal validity}
+
+The factorial grid controls the declared Walker factors but not alternative task rules, node placements, or package components. High-CN aggregate patterns are associations under one implementation. The exploratory population excludes 32 Low-priority tasks because of the documented index defect and is analyzed as its own workload.
+
+\subsection{External validity}
+
+The two event windows are case studies. Only the listed constellations, routing rules, deadlines, link assumptions, one ground station, and disturbance families were simulated. The 180-satellite conclusions apply to India and 741 tasks; larger fleets and different event windows remain extrapolations until executed.
+
+\subsection{Statistical conclusion validity}
+
+Base-clustered intervals describe stability over the enumerated architecture blocks and are not geographic population intervals. The retained 30 failure replicates and 10 combined-stress replicates support mean-response analysis but not fine low-tail ranking without a convergence extension. Correlated metrics are screened before weighting, and exact Pareto membership is calculated before any compensatory score.
+
+\section{Decision Implication}
+
+The main decision is a portfolio choice within the confirmatory 60/120-satellite population. Lower-resource CN40/CN50 designs are credible balanced options; CN90/CN100 designs provide stronger India completion at greater traffic; and the 120-satellite CN100 option is justified only when faster complete dissemination is worth its fleet and communication burden. The exploratory 180-satellite results show the same underlying tension at larger fleet scale but do not replace this cross-window decision.
+
+Before an operational commitment, the mission owner should provide preference weights and feasibility thresholds, confirm the task-message product, and evaluate at least observation radius, placement, package components, and alternative ground networks on a small representative set. Those steps refine the decision; they are not evidence already contained in this thesis.

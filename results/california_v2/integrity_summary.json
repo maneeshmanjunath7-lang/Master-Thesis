@@ -1,0 +1,29 @@
+{
+  "base_architecture_directories": 81,
+  "case_directories": 891,
+  "success_markers": 890,
+  "missing_success_markers": 1,
+  "failed_markers": 0,
+  "expected_scenarios_per_case": 539,
+  "expected_full_scenario_rows": 480249,
+  "raw_scenario_rows": 484379,
+  "unique_scenario_rows_all_cases": 480110,
+  "duplicate_scenario_rows_removed": 4269,
+  "unique_scenario_rows_success_cases": 479710,
+  "completed_status_rows_success_cases": 469666,
+  "not_applicable_rows_success_cases": 10044,
+  "failed_status_rows_success_cases": 0,
+  "balanced_base_architectures": 80,
+  "balanced_complete_cases": 880,
+  "configuration_fingerprints": {
+    "49627745e7ca1b909f93355f618d36ffd694c452c607014c203655691372542f": 889,
+    "c41db096551b64c84f295382860cb0b7ea94f53ac19595ded5f1a81db46544c2": 2
+  },
+  "task_counts": {
+    "32": 891
+  },
+  "validation_files": 891,
+  "validation_checks": 19179,
+  "passed_checks": 19179,
+  "failed_checks": 0
+}

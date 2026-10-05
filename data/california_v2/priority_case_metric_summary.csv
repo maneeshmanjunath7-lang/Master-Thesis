@@ -1,9 +1,0 @@
-scenario_id,priority_class,case_count,tasks_per_case,observation_success_percent_mean,observation_success_percent_p05,observation_success_percent_p95,s100_before_deadline_percent_mean,s100_before_deadline_percent_p05,s100_before_deadline_percent_p95
-nominal_original,Critical,890,1.0,8.202247191011235,0.0,100.0,2.5842696629213484,0.0,0.0
-nominal_original,High,890,6.0,23.089887640449437,0.0,83.33333333333334,0.8239700374531832,0.0,0.0
-nominal_original,Medium,890,16.0,63.43398876404494,0.0,100.0,0.7794943820224719,0.0,6.25
-nominal_original,Low,890,9.0,89.90012484394508,11.11111111111111,100.0,0.0,0.0,0.0
-unlimited_useful_deadline,Critical,890,1.0,29.213483146067414,0.0,100.0,24.49438202247191,0.0,100.0
-unlimited_useful_deadline,High,890,6.0,53.74531835205992,0.0,100.0,54.550561797752806,0.0,100.0
-unlimited_useful_deadline,Medium,890,16.0,79.65589887640449,50.0,100.0,77.80196629213484,0.0,100.0
-unlimited_useful_deadline,Low,890,9.0,95.30586766541822,82.77777777777781,100.0,88.16479400749064,0.0,100.0

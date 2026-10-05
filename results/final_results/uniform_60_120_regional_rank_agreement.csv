@@ -1,0 +1,7 @@
+metric,region_a,region_b,matched_cases,spearman_rank_agreement
+observation_success_percent,California,India,594,0.7290140403092045
+s100_surviving_before_deadline_percent,California,India,594,0.7713397046051915
+mean_surviving_coverage_deadline_percent,California,India,594,0.717604506748636
+p100_t100_surviving_min,California,India,541,0.7795689408645328
+total_transferred_data_mbits,California,India,594,0.9900111495917036
+robustness_auc_retention,California,India,541,0.608870310035671

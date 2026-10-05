@@ -1,0 +1,17 @@
+{
+  "intended_task_counts": {
+    "California": 32,
+    "India": 773
+  },
+  "india_case_manifests_using_741_tasks": 282,
+  "cases_with_multiple_task_counts_across_scenarios": 6,
+  "safe_uniform_base_architectures": 54,
+  "safe_uniform_cases_per_region": 594,
+  "safe_satellite_levels": [
+    60,
+    120
+  ],
+  "full_grid_scientific_status": "BLOCKED_BY_INDIA_TASK_POPULATION_DRIFT",
+  "uniform_subset_status": "VALID_SENSITIVITY_SUBSET",
+  "required_rerun_cases": 282
+}

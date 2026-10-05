@@ -1,0 +1,134 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{amsmath,amssymb}
+\IfFileExists{siunitx.sty}{%
+  \usepackage{siunitx}%
+  \newcommand{\Angle}[1]{\SI{##1}{\degree}}%
+}{%
+  % Minimal portability fallback for reduced TeX Live installations.
+  \providecommand{\kilo}{\mathrm{k}}
+  \providecommand{\mega}{\mathrm{M}}
+  \providecommand{\gibi}{\mathrm{Gi}}
+  \providecommand{\metre}{\mathrm{m}}
+  \providecommand{\watt}{\mathrm{W}}
+  \providecommand{\hertz}{\mathrm{Hz}}
+  \providecommand{\bit}{\mathrm{bit}}
+  \providecommand{\byte}{\mathrm{B}}
+  \providecommand{\second}{\mathrm{s}}
+  \providecommand{\per}{/}
+  \providecommand{\squared}{^{2}}
+  \providecommand{\cubed}{^{3}}
+  \newcommand{\SI}[2]{\ensuremath{##1\,##2}}
+  \newcommand{\Angle}[1]{\ensuremath{##1^{\circ}}}
+  \newcommand{\sisetup}[1]{}
+}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{csquotes}
+\usepackage{natbib}
+\usepackage{tikz}
+\IfFileExists{tracklang.sty}{%
+  \usepackage[acronym,toc,nonumberlist]{glossaries}
+  \makenoidxglossaries
+  \loadglsentries{chapters/glossary.tex}
+  \newcommand{\printreportglossary}{\printnoidxglossary[type=\acronymtype,title=Acronyms]}
+}{%
+  % Reduced-installation fallback; full builds use the glossaries package.
+  \newcommand{\newacronym}[3]{}
+  \input{chapters/glossary.tex}
+  \newcommand{\glsaddall}{}
+  \newcommand{\printreportglossary}{%
+    \chapter*{Acronyms}\addcontentsline{toc}{chapter}{Acronyms}%
+    \begin{description}[leftmargin=2.4cm,style=nextline]
+      \item[API] application programming interface
+      \item[CDF] cumulative distribution function
+      \item[CN] central node
+      \item[CSV] comma-separated values
+      \item[DBSCAN] Density-Based Spatial Clustering of Applications with Noise
+      \item[DSS] distributed satellite system
+      \item[EO] Earth observation
+      \item[FIRMS] Fire Information for Resource Management System
+      \item[FRP] fire radiative power
+      \item[GS] ground station
+      \item[HPC] high-performance computing
+      \item[ISL] inter-satellite link
+      \item[MW] megawatt
+      \item[PBL] planetary boundary layer
+      \item[SLSTR] Sea and Land Surface Temperature Radiometer
+      \item[TAT] task-allocation time
+      \item[TAT-C] Trade-space Analysis Tool for Constellations
+      \item[UTC] Coordinated Universal Time
+    \end{description}%
+  }
+}
+
+% Institutional identity for the TUM SPS thesis template.
+\AtBeginDocument{%
+  \renewcommand{\theChairName}{Chair of Spacecraft Systems}%
+  \renewcommand{\theDepartmentName}{TUM School of Engineering and Design}%
+}
+
+% TeX Gyre Heros is metric-compatible with Helvetica and supplies the full
+% regular/bold/italic font set required by portable Tectonic builds.
+\IfFileExists{tgheros.sty}{%
+  \usepackage{tgheros}\renewcommand{\sfdefault}{qhv}%
+}{%
+  \usepackage[scaled]{helvet}\renewcommand{\sfdefault}{phv}%
+}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Keep chapter openings compact while preserving the institutional running header.
+\RedeclareSectionCommand[
+  beforeskip=0.8\baselineskip,
+  afterskip=1.2\baselineskip
+]{chapter}
+
+\graphicspath{{figures/}{figures/nominal/}{figures/california_v2/}{figures/objective_weights/}{figures/final_results/}{figures/option2_exploratory_180/}}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=TUMBlue,
+  citecolor=TUMBlue,
+  urlcolor=TUMBlue,
+  pdftitle={Effect of Central Nodes on Task Dissemination in Distributed Satellite Systems},
+  pdfauthor={Maneesh Manjunath}
+}
+
+\sisetup{detect-all,round-mode=places,round-precision=2}
+\setlist{itemsep=0.25em,topsep=0.4em}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcommand{\todo}[1]{\textcolor{red!80!black}{\textbf{Open item:} #1}}
+\newcommand{\reviewcandidate}{\textcolor{orange!75!black}{\textbf{Working draft}}}
+\newcommand{\codeverified}{\textcolor{green!45!black}{\textbf{Validated result}}}
+\newcommand{\inprogress}{\textcolor{orange!75!black}{\textbf{In progress}}}
+\newcommand{\notclaimed}{\textcolor{red!65!black}{\textbf{Not claimed}}}
+\newcommand{\metric}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\Suseful}{\ensuremath{S_{100}^{\mathrm{useful}}}}
+\newcommand{\sourcepath}[1]{\texttt{\detokenize{#1}}}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}

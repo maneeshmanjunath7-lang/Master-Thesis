@@ -1,2 +1,0 @@
-walker_t,walker_p,walker_f,altitude_km,inclination_deg,swath_km,munich_min_elev_deg,n_observations,mean_revisit_hr,max_revisit_hr,min_revisit_hr,n_latency_rows,mean_latency_hr,max_latency_hr,min_latency_hr
-6,2,1,600,90.0,3000.0,5.0,204,3.426479284619595,22.580992173333332,0.09809485444444445,204,3.214864918010621,4.671323530277777,1.7860480527777778

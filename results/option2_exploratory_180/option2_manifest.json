@@ -1,0 +1,38 @@
+{
+  "analysis_policy": "Option 2",
+  "confirmatory_layer": "Audited 60/120-satellite California and India subset",
+  "exploratory_layer": "India 180-satellite, consistent 741-task population",
+  "exploratory_cases_all": 282,
+  "exploratory_case_scenario_rows_all": 151998,
+  "balanced_cn_levels_percent": [
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "balanced_exploratory_cases": 216,
+  "balanced_exploratory_rows": 116424,
+  "tasks_per_case_observed": 741,
+  "tasks_per_case_intended": 773,
+  "bootstrap_draws": 1000,
+  "random_weight_samples": 10000,
+  "seed": 20260923,
+  "inputs": {
+    "region_root": "C:\\Users\\manee\\.codex\\visualizations\\2026\\08\\20\\01a01db1-1660-7141-af33-f3d231777fde\\Complete282_Check_20260923\\Full891_India_282_Rerun_Package_20260918_v1\\outputs\\india_282_corrected_773_tasks\\runs\\India",
+    "selection_audit": "C:\\Users\\manee\\.codex\\visualizations\\2026\\08\\20\\01a01db1-1660-7141-af33-f3d231777fde\\Full891_India_282_Rerun_Package_20260918_v1\\case_selection\\india_cases_requiring_773_task_rerun_audit.csv",
+    "integrity_details": "C:\\Users\\manee\\.codex\\visualizations\\2026\\08\\20\\01a01db1-1660-7141-af33-f3d231777fde\\Complete282_Check_20260923\\report\\case_integrity_details.csv",
+    "confirmatory_source": "C:\\Users\\manee\\.codex\\visualizations\\2026\\08\\20\\01a01db1-1660-7141-af33-f3d231777fde\\Full891_Thesis_Analysis_Deliverable_20260918_v1"
+  },
+  "method_notes": [
+    "Base architectures are the clustered resampling unit.",
+    "Intervals describe stability across the enumerated design grid, not a random population sample.",
+    "The exploratory architecture analysis is restricted to the complete 30\u2013100% CN grid.",
+    "Pareto membership is exact and weight-independent; random weights quantify rank acceptability only.",
+    "Priority event times use deadline censoring and fixed priority-specific horizons.",
+    "No direct cross-fleet or cross-region inference is made from the exploratory layer."
+  ]
+}

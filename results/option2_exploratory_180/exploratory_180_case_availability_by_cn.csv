@@ -1,0 +1,12 @@
+cn_fraction_percent,cases,base_architectures,expected_base_architectures,missing_cases,balanced_for_all_27_bases
+0.0,20,20,27,7,False
+10.0,22,22,27,5,False
+20.0,24,24,27,3,False
+30.0,27,27,27,0,True
+40.0,27,27,27,0,True
+50.0,27,27,27,0,True
+60.0,27,27,27,0,True
+70.0,27,27,27,0,True
+80.0,27,27,27,0,True
+90.0,27,27,27,0,True
+100.0,27,27,27,0,True

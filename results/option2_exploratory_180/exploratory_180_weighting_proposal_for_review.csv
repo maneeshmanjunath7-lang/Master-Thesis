@@ -1,0 +1,6 @@
+objective_family,representative_measure,direction,illustrative_weight_for_supervisor_review,justification,data_redundancy_flag,approval_status
+Mission success,s100_surviving_before_deadline_percent,maximise,0.25,Primary useful dissemination endpoint,False,PROPOSAL — Vincenzo to review; random-weight acceptability remains the primary sensitivity evidence
+Observation,observation_success_percent,maximise,0.2,Follow-up sensing after reception; operationally distinct from dissemination,False,PROPOSAL — Vincenzo to review; random-weight acceptability remains the primary sensitivity evidence
+Timeliness,p100_t100_surviving_min / censor-aware RMST,minimise,0.2,Time endpoint reported with event probability to avoid censoring bias,False,PROPOSAL — Vincenzo to review; random-weight acceptability remains the primary sensitivity evidence
+Resource efficiency,"composite: satellites, absolute CN count, transferred Mbit",maximise efficiency,0.2,One family prevents several correlated resource columns receiving full weights separately,False,PROPOSAL — Vincenzo to review; random-weight acceptability remains the primary sensitivity evidence
+Robustness,mean failure-family S100 retention AUC,maximise,0.15,"Rewards graceful degradation, not only nominal performance",False,PROPOSAL — Vincenzo to review; random-weight acceptability remains the primary sensitivity evidence

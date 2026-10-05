@@ -1,0 +1,209 @@
+\section{Two Evidence Layers}
+
+Three result layers are retained in the thesis, and they are not pooled. The earlier nominal campaign provides the historical baseline reported in Chapter~6. Within Fresh Full891 V2, the validated California--India 60/120-satellite subset is the confirmatory layer for matched regional effects and the main conditional shortlist. The completed India 180-satellite archive is a separate exploratory layer: all 282 available cases use one internally consistent 741-task population, and the balanced 216-case CN30--CN100 block supports central-node, robustness, and decision analyses. Table~\ref{tab:evidence_layers} states which claims each layer can support.
+
+\begin{table}[htbp]
+\centering
+\caption{Result layers and permitted use.}
+\label{tab:evidence_layers}
+\begin{tabularx}{\textwidth}{L{0.22\textwidth}L{0.25\textwidth}Y}
+\toprule
+Layer & Coverage & Role in this report \\
+\midrule
+Earlier nominal & 891 California + 891 India architecture cases & Historical two-event-window baseline \\
+Fresh V2 uniform layer & 594 California + 594 India cases at 60/120 satellites & Primary matched effects, Pareto analysis, and shortlist \\
+Fresh V2 India T180 layer & 282 completed India cases; 216 in the balanced CN30--CN100 block & Exploratory large-fleet response, robustness, priority timing, Pareto, and acceptability analysis \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The separation is methodological rather than cosmetic. The earlier and Fresh V2 campaigns were generated under different result contracts, so a value from one version is not averaged with the other. Within Fresh V2, the confirmatory and exploratory task populations are also kept separate. The India 180 layer supports internally valid statements about the tested 741-task event window and architecture block, but not an unqualified fleet-size coefficient or a clean 60/120/180 comparison.
+
+\section{Common Architecture Grid}
+
+Both campaigns use the architecture grid in Table~\ref{tab:factor_grid}. Four geometry factors produce 81 base architectures. Each base geometry is repeated for eleven central-node fractions, giving 891 identifiers per region. This pairing is what allows central-node fraction to be examined without changing the underlying Walker geometry.
+
+\begin{table}[htbp]
+\centering
+\caption{Architecture factors in the Full891 design.}
+\label{tab:factor_grid}
+\begin{tabularx}{\textwidth}{L{0.27\textwidth}L{0.28\textwidth}Y}
+\toprule
+Factor & Levels & Experimental role \\
+\midrule
+Total satellites & 60, 120, 180 & Fleet scale and resource proxy \\
+Orbital planes & 3, 5, 10 & Spatial distribution and contact geometry \\
+Altitude & 500, 800, 1000 km & Access/contact geometry \\
+Inclination & 60, 80, 98.6 deg & Latitude-dependent access geometry \\
+Central Node fraction & 0, 10, $\ldots$, 100\% & Exposure to the implemented routing package \\
+Walker phasing & $F=1$ & Fixed control \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Earlier Two-Event-Window Nominal Campaign}
+
+The earlier campaign evaluates each architecture once for California and once for India, resulting in 1,782 analytical rows. All expected identifiers were present and passed the configuration checks. I also recomputed ten case metrics independently; all 17,820 comparisons agreed within $10^{-6}$. This output predates the Fresh V2 scenario contract and is retained as a historical cross-check rather than the final matched result layer.
+
+Its use is limited to that purpose. The dataset supports the frozen nominal comparison of the two event windows, but it contains no Fresh V2 failure replay or controlled task-size evidence. Figures and tables in Chapter~6 are therefore labeled as results from the earlier nominal layer rather than mixed with the California Fresh V2 archive.
+
+\section{Fresh Full891 V2 Scenario Matrix}
+
+Fresh V2 declares 539 scenarios for every architecture, as summarized in Table~\ref{tab:v2_scenario_matrix}. Deterministic settings are run once. Random failure families use 30 replicates at each severity so that the reported response is not tied to one selected node, link set, or outage interval.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Fresh V2 scenario contract for each architecture case.}
+\label{tab:v2_scenario_matrix}
+\begin{tabularx}{\textwidth}{L{0.30\textwidth}L{0.45\textwidth}r}
+\toprule
+Scenario family & Construction & Rows \\
+\midrule
+Core, policy, and unlimited & Seven named scenarios & 7 \\
+Task size & $0.5\times$, $1\times$, $2\times$, $4\times$ & 4 \\
+Random satellite failure & Four levels $\times$ 30 replicates & 120 \\
+Random central-node failure & Four levels $\times$ 30 replicates & 120 \\
+Link-window outage & Four levels $\times$ 30 replicates & 120 \\
+Ground-station outage & Four levels $\times$ 30 replicates & 120 \\
+Targeted central-node failure & Four deterministic levels & 4 \\
+Capacity degradation & Four deterministic levels & 4 \\
+Combined stress & Two sizes $\times$ two satellite-failure levels $\times$ 10 replicates & 40 \\
+\midrule
+Total & & 539 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A replicate keeps the architecture, task set, scenario family, and severity fixed. Only the seeded selection of failed nodes, removed windows, or outage interval changes. The 30 rows at one severity are repeated trials of the same architecture; they are not additional architecture cases. Different case identifiers use different seed keys, so these rows are reproducible but are not assumed to form common-random-number pairs across architectures.
+
+\subsection{Stochastic-precision audit}
+
+The fixed counts of 30 trials per random-failure severity and 10 per combined-stress cell are starting allocations, not automatic evidence of tail precision. The planned audit recomputes estimates for representative cases and each retained shortlist candidate after 10, 20, and 30 trials and, if extended data are supplied, after 60 and 100. The proposed acceptance rule requires two consecutive retained-count checkpoints to change the mean by less than 1 percentage point, the fifth percentile by less than 2 percentage points, normalized retention AUC by less than 0.02, and rank-1 acceptability by less than 3 percentage points. Monte Carlo standard errors or replicate-bootstrap intervals must accompany any precision claim. No 60- or 100-replicate result is asserted by the present report.
+
+If these tolerances are not met, additional replicates must be run or the unstable low-tail and acceptability claim must be withheld. In particular, the existing 10-replicate combined-stress cells support descriptive means but not an unqualified fifth-percentile claim before this audit passes.
+
+The completed two-region design contains $1{,}782\times539=960{,}498$ unique scenario-status rows. CN0 has no central node to remove. Its 124 central-node-failure combinations are recorded as \texttt{NOT\_APPLICABLE}; over two regions this gives 20,088 rows. Keeping these identifiers in the scenario contract distinguishes an inapplicable test from a failed simulation.
+
+\section{Final Fresh V2 Integrity and Task-Provenance Audit}
+
+The archives were audited before calculating any architecture aggregate. The full regional inventories contain the expected $891\times539=480{,}249$ scenario-status keys. California restarts left 4,269 duplicate keys in intermediate batches; the deterministic de-duplication rule retained the final scientifically identical row for each key. The separate India 180 analysis contains 282 complete case directories and $282\times539=151{,}998$ scenario-status rows, all evaluated on the same 741-task population. Table~\ref{tab:ca_integrity} separates the full regional inventory from the final analysis populations.
+
+\begin{table}[htbp]
+\centering
+\caption{Final Fresh V2 integrity and analysis populations.}
+\label{tab:ca_integrity}
+\begin{tabularx}{\textwidth}{Yrr}
+\toprule
+Quantity & California & India \\
+\midrule
+Base architectures / cases & 81 / 891 & 81 / 891 \\
+Unique scenario-status rows & 480,249 & 480,249 \\
+Completed scientific rows & 470,205 & 470,205 \\
+Not applicable / failed & 10,044 / 0 & 10,044 / 0 \\
+Resume duplicates removed & 4,269 & 0 \\
+Validation checks passed & 19,179 & 19,179 \\
+Confirmatory task populations & 32 in every case & 773 in the 60/120 layer \\
+Exploratory T180 population & Not used for regional inference & 282 complete cases on 741 tasks \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The intended task file has SHA-256 \texttt{e717a1d...e533} and contains 32 California plus 773 India tasks. The 741-task India population was traced to positional indexing during task normalization. After filtering India from the combined CSV, the rows retained labels 32--804. A new normalized table used labels 0--772, and assigning the filtered Series caused label alignment: the first 32 normalized rows became invalid and the final 32 source rows were omitted. All omitted records were Low-priority tasks dated 16 April 2026; High- and Medium-priority populations were unchanged. The 282 completed India 180 cases are internally consistent on the resulting 741-task population. This is a task-preparation/index-alignment defect, not a numerical solver, routing, or checkpoint-resume failure. The 180-satellite results are therefore official exploratory findings for that declared population, but they are not differenced against the 773-task confirmatory layer as a pure fleet-size effect.
+
+\section{Validation Gates and Claim Freeze}
+
+The archive is checked before any ranking is accepted. The sequence is:
+
+\begin{enumerate}
+\item inventory paths, manifests, markers, and expected identifiers without modifying raw output;
+\item confirm schema, types, join keys, task provenance, and scenario traceability;
+\item test completeness, uniqueness, status values, and explicit not-applicable rows;
+\item recompute metrics from lower-level task and transfer evidence where it is retained;
+\item calculate paired effects and architecture sweeps only on eligible cases;
+\item construct the exact Pareto set before applying objective weights;
+\item run robustness and objective-weight sensitivity with declared seeds; and
+\item maintain a claim ledger that records both supported conclusions and unavailable evidence.
+\end{enumerate}
+
+This order is intended to stop a plausible-looking trade-space result from hiding a data problem. Duplicate rows, an incomplete sweep, a changed denominator, or censored latency can all alter a ranking. Raw values remain visible beside normalized scores. I reserve the word robustness for scenarios in which the modified physical or temporal opportunities are actually replayed; a nominal missed task is not counted as a robustness experiment.
+
+\section{Analysis Populations}
+
+Not every question uses the same subset of the archive. The relevant populations are:
+
+\begin{itemize}
+\item all 891 identifiers per region for archive inventory and structural scenario summaries;
+\item 594 cases per region at 60/120 satellites for matched regional effects, balanced central-node curves, Pareto analysis, and the current conditional shortlist;
+\item all 282 completed India T180 cases for inventory, policy, packet-size, failure, and priority-stratified exploratory summaries;
+\item the balanced 216-case India T180 block (27 base architectures by CN30--CN100) for central-node response, exact Pareto filtering, and rank acceptability;
+\item High-, Medium-, and Low-priority task-event strata within the internally consistent 741-task India T180 population; and
+\item eligible cases within each scenario family after explicit \texttt{NOT\_APPLICABLE}, censoring, and mixed-population handling.
+\end{itemize}
+
+The denominator and task population are stated with each result. This is especially important for P100 $T_{100}$, which is undefined when any required useful recipient misses the deadline, for central-node failure at CN0, and for separating the 741-task exploratory India layer from the 773-task confirmatory layer.
+
+\section{Output Contract and Post-Processing Inputs}
+
+Each case directory contains a manifest and architecture checks together with the constellation, central-node distribution, scenario metrics, task metrics, and selected transfer events. Large tables are partitioned into files such as \path{case_metrics_part_0000.parquet}. The success marker is written only after every expected scenario identifier has been found.
+
+The report repository contains compact CSV/JSON summaries and the figures used in the thesis. The complete Parquet archive is kept outside normal Git history because of its size. The compact release preserves the values used in the report in formats that can be checked with ordinary analytical tools; Appendix~E records the raw directory and marker convention.
+
+\section{Statistical and Decision Analysis}
+
+Central-node curves use only complete eleven-level base sweeps. For the other architecture factors I report marginal means and unadjusted one-factor $\eta^2$. Since the factorial grid contains interactions, these quantities describe variation in the simulated dataset rather than isolated causal coefficients. Focused central-node-by-satellite-count, plane-count, altitude, and inclination contrasts are reported alongside the marginal summaries. Spearman correlation is used only as a measure of monotonic association.
+
+Failure loss is calculated against the same architecture's unlimited baseline, primarily as paired percentage-point change. The 30 seeded trials define the replicate distribution at each severity. The task-size experiment compares four fixed multipliers. In the policy ablation, numerically identical peer and hybrid outputs are reported as implementation-equivalent rather than treated as independent confirmation.
+
+The decision analysis starts with engineering constraints and exact Pareto filtering. Normalization and objective weights are applied only after the raw performance and burden vectors have been inspected. At the endpoints, resource-only weighting can choose a case with negligible mission performance, while performance-only weighting can choose an extreme fleet. Weighted utility is therefore used to express a preference inside the feasible trade space, not to replace feasibility checks.
+
+\section{Final Post-Processing Execution and Output Contract}
+\label{sec:final_postprocessing_protocol}
+
+Section~\ref{sec:final_postprocessing_protocol} was implemented as one deterministic workflow so that California and India were not combined through ad-hoc spreadsheet steps. The completed analysis used the following command form:
+
+\begin{lstlisting}[language=bash]
+python postprocess_complete.py \
+  --region /path/to/California.zip \
+  --region /path/to/India.zip \
+  --output final_postprocessing \
+  --bootstrap-draws 1000 \
+  --weight-samples 10000 \
+  --seed 20260910 \
+  --collinearity-threshold 0.95
+\end{lstlisting}
+
+An extracted event-window directory may be supplied instead of a ZIP archive. The task-event pass is intentionally retained because it produces direct deadline-attainment and priority-stratified Kaplan--Meier/RMST evidence. The optional skip flag is suitable only for a quick pipeline check, not for the final thesis run. High, Medium, and Low strata use their fixed deadlines as horizons in both event windows; the California-only Critical stratum is reported separately. Any standardized cross-window timing summary uses the fixed equal weights declared in Section~\ref{sec:final_postprocessing_protocol}.
+
+Table~\ref{tab:postprocessing_contract} is the traceability contract for the final report. Each thesis claim is tied to a machine-readable output rather than copied from terminal text.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Final post-processing output and thesis-use contract.}
+\label{tab:postprocessing_contract}
+\begin{tabularx}{\textwidth}{L{0.29\textwidth}Y Y}
+\toprule
+Output & Required interpretation & Report destination \\
+\midrule
+\path{completion_gate.csv} and task audit & Both regions pass structural checks; every comparison uses a declared task population & Chapter~7 and Appendix~C \\
+CN interval, absolute-count, interaction, and paired-effect tables & Package response, percentage/count scale, factorial interactions, policy, and task-size effects & Chapter~7, RQ2--RQ3 \\
+\path{event_time_summary.csv} and KM curves & Direct attainment plus priority-stratified observation and S100 probability/RMST & Chapter~7, RQ1--RQ2 \\
+Event-window delta/rank, precision, and robustness tables & Matched case-study contrasts; replicate stability; absolute, delta, retention, qualified low-tail, and AUC behaviour & Chapter~7, RQ2--RQ3 \\
+Redundancy, Pareto, and rank-acceptability tables & Correlation gate, exact non-dominated set, and conditional shortlist & Chapter~7, RQ3 \\
+High-CN trace candidates and \path{reproducibility_manifest.json} & Trace-level investigation plus seeds, versions, inputs, and hashes & Discussion and Appendix~C/E \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The final archive freeze passed five checks. First, the confirmatory 60/120 layer and the separate 282-case India 180 layer passed their declared structural and within-population gates. Second, the matched event-window join contained the expected 594 identifiers per region, while the exploratory decision block contained the expected 216 balanced cases. Third, unstable low-tail claims were not promoted beyond descriptive evidence. Fourth, the tables and figures were generated from the same canonical output directories. Fifth, the numerical values in the results, discussion, and conclusion were cross-checked against the compact CSV tables. No value from the 741-task India layer was silently substituted into the 773-task matched comparison.
+
+\section{Compute Configuration and Resume Semantics}
+
+The VM launcher limits parallel workers using both available CPUs and free memory. The planning allowance is about \SI{3}{\gibi\byte} per worker, so a nominal 16-worker setting is used only when enough memory remains for the operating system and temporary peaks.
+
+A clean stop between checkpoints leaves completed rows usable. On restart, the launcher recognizes completed identifiers and schedules only the missing scenarios. An abrupt interruption can leave duplicate or temporary batches, which is why the later key audit and success-marker requirement are necessary. Although the observed India discrepancy originated in DataFrame index alignment, the audit also showed that identifier-level resume alone is not a sufficient scientific guard. Future runs must reset filtered indices before normalization and bind every partition and success marker to the task-file hash, regional task count, and priority counts. Changing the worker limit affects only jobs launched after the restart; it does not alter the case definition or scientific seed.
+
+\section{Remaining Scope Limits}
+
+The final archive uses a fixed \SI{700}{\kilo\metre} access radius and one deterministic balanced Central Node placement, and it does not isolate the components of the Central Node routing package. The canonical case table has no separate first-reception-latency field. The selected event windows are case studies rather than random regional samples, so the resampling intervals describe stability across the enumerated architecture blocks rather than geographic population uncertainty. Because the India T180 layer uses 741 tasks while the confirmatory India layer uses 773, an unqualified three-level fleet-size effect is not reported. This boundary does not invalidate the internally consistent exploratory 180-satellite findings or the uniform 60/120 matched analysis.

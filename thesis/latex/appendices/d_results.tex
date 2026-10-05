@@ -1,0 +1,152 @@
+\section{Confirmatory Numerical Reference}
+
+\begin{table}[H]
+\centering
+\caption{Matched India-minus-California results for the validated 60/120-satellite population.}
+\label{tab:appendix_matched_effects}
+\begin{tabularx}{\textwidth}{YrrL{0.27\textwidth}}
+\toprule
+Metric & Matched cases & Mean change & 95\% stability interval \\
+\midrule
+Observation fulfilment & 594 & $+4.66$ pp & $[+1.58,+7.78]$ pp \\
+Strict useful completion & 594 & $-2.98$ pp & $[-5.39,-0.33]$ pp \\
+Mean useful coverage & 594 & $-5.95$ pp & $[-7.64,-4.41]$ pp \\
+P100 $T_{100}$ & 541 & $+175.07$ min & $[+166.94,+182.97]$ min \\
+Transferred data & 594 & $+27,957$ Mbit & $[+25,193,+30,779]$ Mbit \\
+Robustness retention AUC & 541 & $-0.041$ & $[-0.047,-0.035]$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Cross-window Spearman rank agreement on the confirmatory population.}
+\label{tab:appendix_rank_agreement}
+\begin{tabular}{lr}
+\toprule
+Metric & Spearman $\rho$ \\
+\midrule
+Observation fulfilment & 0.729 \\
+Strict useful completion & 0.771 \\
+Mean useful coverage & 0.718 \\
+P100 $T_{100}$ & 0.780 \\
+Transferred data & 0.990 \\
+Robustness retention AUC & 0.609 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Five-case conditional shortlist calculated on the validated 60/120-satellite population.}
+\label{tab:appendix_shortlist}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Architecture & CA Obs. & CA \Suseful & India Obs. & India \Suseful & India $T_{100}$ & India Mbit \\
+\midrule
+\texttt{T060\_P05\_H0800\_I0800\_CN050\_F1} & 100.00 & 93.75 & 82.15 & 82.15 & 253.48 & 19,326 \\
+\texttt{T060\_P10\_H0800\_I0986\_CN040\_F1} & 96.88 & 100.00 & 99.61 & 83.70 & 291.88 & 18,238 \\
+\texttt{T060\_P10\_H1000\_I0986\_CN090\_F1} & 96.88 & 100.00 & 100.00 & 100.00 & 167.65 & 32,947 \\
+\texttt{T060\_P10\_H1000\_I0986\_CN100\_F1} & 96.88 & 100.00 & 100.00 & 100.00 & 146.65 & 35,700 \\
+\texttt{T120\_P10\_H1000\_I0986\_CN100\_F1} & 100.00 & 100.00 & 100.00 & 100.00 & 105.45 & 71,400 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\section{Exploratory India 180-Satellite Reference}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Exploratory India 180-satellite central-node response on the balanced 216-case CN30--CN100 block.}
+\label{tab:appendix_t180_cn}
+\begin{tabularx}{\textwidth}{L{0.12\textwidth}rYYYYY}
+\toprule
+Policy & CN & Obs. (\%) & \Suseful\ (\%) & Coverage (\%) & P100 $T_{100}$ (min) & Data (Mbit) \\
+\midrule
+Bounded & 30 & 87.73 & 0.26 & 11.35 & 81.16 & 4,543 \\
+Bounded & 50 & 87.19 & 0.06 & 10.93 & 78.18 & 4,527 \\
+Bounded & 100 & 42.47 & 0.00 & 2.02 & -- & 2,890 \\
+Unlimited & 30 & 89.64 & 88.50 & 95.55 & 257.08 & 43,976 \\
+Unlimited & 50 & 91.47 & 94.62 & 98.38 & 199.74 & 61,331 \\
+Unlimited & 100 & 92.03 & 97.04 & 99.13 & 142.03 & 102,880 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Exploratory India 180-satellite paired policy and packet-size effects.}
+\label{tab:appendix_t180_policy}
+\begin{tabularx}{\textwidth}{Yrrr}
+\toprule
+Contrast against nominal $1\times$ & $\Delta$ Obs. (pp) & $\Delta$ \Suseful\ (pp) & $\Delta$ data (Mbit) \\
+\midrule
+Peer-only routing & $+0.29$ & $+0.98$ & $+28,613$ \\
+$0.5\times$ packet size & $+1.10$ & $+2.70$ & -- \\
+$2\times$ packet size & $-6.39$ & $-10.93$ & $+61,668$ \\
+$4\times$ packet size & $-23.04$ & $-34.70$ & $+127,203$ \\
+Unlimited useful-deadline forwarding & $+12.26$ & $+94.70$ & $+69,479$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Exploratory India 180-satellite strict-completion retention at 30\% severity.}
+\label{tab:appendix_t180_robustness}
+\begin{tabularx}{\textwidth}{Yr}
+\toprule
+Failure family & \Suseful\ retention (\%) \\
+\midrule
+Ground-station outage & 76.34 \\
+Targeted central-node failure & 93.74 \\
+Random central-node failure & 95.07 \\
+Capacity degradation & 95.21 \\
+Link-window outage & 95.25 \\
+Random satellite failure & 95.48 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Exploratory combined-stress strict-completion retention.}
+\label{tab:appendix_t180_combined}
+\begin{tabular}{lrr}
+\toprule
+Packet multiplier & Satellite failure & \Suseful\ retention (\%) \\
+\midrule
+$2\times$ & 10\% & 85.82 \\
+$2\times$ & 20\% & 83.10 \\
+$4\times$ & 10\% & 59.79 \\
+$4\times$ & 20\% & 56.33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Priority-stratified strict completion under unlimited forwarding in the India 180-satellite layer.}
+\label{tab:appendix_t180_priority}
+\begin{tabular}{lrrrr}
+\toprule
+Priority & CN30 attainment (\%) & CN30 speed & CN100 attainment (\%) & CN100 speed \\
+\midrule
+High & 50.95 & 0.155 & 65.66 & 0.309 \\
+Medium & 80.87 & 0.378 & 95.90 & 0.652 \\
+Low & 99.14 & 0.558 & 100.00 & 0.760 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The speed statistic is the standardized censor-aware completion-speed score defined in Chapter~4; higher values indicate earlier completion relative to the priority-specific deadline. The exploratory exact Pareto analysis retains 60 of 216 balanced cases. The leading rank-acceptability case is \texttt{T180\_P10\_H0500\_I0986\_CN050\_F1}, with 27.02\% rank-1 and 46.94\% top-5 acceptability under the declared random-weight distribution. This is a conditional India-only decision result, not a universal optimum.
+
+\section{Included Machine-Readable Result Files}
+
+Confirmatory evidence is stored under \path{data/final_results}. Its principal files cover the completion gate, matched regional deltas, priority-stratified event times, robustness, exact Pareto membership, rank acceptability, and the conditional five-case shortlist.
+
+Exploratory 180-satellite evidence is stored under \path{data/option2_exploratory_180}. It includes the scope and case-selection audits, canonical case metrics, central-node intervals, paired scenario effects, robustness and combined-stress summaries, priority-event tables, exact Pareto membership, rank acceptability, the conditional shortlist, and \path{option2_manifest.json}. These compact artefacts are the numerical source of the final report; the multi-gigabyte raw Parquet campaign is retained separately.

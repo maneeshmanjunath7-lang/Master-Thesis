@@ -1,0 +1,7 @@
+region,model,degree,AIC,selected
+California,Linear,1,61.969450289594064,False
+California,Quadratic,2,46.41934154321168,True
+California,Cubic,3,48.233354881866184,False
+India,Linear,1,63.18064610296838,False
+India,Quadratic,2,43.04839088690676,True
+India,Cubic,3,44.49539099091321,False
