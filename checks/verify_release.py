@@ -25,6 +25,11 @@ REQUIRED = (
 )
 FORBIDDEN_COMPONENTS = {".venv", "venv", "__pycache__", "raw_outputs", "outputs", "_runtime_deps"}
 TEXT_SUFFIXES = {".py", ".sh", ".ps1", ".json", ".toml", ".yaml", ".yml", ".md", ".txt", ".tex"}
+MANIFEST_TEXT_SUFFIXES = {
+    ".bib", ".cff", ".cls", ".cmd", ".cpg", ".csv", ".html", ".json",
+    ".md", ".prj", ".ps1", ".py", ".sh", ".sty", ".tex", ".toml",
+    ".txt", ".xml", ".yaml", ".yml",
+}
 SECRET_ASSIGNMENT = re.compile(
     r"(?i)(api[_-]?key|access[_-]?token|secret|password)\s*[:=]\s*['\"][A-Za-z0-9_./+\-=]{16,}['\"]"
 )
@@ -32,9 +37,13 @@ SECRET_ASSIGNMENT = re.compile(
 
 def digest(path: Path) -> str:
     value = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            value.update(block)
+    if path.suffix.lower() in MANIFEST_TEXT_SUFFIXES:
+        data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        value.update(data)
+    else:
+        with path.open("rb") as handle:
+            for block in iter(lambda: handle.read(1024 * 1024), b""):
+                value.update(block)
     return value.hexdigest()
 
 
