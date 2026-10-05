@@ -37,7 +37,7 @@ SECRET_ASSIGNMENT = re.compile(
 
 def digest(path: Path) -> str:
     value = hashlib.sha256()
-    if path.suffix.lower() in MANIFEST_TEXT_SUFFIXES:
+    if path.suffix.lower() in MANIFEST_TEXT_SUFFIXES or path.name == ".keep":
         data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
         value.update(data)
     else:

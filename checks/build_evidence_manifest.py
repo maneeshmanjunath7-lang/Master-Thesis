@@ -17,7 +17,7 @@ TEXT_SUFFIXES = {
 
 def digest(path: Path) -> str:
     value = hashlib.sha256()
-    if path.suffix.lower() in TEXT_SUFFIXES:
+    if path.suffix.lower() in TEXT_SUFFIXES or path.name == ".keep":
         # Git checks text out with platform-dependent line endings. Hash a
         # canonical LF representation so the manifest verifies on Windows and
         # Linux without weakening byte-level checks for binary evidence.
