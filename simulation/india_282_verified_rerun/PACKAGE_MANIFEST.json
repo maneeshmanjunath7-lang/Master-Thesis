@@ -1,0 +1,194 @@
+{
+  "package": "Full891_India_282_VM_Final_Fixed_20260928_v4",
+  "created_at_utc": "2026-09-28T11:13:21.153993Z",
+  "purpose": "Ubuntu VM rerun of the 282 audited India cases with a contract-locked 773-task population",
+  "software_version": "2.2.2-india282-vm-contract-fix",
+  "fix": "Reset the regional index, require exact 773-task identity, reject incompatible 741-task checkpoints, require a verified canary, and separate generated installation/PID metadata from immutable package files.",
+  "source_campaign_archive_sha256": "b54fabc0278830913ade88aa8fa188dc89de65b2ddaf141370e9396a0905b45f",
+  "task_input_sha256": "e717a1dde84db0f47efdda09cfca2f437909349b25a139a45a7c1928da80e533",
+  "case_allowlist_sha256": "053f74ab92b5e382b1cd9547a5cc3454532770cb583a2a9566904d892f6902ab",
+  "expected_cases": 282,
+  "expected_scenarios_per_case": 539,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 109,
+      "sha256": "3c9e19c9195424798d58607c0aab0c5e6285cb274eba6b58acbd676467b8cb74"
+    },
+    {
+      "path": "case_selection/india_cases_requiring_773_task_rerun_audit.csv",
+      "bytes": 107362,
+      "sha256": "053f74ab92b5e382b1cd9547a5cc3454532770cb583a2a9566904d892f6902ab"
+    },
+    {
+      "path": "config/india_282_rerun.json",
+      "bytes": 3402,
+      "sha256": "562e8a03e3c1b25677ad2f2a61e30e83c19d7a9e967aa95e2c2b0f44539033c4"
+    },
+    {
+      "path": "config/original_full_campaign_reference.json",
+      "bytes": 2785,
+      "sha256": "ac5a1fd55f4e63da54a539aa4de6d8a498883b818fca913d91e8d596c5c6c076"
+    },
+    {
+      "path": "DATA_DICTIONARY.md",
+      "bytes": 1672,
+      "sha256": "3d2cea9226e9526acdc6d5ba71e044c6cdbdca93ff4838c698738a15449d3415"
+    },
+    {
+      "path": "EXPORT_282_VM.sh",
+      "bytes": 336,
+      "sha256": "59d426df9aa0592a5034d9bfa2aea32cda0d1989a8185e43cda070c13c5ad7ae"
+    },
+    {
+      "path": "input_tasks/all_sentinel3_tasks_with_priority_score_deduplicated.csv",
+      "bytes": 315260,
+      "sha256": "e717a1dde84db0f47efdda09cfca2f437909349b25a139a45a7c1928da80e533"
+    },
+    {
+      "path": "ORIGINAL_SOURCE_PROVENANCE.md",
+      "bytes": 1417,
+      "sha256": "13f559a48c075fe0c0b7aa7bd93a14f514b417b56153d013405cb28934b1cb66"
+    },
+    {
+      "path": "PREFLIGHT_282_VM.sh",
+      "bytes": 803,
+      "sha256": "2790c9c0b5339a16e4608dff84e58846217018cf5254706b4d04d64d7842450b"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 694,
+      "sha256": "8d544b8a86c89cd2f6724aa5c784ef72f02054a85915138d59b95ce1b59cc466"
+    },
+    {
+      "path": "README_VM.md",
+      "bytes": 4370,
+      "sha256": "05dbd4f110e87d30e1ae8918b97da6f9119e8fe2d96e65f60ba3b14723d16952"
+    },
+    {
+      "path": "REPAIR_PROVENANCE.md",
+      "bytes": 2151,
+      "sha256": "8f71ee33d20af3b88f8dea90ba5e79b246c5270975345aca7340719e7f851e66"
+    },
+    {
+      "path": "requirements-vm-lock.txt",
+      "bytes": 153,
+      "sha256": "99f0e5a0c53d5e237078c609fc7469b621c710da58fab745206197d7557adceb"
+    },
+    {
+      "path": "requirements-vm.txt",
+      "bytes": 162,
+      "sha256": "8375aacbaebdf0fbd57e2686d14bac43e4bc8f33186ca39b8ee3147998ff2d27"
+    },
+    {
+      "path": "RUN_282_VM.sh",
+      "bytes": 1057,
+      "sha256": "e4d5bfd687fa5d6cad594894cebd7e3e7675681cafcd1aa293233299f63136b4"
+    },
+    {
+      "path": "RUN_CANARY_VM.sh",
+      "bytes": 875,
+      "sha256": "cfddac8e7812fe3e552d3045f26344a590f3b71e9834e49391595ac277a25856"
+    },
+    {
+      "path": "SETUP_VM.sh",
+      "bytes": 564,
+      "sha256": "e5fdd49ee87636880e21788c8e21654a09c3904c51100732583007646c900def"
+    },
+    {
+      "path": "src/full891_fresh/__init__.py",
+      "bytes": 99,
+      "sha256": "54304ca7064e8038db33fd68efe87b08ef41be9348e837d0389e56440b9ce682"
+    },
+    {
+      "path": "src/full891_fresh/analysis.py",
+      "bytes": 20055,
+      "sha256": "d190a6b82921961b927fdb5a18b63ba31079d69cf5a16d1be7c479168ef1f70d"
+    },
+    {
+      "path": "src/full891_fresh/cli.py",
+      "bytes": 6877,
+      "sha256": "99db145d2c2e34552f6f61426a010826636312d81d594d3476cd0bf5387f1864"
+    },
+    {
+      "path": "src/full891_fresh/config.py",
+      "bytes": 4087,
+      "sha256": "f785fa7bef2a8cd125e5bc4dce3c1a0e9a10f53d14a22dcac4398215708051db"
+    },
+    {
+      "path": "src/full891_fresh/failures.py",
+      "bytes": 9763,
+      "sha256": "e23f3e6a5d541a116383fc1491f779f0c6b46bd29a067b450d25e71a5099dfa2"
+    },
+    {
+      "path": "src/full891_fresh/legacy_simulator.py",
+      "bytes": 198490,
+      "sha256": "d8ff15d7f876be15e813f6e0ebffd7c98ce3eefa97610cbbc20c83756d675fb3"
+    },
+    {
+      "path": "src/full891_fresh/routing.py",
+      "bytes": 25139,
+      "sha256": "3848ff76e4f8aaaf3f5b275074797d554a8d59b1cca23ed027ef50c701acb5e6"
+    },
+    {
+      "path": "src/full891_fresh/runner.py",
+      "bytes": 42439,
+      "sha256": "e2f0798b44d1fc47a152d94237c1e5780a336600d06c12fc11564f07ca6ded40"
+    },
+    {
+      "path": "src/full891_fresh/scenarios.py",
+      "bytes": 5729,
+      "sha256": "40603df9cb845668ff2519dbfa56b52c587556c0cc7a656a3b26b4e3dd144261"
+    },
+    {
+      "path": "src/full891_fresh/storage.py",
+      "bytes": 4609,
+      "sha256": "7c39017ba0842dfbb1ce3655ee7e3f16f5ab817601a7f55dd2c2bd10960d57d3"
+    },
+    {
+      "path": "START_282_BACKGROUND_VM.sh",
+      "bytes": 743,
+      "sha256": "c46155ba95f19729d8c8c28fbe45ddfb931e0f391ece5d8f8957458d4c2e3dc3"
+    },
+    {
+      "path": "STATUS_282_VM.sh",
+      "bytes": 833,
+      "sha256": "d7a6cbfbd2c9c927f880ae6765a238bf0e318d0b20ca055587a65e678565caa2"
+    },
+    {
+      "path": "tests/test_core.py",
+      "bytes": 18202,
+      "sha256": "6a1ba51f90d79203f01f63cbd2a3dc6c5803d9cde37106bffb4a0cbacb18e137"
+    },
+    {
+      "path": "tools/build_package_manifest.py",
+      "bytes": 2300,
+      "sha256": "b6bbe0d6d9501fe3ddb209c2863e0fef7ce347a4d60ee1745330af98e3bd3148"
+    },
+    {
+      "path": "tools/export_corrected_cases.py",
+      "bytes": 1150,
+      "sha256": "325c74c529ab68f241fc8d966feed508e5a99ed4672f18bed3c1cdd5d48d7ba4"
+    },
+    {
+      "path": "tools/preflight_282.py",
+      "bytes": 4311,
+      "sha256": "1bba4d91c533eadaac6b8a6b870c477ebbcfd7290d64b76a60877f7dcfc138bd"
+    },
+    {
+      "path": "tools/verify_package.py",
+      "bytes": 2317,
+      "sha256": "b4126ac3727c0a4f050e444f01903c57b08ba6e25568a96c00c9d0a3da2a0ed3"
+    },
+    {
+      "path": "tools/verify_rerun.py",
+      "bytes": 11964,
+      "sha256": "e07dbd3fc4ed92be3989cdda05edf82d405b2c6af6e292aa01a374367674998d"
+    },
+    {
+      "path": "VERIFY_282_VM.sh",
+      "bytes": 321,
+      "sha256": "16c6db42837d8ad63f600dc78b088daa8e677e0057bde06d3016668d38c0a431"
+    }
+  ]
+}

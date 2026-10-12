@@ -19,7 +19,11 @@ REQUIRED = (
     "results/README.md",
     "results/Thesis_Result_Tables.xlsx",
     "results/final_results/completion_gate.csv",
-    "results/option2_exploratory_180/exploratory_180_scope_gate.csv",
+    "results/final_corrected_180/corrected_180_scope_gate.csv",
+    "results/final_corrected_180/corrected_180_postprocessing_manifest.json",
+    "simulation/india_282_verified_rerun/PACKAGE_MANIFEST.json",
+    "simulation/india_282_verified_rerun/README_VM.md",
+    "postprocessing/corrected_180/postprocess_corrected_180.py",
     "thesis/Master_Thesis_Maneesh_Manjunath_2026.pdf",
     "thesis/latex/main.tex",
 )

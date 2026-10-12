@@ -1,0 +1,9 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+outputs/
+logs/
+test_temp/
+preflight_probe_output/
+.india_282_vm.pid

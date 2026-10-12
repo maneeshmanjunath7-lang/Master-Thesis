@@ -13,7 +13,7 @@ Strict useful completion & 594 & $-2.98$ pp & $[-5.39,-0.33]$ pp \\
 Mean useful coverage & 594 & $-5.95$ pp & $[-7.64,-4.41]$ pp \\
 P100 $T_{100}$ & 541 & $+175.07$ min & $[+166.94,+182.97]$ min \\
 Transferred data & 594 & $+27,957$ Mbit & $[+25,193,+30,779]$ Mbit \\
-Robustness retention AUC & 541 & $-0.041$ & $[-0.047,-0.035]$ \\
+Robustness retention AUC & 541 & $-0.04$ & $[-0.05,-0.04]$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -26,12 +26,12 @@ Robustness retention AUC & 541 & $-0.041$ & $[-0.047,-0.035]$ \\
 \toprule
 Metric & Spearman $\rho$ \\
 \midrule
-Observation fulfilment & 0.729 \\
-Strict useful completion & 0.771 \\
-Mean useful coverage & 0.718 \\
-P100 $T_{100}$ & 0.780 \\
-Transferred data & 0.990 \\
-Robustness retention AUC & 0.609 \\
+Observation fulfilment & 0.73 \\
+Strict useful completion & 0.77 \\
+Mean useful coverage & 0.72 \\
+P100 $T_{100}$ & 0.78 \\
+Transferred data & 0.99 \\
+Robustness retention AUC & 0.61 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -55,74 +55,92 @@ Architecture & CA Obs. & CA \Suseful & India Obs. & India \Suseful & India $T_{1
 \end{tabular}}
 \end{table}
 
-\section{Exploratory India 180-Satellite Reference}
+\section{India 180-Satellite Campaign Extension}
 
 \begin{table}[H]
 \centering
 \small
-\caption{Exploratory India 180-satellite central-node response on the balanced 216-case CN30--CN100 block.}
+\caption{India 180-satellite Central Node response on the balanced 216-case CN30--CN100 block.}
 \label{tab:appendix_t180_cn}
 \begin{tabularx}{\textwidth}{L{0.12\textwidth}rYYYYY}
 \toprule
 Policy & CN & Obs. (\%) & \Suseful\ (\%) & Coverage (\%) & P100 $T_{100}$ (min) & Data (Mbit) \\
 \midrule
-Bounded & 30 & 87.73 & 0.26 & 11.35 & 81.16 & 4,543 \\
-Bounded & 50 & 87.19 & 0.06 & 10.93 & 78.18 & 4,527 \\
-Bounded & 100 & 42.47 & 0.00 & 2.02 & -- & 2,890 \\
-Unlimited & 30 & 89.64 & 88.50 & 95.55 & 257.08 & 43,976 \\
-Unlimited & 50 & 91.47 & 94.62 & 98.38 & 199.74 & 61,331 \\
-Unlimited & 100 & 92.03 & 97.04 & 99.13 & 142.03 & 102,880 \\
+Bounded & 30 & 88.15 & 0.25 & 11.20 & 81.16 & 4,671 \\
+Bounded & 50 & 87.67 & 0.06 & 10.81 & 78.18 & 4,655 \\
+Bounded & 100 & 43.52 & 0.00 & 2.04 & -- & 2,970 \\
+Unlimited & 30 & 90.07 & 88.98 & 95.74 & 257.08 & 45,476 \\
+Unlimited & 50 & 91.82 & 94.84 & 98.45 & 199.74 & 63,225 \\
+Unlimited & 100 & 92.36 & 97.16 & 99.17 & 142.03 & 105,760 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Exploratory India 180-satellite paired policy and packet-size effects.}
+\small
+\caption{Matched India 180-minus-120-satellite effects under unlimited routing.}
+\label{tab:appendix_t120_t180}
+\begin{tabularx}{\textwidth}{Yrrr}
+\toprule
+Metric & T120 mean & T180 mean & Mean change \\
+\midrule
+Observation fulfilment (\%) & 90.57 & 91.80 & $+1.23$ pp \\
+Strict useful completion (\%) & 91.01 & 94.99 & $+3.99$ pp \\
+Useful-recipient coverage (\%) & 96.80 & 98.34 & $+1.55$ pp \\
+P100 $T_{100}$ (min) & 231.23 & 186.55 & $-44.68$ min \\
+Transferred data (Mbit/case) & 50,060 & 75,887 & $+25,827$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{India 180-satellite paired policy and packet-size effects.}
 \label{tab:appendix_t180_policy}
 \begin{tabularx}{\textwidth}{Yrrr}
 \toprule
 Contrast against nominal $1\times$ & $\Delta$ Obs. (pp) & $\Delta$ \Suseful\ (pp) & $\Delta$ data (Mbit) \\
 \midrule
-Peer-only routing & $+0.29$ & $+0.98$ & $+28,613$ \\
-$0.5\times$ packet size & $+1.10$ & $+2.70$ & -- \\
-$2\times$ packet size & $-6.39$ & $-10.93$ & $+61,668$ \\
-$4\times$ packet size & $-23.04$ & $-34.70$ & $+127,203$ \\
-Unlimited useful-deadline forwarding & $+12.26$ & $+94.70$ & $+69,479$ \\
+Peer-only routing & $+0.28$ & $+0.94$ & $+29,304$ \\
+$0.5\times$ packet size & $+1.05$ & $+2.59$ & $-37,467$ \\
+$2\times$ packet size & $-6.13$ & $-10.49$ & $+63,857$ \\
+$4\times$ packet size & $-22.32$ & $-33.67$ & $+133,628$ \\
+Unlimited useful-deadline forwarding & $+11.98$ & $+94.92$ & $+71,546$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Exploratory India 180-satellite strict-completion retention at 30\% severity.}
+\caption{India 180-satellite strict-completion retention at 30\% severity.}
 \label{tab:appendix_t180_robustness}
 \begin{tabularx}{\textwidth}{Yr}
 \toprule
 Failure family & \Suseful\ retention (\%) \\
 \midrule
-Ground-station outage & 76.34 \\
-Targeted central-node failure & 93.74 \\
-Random central-node failure & 95.07 \\
-Capacity degradation & 95.21 \\
-Link-window outage & 95.25 \\
-Random satellite failure & 95.48 \\
+Ground-station outage & 76.26 \\
+Targeted Central Node failure & 93.99 \\
+Random Central Node failure & 95.28 \\
+Capacity degradation & 95.43 \\
+Link-window outage & 95.47 \\
+Random satellite failure & 95.67 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Exploratory combined-stress strict-completion retention.}
+\caption{India 180-satellite combined-stress strict-completion retention.}
 \label{tab:appendix_t180_combined}
 \begin{tabular}{lrr}
 \toprule
 Packet multiplier & Satellite failure & \Suseful\ retention (\%) \\
 \midrule
-$2\times$ & 10\% & 85.82 \\
-$2\times$ & 20\% & 83.10 \\
-$4\times$ & 10\% & 59.79 \\
-$4\times$ & 20\% & 56.33 \\
+$2\times$ & 10\% & 86.44 \\
+$2\times$ & 20\% & 83.81 \\
+$4\times$ & 10\% & 60.97 \\
+$4\times$ & 20\% & 57.49 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -136,17 +154,17 @@ $4\times$ & 20\% & 56.33 \\
 \toprule
 Priority & CN30 attainment (\%) & CN30 speed & CN100 attainment (\%) & CN100 speed \\
 \midrule
-High & 50.95 & 0.155 & 65.66 & 0.309 \\
-Medium & 80.87 & 0.378 & 95.90 & 0.652 \\
-Low & 99.14 & 0.558 & 100.00 & 0.760 \\
+High & 50.95 & 0.16 & 65.66 & 0.31 \\
+Medium & 80.87 & 0.38 & 95.90 & 0.65 \\
+Low & 99.23 & 0.57 & 100.00 & 0.77 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The speed statistic is the standardized censor-aware completion-speed score defined in Chapter~4; higher values indicate earlier completion relative to the priority-specific deadline. The exploratory exact Pareto analysis retains 60 of 216 balanced cases. The leading rank-acceptability case is \texttt{T180\_P10\_H0500\_I0986\_CN050\_F1}, with 27.02\% rank-1 and 46.94\% top-5 acceptability under the declared random-weight distribution. This is a conditional India-only decision result, not a universal optimum.
+The speed statistic is the standardized, censor-aware score defined in Chapter~4; a higher value means earlier completion relative to that priority class's deadline. Exact Pareto filtering retains 61 of the 216 balanced cases. Under the declared random-weight distribution, \path{T180_P10_H0500_I0986_CN050_F1} ranks first in 26.55\% of draws and enters the top five in 46.38\%. This result is conditional on the India workload and the tested weights; it is not a universal optimum.
 
 \section{Included Machine-Readable Result Files}
 
 Confirmatory evidence is stored under \path{data/final_results}. Its principal files cover the completion gate, matched regional deltas, priority-stratified event times, robustness, exact Pareto membership, rank acceptability, and the conditional five-case shortlist.
 
-Exploratory 180-satellite evidence is stored under \path{data/option2_exploratory_180}. It includes the scope and case-selection audits, canonical case metrics, central-node intervals, paired scenario effects, robustness and combined-stress summaries, priority-event tables, exact Pareto membership, rank acceptability, the conditional shortlist, and \path{option2_manifest.json}. These compact artefacts are the numerical source of the final report; the multi-gigabyte raw Parquet campaign is retained separately.
+The 180-satellite campaign evidence is stored under \path{data/final_corrected_180}; the directory name records its provenance. It includes the verification and case-selection gates, canonical case metrics, Central Node intervals, matched 120-to-180 effects, paired scenario effects, robustness and combined-stress summaries, priority-event tables, exact Pareto membership, rank acceptability, the portfolio extension, and \path{corrected_180_postprocessing_manifest.json}. These compact artefacts are the numerical source of the final report; the multi-gigabyte raw Parquet campaign is retained separately.

@@ -100,13 +100,13 @@ California versus India & Only if every seed-key field is identical & No cross-w
 \end{tabularx}
 \end{table}
 
-The current campaign therefore guarantees reproducibility, not common random numbers across architectures. A future paired variance-reduction run must introduce and record a separate shared-draw identifier.
+The current campaign therefore guarantees reproducibility, not common random numbers across architectures. Common random numbers can reduce variance only when the corresponding draws are deliberately shared and recorded across alternatives \citep{SloanUnwin1990}. A future paired variance-reduction run must therefore introduce a separate shared-draw identifier.
 
 \section{Checkpoint and Completion Rules}
 
-Scenario metrics are flushed in 20-row Parquet batches. A temporary path is atomically renamed only after its batch write finishes. Resuming reads the declared scenario keys already present and evaluates only missing keys. Duplicate keys can still arise when interruption occurs near a completion boundary; post-processing applies deterministic key-level de-duplication before validation.
+The runner writes scenario metrics in Parquet batches of 20 rows. It writes to a temporary path first and renames that path only after the batch is complete. On restart, the runner reads the scenario keys already stored and calculates the missing keys. An interruption close to a batch boundary can still leave duplicate keys, so the post-processing applies one deterministic key-level de-duplication rule before validation.
 
-A case is complete only when its \path{_SUCCESS.json} exists and all expected scenario identifiers are accounted for as completed or explicitly not applicable. A case without the marker is not promoted to the complete analytical population, even if many rows are readable.
+A case is classified as complete only if \path{_SUCCESS.json} exists and every expected scenario identifier is either completed or explicitly marked not applicable. Readable rows without that marker are not promoted into the complete analysis population.
 
 \section{Representative Parquet Reading Commands}
 

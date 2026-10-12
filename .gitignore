@@ -31,3 +31,7 @@ raw_outputs/
 tmp/
 work/
 _runtime_deps/
+
+# Superseded 741-task plot exports retained only in the local authoring archive.
+figures/option2_exploratory_180/
+thesis/latex/figures/option2_exploratory_180/

@@ -1,0 +1,5 @@
+check,observed,reference,status
+verified_complete_cases,282,282,PASS
+unique_case_scenario_rows,151998,151998,PASS
+task_population,773,773,PASS
+balanced_cn30_cn100_cases,216,216,PASS

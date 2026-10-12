@@ -116,3 +116,11 @@ Prefer the vector PDF files:
 
 Do not put the report's full caption into the Matplotlib image. Keeping it in LaTeX preserves TUM typography, accessibility, cross-references, and consistent spacing.
 
+## Final-revision generators
+
+The release also includes the scripts used for the final supervisor-revision figures:
+
+- `generate_part2_revision_figures.py` generates the final Part 2 analytical figures from the canonical tables.
+- `revise_intro_sequence_diagrams.py` regenerates the introduction and temporal-routing diagrams with the approved Central Node terminology.
+- `preview_analysis_workflow_spacing.py` reproduces the final six-stage analysis workflow layout with enlarged boxes and spacing.
+

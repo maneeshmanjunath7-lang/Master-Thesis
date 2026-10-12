@@ -1,10 +1,12 @@
-\section{Evidence-Layer Boundary}
+This chapter uses the Reference Campaign to establish the behaviour of the frozen nominal model. The analysis begins with the two event-window baselines and then examines the Central Node and geometry responses. Correlation and regression are used only as compact summaries of those responses. The final sections check whether architecture order carries from one event window to the other and show the nominal Pareto trade space. The purpose is to expose the existing performance tensions, not to select a universal optimum from this earlier campaign.
 
-The earlier nominal campaign is retained as the historical like-for-like two-event-window architecture sweep. It contains 891 California cases and the same 891 identifiers for India. I use it here to preserve the baseline comparison under that frozen model. These values are kept separate from Fresh Full891 V2 and are not averaged with the final scenario results in Chapter~7. The contrast is a case-study comparison, not an estimate of a California, India, seasonal, or global population effect.
+\section{Reference-Campaign Boundary}
 
-\section{Result Status}
+The earlier nominal campaign is retained as the historical like-for-like two-event-window architecture sweep. It contains 891 California cases and the same 891 identifiers for India, preserving the baseline comparison under that frozen model. These values are kept separate from Fresh Full891 V2 and are not averaged with the final scenario results in Chapter~7. The contrast is a case-study comparison, not an estimate of a California, India, seasonal, or global population effect.
 
-All case rows used in this chapter passed the validation procedure in Chapter~5. They replace the earlier screening and development-stage numerical results from V10, V16, V19, the 30-hour runs, and the fixed-architecture slide studies. Fresh V2 is a later evidence layer rather than a replacement for this event-window comparison, so its California results are reported separately in Chapter~7.
+\section{Validation Status}
+
+All case rows used in this chapter passed the validation procedure in Chapter~5. Specifically, all 1,782 expected case identifiers were present, every case had the expected task population and completed status, and 17,820 independently recomputed metric comparisons agreed with the stored values within $10^{-6}$. Appendix~C records the checks and their evidence. This chapter preserves the Reference Campaign as the frozen nominal baseline. Chapter~7 then presents the unified final Fresh V2 campaign, including the matched regional analysis and the verified 180-satellite evidence.
 
 The analytical population contains 891 cases for California and 891 for India. Every case has the expected task count, and every required case status is completed. Core summary metrics were recomputed from lower-level outputs in 17,820 comparisons with zero failures at a tolerance of $10^{-6}$. The numerical evidence is therefore internally consistent even though external model-validity limitations remain.
 
@@ -20,8 +22,8 @@ Table~\ref{tab:regional_summary} gives event-window-normalized means over all 89
 \toprule
 Region & Obs. (\%) & \Suseful\ (\%) & Receivers (\%) & Mbit/task & Events/task \\
 \midrule
-California & 47.468 & 0.624 & 13.868 & 5.884 & 6.186 \\
-India & 55.066 & 0.462 & 12.060 & 4.620 & 6.202 \\
+California & 47.47 & 0.62 & 13.87 & 5.88 & 6.19 \\
+India & 55.07 & 0.46 & 12.06 & 4.62 & 6.20 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -34,7 +36,7 @@ Figure~\ref{fig:cn_sweep} averages the 81 base geometries at each central-node l
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{01_cn_sweep_regional_summary.png}
+\includegraphics[width=0.98\textwidth]{part2_revision/02_nominal_cn_response.pdf}
 \caption{Event-window-specific marginal response to central-node fraction across the full final grid. \Suseful\ denotes complete dissemination to all simulator-defined useful recipients.}
 \label{fig:cn_sweep}
 \end{figure}
@@ -49,42 +51,42 @@ Selected levels are reported in Table~\ref{tab:cn_selected}. The table illustrat
 \toprule
 Region & CN (\%) & Obs. (\%) & \Suseful\ (\%) & Receivers (\%) & P90 first (min) \\
 \midrule
-California & 0 & 3.395 & 0.772 & 9.623 & 149.779 \\
-California & 10 & 48.727 & 1.698 & 18.098 & 49.648 \\
-California & 20 & 50.309 & 1.389 & 18.847 & 35.013 \\
-California & 50 & 54.321 & 0.579 & 17.289 & 25.647 \\
-California & 80 & 60.494 & 0.077 & 11.874 & 22.768 \\
-California & 100 & 35.610 & 0.000 & 2.401 & 22.039 \\
+California & 0 & 3.40 & 0.77 & 9.62 & 149.78 \\
+California & 10 & 48.73 & 1.70 & 18.10 & 49.65 \\
+California & 20 & 50.31 & 1.39 & 18.85 & 35.01 \\
+California & 50 & 54.32 & 0.58 & 17.29 & 25.65 \\
+California & 80 & 60.49 & 0.08 & 11.87 & 22.77 \\
+California & 100 & 35.61 & 0.00 & 2.40 & 22.04 \\
 \midrule
-India & 0 & 4.921 & 0.982 & 6.988 & 243.944 \\
-India & 10 & 49.766 & 1.142 & 14.235 & 171.061 \\
-India & 20 & 56.044 & 1.102 & 14.916 & 114.486 \\
-India & 50 & 62.503 & 0.174 & 14.211 & 54.628 \\
-India & 80 & 69.460 & 0.056 & 12.148 & 38.982 \\
-India & 100 & 45.925 & 0.003 & 3.752 & 35.365 \\
+India & 0 & 4.92 & 0.98 & 6.99 & 243.94 \\
+India & 10 & 49.77 & 1.14 & 14.24 & 171.06 \\
+India & 20 & 56.04 & 1.10 & 14.92 & 114.49 \\
+India & 50 & 62.50 & 0.17 & 14.21 & 54.63 \\
+India & 80 & 69.46 & 0.06 & 12.15 & 38.98 \\
+India & 100 & 45.93 & 0.00 & 3.75 & 35.37 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Observation fulfilment}
 
-The event-window-aggregated observation maximum occurs at 80 percent central nodes: 60.49 percent in California and 69.46 percent in India. At 90 percent, both means are slightly lower, and at 100 percent they fall to 35.61 and 45.92 percent. The result does not support a monotonic ``more central nodes is better'' claim for the implemented routing package.
+The event-window-aggregated observation maximum occurs at 80 percent Central Nodes: 60.49 percent in California and 69.46 percent in India. At 90 percent, both means are slightly lower, and at 100 percent they fall to 35.61 and 45.93 percent. This is the central result of the sweep: the first Central Nodes remove an information bottleneck, but full participation does not preserve that gain under the bounded forwarding package. The decrease is therefore meaningful rather than a cosmetic curve feature, although the bundled treatment does not identify whether forwarding concentration, copy limits, placement, or another package component is responsible.
 
-The highest individual California observation result is 93.75 percent for \path{T060_P05_H0800_I0800_CN050_F1}. The highest India result is 99.094 percent for \path{T180_P10_H1000_I0600_CN090_F1}. Neither of these cases completes \Suseful\ for any task, emphasizing that a case can observe nearly all tasks without disseminating them to every useful recipient.
+The highest individual California observation result is 93.75 percent for \path{T060_P05_H0800_I0800_CN050_F1}. The highest India result is 99.09 percent for \path{T180_P10_H1000_I0600_CN090_F1}. Neither of these cases completes \Suseful\ for any task, emphasizing that a case can observe nearly all tasks without disseminating them to every useful recipient.
 
 \subsection{Useful-recipient completion and receiver coverage}
 
-Mean \Suseful\ is small at every aggregate level and reaches its marginal maximum at CN10 in both regions: 1.698 percent for California and 1.142 percent for India. Mean useful-receiver coverage instead peaks at CN20: 18.85 percent for California and 14.92 percent for India. Beyond this point, the number of useful receivers reached by the deadline decreases, particularly at CN100.
+Mean \Suseful\ is small at every aggregate level and reaches its marginal maximum at CN10 in both regions: 1.70 percent for California and 1.14 percent for India. Mean useful-receiver coverage instead peaks at CN20: 18.85 percent for California and 14.92 percent for India. Beyond this point, the number of useful receivers reached by the deadline decreases, particularly at CN100.
 
-The strongest individual \Suseful\ cases are lower-resource 60-satellite configurations. California reaches 25.0 percent for \texttt{T060\_P03\_H0800\_I0986\_CN030\_F1}; India reaches 21.475 percent for \texttt{T060\_P05\_H1000\_I0600\_CN020\_F1}. These same cases also have the largest mean receiver fraction in their region, 47.58 and 45.56 percent, respectively.
+The strongest individual \Suseful\ cases are lower-resource 60-satellite configurations. California reaches 25.00 percent for \texttt{T060\_P03\_H0800\_I0986\_CN030\_F1}; India reaches 21.48 percent for \texttt{T060\_P05\_H1000\_I0600\_CN020\_F1}. These same cases also have the largest mean receiver fraction in their region, 47.58 and 45.56 percent, respectively.
 
 The fact that 60-satellite cases dominate this metric is partly mathematical and partly operational. With fewer eligible recipients, completion requires fewer unique arrivals. Larger constellations create more possible observers but also enlarge the dissemination target. This is why \Suseful\ should be compared together with observation fulfilment and resource burden rather than used alone.
 
 \subsection{First-reception latency}
 
-Conditional P90 first-reception latency falls from 149.78 to 22.04 minutes in California and from 243.94 to 35.36 minutes in India between CN0 and CN100. Most of the California improvement occurs by CN20, while the India response continues to fall strongly through CN50. The later reduction has diminishing magnitude in both regions.
+Between CN0 and CN100, conditional P90 first-reception latency falls from 149.78 to 22.04 minutes for California and from 243.94 to 35.36 minutes for India. The shapes are not identical. California obtains most of its reduction by CN20, whereas India continues to improve strongly through CN50. Beyond those levels, each additional reduction is smaller.
 
-The smallest per-case conditional P90 is 1.40 minutes in California and 8.52 minutes in India. These values are not labelled ``best latency architectures'' because conditional latency can look favourable when many difficult tasks are censored. The completion fraction must accompany any latency rank. This is the practical reason for retaining censored-task columns in the canonical tables.
+The smallest per-case conditional P90 is 1.40 minutes in California and 8.52 minutes in India. These values do not by themselves identify the best architectures. A conditional latency can be small simply because difficult, unfinished tasks have been censored. Any latency comparison must therefore be read together with its completion fraction, which is why the canonical tables retain the censoring columns.
 
 \section{Architecture Factor Effects}
 
@@ -110,7 +112,7 @@ India & CN fraction & 80\%; highest mean observation & 69.46 & 38.98 \\
 \end{tabularx}
 \end{table}
 
-Increasing satellite count reduces the conditional P90 of first reception but decreases useful-receiver fraction. In California, mean receiver coverage falls from 20.95 percent at 60 satellites to 8.55 percent at 180. In India it falls from 18.33 to 7.32 percent. Again, this is not evidence that larger constellations communicate less; it shows that the target recipient set grows faster than the bounded-copy forwarding policy.
+Adding satellites shortens the conditional P90 of first reception, but the fraction of useful receivers reached becomes smaller. Mean receiver coverage falls from 20.95 to 8.55 percent between 60 and 180 satellites in California and from 18.33 to 7.32 percent in India. This does not mean that the larger constellations send fewer messages. Their useful-recipient set grows faster than the bounded-copy policy can cover it.
 
 Plane count affects the two event windows differently. California has its highest mean observation at five planes, while the India workload benefits strongly from ten. Inclination produces the largest event-window contrast: 60 degrees yields 72.42 percent mean observation in India, whereas 98.6 degrees yields 40.43 percent. This is consistent with task latitude and event epoch, but the simulator does not isolate which component is responsible.
 
@@ -128,19 +130,19 @@ Table~\ref{tab:spearman} lists the strongest exploratory rank associations. High
 \toprule
 Region & Factor & Metric & $\rho$ \\
 \midrule
-California & Central-node fraction & P90 first-reception latency & $-0.553$ \\
-California & Satellite count & Mean useful-receiver fraction & $-0.555$ \\
-California & Plane count & Observation fulfilment & $+0.390$ \\
-California & Central-node fraction & Observation fulfilment & $+0.285$ \\
-India & Central-node fraction & P90 first-reception latency & $-0.686$ \\
-India & Satellite count & Mean useful-receiver fraction & $-0.614$ \\
-India & Inclination & Observation fulfilment & $-0.586$ \\
-India & Central-node fraction & Observation fulfilment & $+0.336$ \\
+California & Central Node fraction & P90 first-reception latency & $-0.55$ \\
+California & Satellite count & Mean useful-receiver fraction & $-0.56$ \\
+California & Plane count & Observation fulfilment & $+0.39$ \\
+California & Central Node fraction & Observation fulfilment & $+0.29$ \\
+India & Central Node fraction & P90 first-reception latency & $-0.69$ \\
+India & Satellite count & Mean useful-receiver fraction & $-0.61$ \\
+India & Inclination & Observation fulfilment & $-0.59$ \\
+India & Central Node fraction & Observation fulfilment & $+0.34$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-No causal statement is attached to these coefficients. Central-node fraction and satellite count change the denominator and routing opportunities, and all coefficients pool the other factors. The full-factorial structure supports controlled marginal contrasts, but a mechanistic causal model would require interaction terms and possibly additional replicates.
+Spearman $\rho$ asks whether the rank of one variable tends to rise or fall with the rank of another; the relation need not be linear. A value close to $+1$ or $-1$ indicates consistent monotonic order, while a value near zero indicates little such order. For India, $\rho=-0.69$ means that higher Central Node fractions are usually associated with lower first-reception latency in this grid. It is not a causal coefficient. Recipient opportunities and all components of the bundled routing treatment change with the fraction, and the calculation pools the remaining architecture factors.
 
 \section{Exploratory Regression of Central-Node Marginal Means}
 
@@ -148,7 +150,7 @@ Figure~\ref{fig:regression_models} compares the best leave-one-level-out model f
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{regression_model_comparison.png}
+\includegraphics[width=0.98\textwidth]{part2_revision/03_nominal_cn_model_fits.pdf}
 \caption{Exploratory regression of the 11 event-window central-node marginal means. The displayed model minimizes leave-one-level-out RMSE among linear, quadratic, cubic, and exponential-with-offset candidates.}
 \label{fig:regression_models}
 \end{figure}
@@ -163,17 +165,17 @@ Table~\ref{tab:regression_best} gives the selected models. California observatio
 \toprule
 Region & Response & Selected model & $R^2$ & LOOCV RMSE \\
 \midrule
-California & Observation fulfilment & Exponential + offset & 0.833 & 14.514 \\
-California & Useful-receiver fraction & Quadratic & 0.911 & 2.611 \\
-California & P90 first reception & Exponential + offset & 0.995 & 23.567 min \\
-India & Observation fulfilment & Quadratic & 0.778 & 14.210 \\
-India & Useful-receiver fraction & Quadratic & 0.851 & 2.310 \\
-India & P90 first reception & Exponential + offset & 0.999 & 6.294 min \\
+California & Observation fulfilment & Exponential + offset & 0.83 & 14.51 \\
+California & Useful-receiver fraction & Quadratic & 0.91 & 2.61 \\
+California & P90 first reception & Exponential + offset & 1.00 & 23.57 min \\
+India & Observation fulfilment & Quadratic & 0.78 & 14.21 \\
+India & Useful-receiver fraction & Quadratic & 0.85 & 2.31 \\
+India & P90 first reception & Exponential + offset & 1.00 & 6.29 min \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-The fitted curves are useful mainly as summaries of shape. First-reception latency shows a saturating improvement, while receiver breadth is hump-shaped over the sampled fractions. An optimum cannot be read from either curve alone because observation, coverage, latency, and resource burden favor different parts of the design space.
+The fit statistics are not uniformly ``good''. The latency curves have excellent in-sample $R^2$, but California's 23.57-minute leave-one-level-out error is still operationally large. Observation has lower $R^2$ and approximately 14-percentage-point prediction error because the abrupt CN100 decline is difficult to reconstruct when that level is omitted. Coverage is better behaved, with 2.31--2.61 percentage-point error. Thus the curves summarize saturation and hump-shaped response; they are not reliable laws for interpolation or extrapolation, and they cannot define an optimum without the competing completion and resource objectives.
 
 \section{Paired Event-Window Comparison}
 
@@ -181,12 +183,12 @@ Figure~\ref{fig:regional_paired} places the California and India observation res
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.72\textwidth]{04_regional_paired_observation.png}
+\includegraphics[width=0.72\textwidth]{part2_revision/04_nominal_paired_observation.pdf}
 \caption{Paired observation fulfilment for identical architecture identifiers under the California and India task sets.}
 \label{fig:regional_paired}
 \end{figure}
 
-Rank agreement is reported in Table~\ref{tab:rank_agreement}. Conditional P90 first reception and receiver fraction are comparatively stable, whereas \Suseful\ ranking agreement is only 0.110. This low agreement is consistent with the different task counts, priority mixes, deadlines, and useful-recipient completion rates.
+Rank agreement is reported in Table~\ref{tab:rank_agreement}. A value of 1 would mean that every architecture has the same relative order in both event windows; zero would indicate no monotonic agreement. Conditional P90 first reception and receiver coverage are comparatively stable at 0.78 and 0.74. Observation is only moderately stable at 0.50, and \Suseful\ agreement is 0.11. The last value means that an architecture selected for complete dissemination in one event window provides almost no ranking guarantee in the other. Different task counts, priority mixes, deadlines, and useful-recipient sets therefore alter the decision, not merely the absolute score.
 
 \begin{table}[htbp]
 \centering
@@ -196,10 +198,10 @@ Rank agreement is reported in Table~\ref{tab:rank_agreement}. Conditional P90 fi
 \toprule
 Metric & Rank agreement \\
 \midrule
-Observation fulfilment & 0.504 \\
-\Suseful & 0.110 \\
-Mean useful-receiver fraction & 0.738 \\
-Conditional P90 first-reception latency & 0.775 \\
+Observation fulfilment & 0.50 \\
+\Suseful & 0.11 \\
+Mean useful-receiver fraction & 0.74 \\
+Conditional P90 first-reception latency & 0.78 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -210,12 +212,31 @@ Figure~\ref{fig:pareto} plots observation fulfilment against the declared resour
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{02_exact_pareto_landscape.png}
-\caption{Observation fulfilment versus non-monetary resource burden. Black outlines identify cases on the exact five-objective Pareto set.}
+\includegraphics[width=0.98\textwidth]{part2_revision/05_nominal_pareto_landscape.pdf}
+\caption{Observation fulfilment versus resource burden, with fleet size shown by marker and Central Node fraction by colour. Black outlines identify cases on the exact five-objective Pareto set.}
 \label{fig:pareto}
 \end{figure}
 
-The exact fronts contain 183 California cases and 142 India cases, or 20.5 and 15.9 percent of the respective candidate sets. A large fraction of the architectures therefore survives at least one objective trade. Reducing these fronts immediately to one equally weighted score would remove viable alternatives before the preference assumptions have been examined.
+The exact fronts contain 183 California cases and 142 India cases, or 20.5 and 15.9 percent of the respective candidate sets. Table~\ref{tab:nominal_pareto_composition} explains which architectures form those fronts. Sixty-satellite cases dominate numerically (125 California and 85 India cases), with a median CN40 configuration. The 180-satellite front is much smaller (17 and 19 cases) and is concentrated at higher Central Node fractions. Smaller fleets therefore survive because they reduce resource burden, whereas larger fleets survive only when their mission benefit compensates for that burden. A single equally weighted score would hide this structure.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Composition of the exact nominal Pareto fronts.}
+\label{tab:nominal_pareto_composition}
+\begin{tabular}{lrrrr}
+\toprule
+Region & Satellites & Pareto cases & Median CN (\%) & Median observation (\%) \\
+\midrule
+California & 60 & 125 & 40 & 56.25 \\
+California & 120 & 41 & 70 & 56.25 \\
+California & 180 & 17 & 80 & 53.13 \\
+India & 60 & 85 & 40 & 71.80 \\
+India & 120 & 38 & 70 & 77.49 \\
+India & 180 & 19 & 70 & 72.70 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Nominal Result Synthesis}
 

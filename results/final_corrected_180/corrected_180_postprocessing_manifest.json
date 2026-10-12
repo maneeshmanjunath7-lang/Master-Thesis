@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "analysis_date": "2026-10-09",
+  "simulation_verification": {
+    "status": "PASS",
+    "profile": "full",
+    "output_root": "/home/maneeshmanjunath/Downloads/Maneesh/Full891_India_282_VM_Final_Fixed_20260928_v4/outputs/india_282_corrected_773_tasks_vm_contract_v2",
+    "expected_cases": 282,
+    "verified_complete_cases": 282,
+    "missing_or_invalid_cases": 0,
+    "unexpected_case_directories": [],
+    "scenario_count_per_case": 539,
+    "task_count_india": 773,
+    "task_input_sha256": "e717a1dde84db0f47efdda09cfca2f437909349b25a139a45a7c1928da80e533",
+    "normalized_task_ids_sha256": "76184528e30b662091ed4a8146cc3588721312672f09bd0dcab9de637c9c7241",
+    "normalized_tasks_sha256": "e2a85e94180f5fd02c1d11e4efcca21e627af6383b56995818cc301ad11f5c15",
+    "case_allowlist_sha256": "053f74ab92b5e382b1cd9547a5cc3454532770cb583a2a9566904d892f6902ab",
+    "run_contract_sha256": "cb2fbf1f1969a26747bb6455b012d66c1fbfa979f7e7bc375ff9ff28aa23744d",
+    "failures": []
+  },
+  "full_case_count": 282,
+  "balanced_case_count": 216,
+  "balanced_cn_levels_percent": [
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "task_population": 773,
+  "case_scenario_rows": 151998,
+  "bootstrap_draws": 1000,
+  "random_weight_draws": 10000,
+  "seed": 20261009,
+  "inference_boundary": "Aggregate architecture analysis uses the complete CN30-CN100 block. The controlled T120-T180 comparison uses the matched India unlimited-routing baseline only."
+}

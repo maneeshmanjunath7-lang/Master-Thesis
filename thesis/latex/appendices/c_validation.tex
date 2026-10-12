@@ -48,7 +48,7 @@ The final evidence release therefore uses two explicit Fresh V2 populations:
 
 \begin{itemize}
 \item a confirmatory California--India population with 594 matched 60/120-satellite cases per event window; and
-\item an exploratory India 180-satellite population with 282 completed cases and 151,998 scenario-status rows, all based on 741 tasks. Its balanced CN30--CN100 block contains 216 cases from 27 base architectures.
+\item an India 180-satellite extension with 282 verified cases and 151,998 scenario-status rows, all based on the intended 773 tasks. Its balanced CN30--CN100 block contains 216 cases from 27 base architectures.
 \end{itemize}
 
 The 180-satellite availability is 20 cases at CN0, 22 at CN10, 24 at CN20, and all 27 base architectures at each CN level from 30 to 100. The 216-case block is used whenever a complete central-node sweep or exact decision comparison is required.
@@ -60,9 +60,9 @@ The frozen intended input has the SHA-256 value
 \small\texttt{e717a1dde84db0f47efdda09cfca2f437}\linebreak
 \texttt{909349b25a139a45a7c1928da80e533}.
 \end{center}
-It contains 32 California and 773 India tasks. The 741-task India population used by the completed 180-satellite layer was traced to an index-alignment defect in task normalization. Filtering India from the combined CSV retained row labels 32--804. The normalization function created a new table indexed 0--772 and assigned filtered Series without first resetting their labels. Pandas aligned by label: the first 32 normalized rows became invalid and the final 32 source rows were omitted. All omitted records were Low-priority tasks from 16 April 2026; the High- and Medium-priority task sets were unchanged.
+It contains 32 California and 773 India tasks. The 741-task population in the first 180-satellite execution was traced to an index-alignment defect in task normalization. Filtering India from the combined CSV retained row labels 32--804. The normalization function created a new table indexed 0--772 and assigned filtered Series without first resetting their labels. Pandas aligned by label: the first 32 normalized rows became invalid and the final 32 source rows were omitted. All omitted records were Low-priority tasks from 16 April 2026; the High- and Medium-priority task sets were unchanged.
 
-The executed 282 cases are internally consistent on 741 tasks. The defect therefore does not imply corrupted orbit propagation, routing, failure injection, or numerical evaluation. It changes the task population and prevents direct interpretation of a 60/120-to-180 difference as a pure fleet-size effect. The final treatment is to keep the 60/120 layer confirmatory, publish the 180-satellite findings as an official but separate exploratory analysis, and state the task-population boundary wherever the two layers are discussed.
+The corrected execution resets the regional index and freezes the task population through the source, normalized-task, allow-list, and run-contract hashes. Its verification record reports \texttt{PASS}, 282 of 282 selected cases complete, zero missing or invalid cases, 539 scenario identifiers per case, and 773 India tasks. The earlier output is retained only as provenance evidence and is not used in final numerical tables. The common task contract permits a matched India 120-to-180 comparison on the complete CN30--CN100 block.
 
 \section{Final Claim Ledger}
 
@@ -77,14 +77,14 @@ Claim & Status & Boundary \\
 \midrule
 Full two-region structural scenario inventory & Supported & 891 identifiers and 480,249 unique status rows per region \\
 Uniform 60/120 matched regional effects & Supported & 594 cases per region; intended task populations \\
-India T180 exploratory findings & Supported & 282 completed cases on one 741-task population \\
+India T180 corrected findings & Supported & 282 verified cases on the intended 773-task population \\
 Balanced T180 CN/Pareto analysis & Supported & 216 cases, CN30--CN100, 27 bases \\
-Clean 120-to-180 fleet-size effect & Not claimed & India task populations differ between layers \\
+Matched India 120-to-180 fleet-size effect & Supported conditionally & 216 common CN30--CN100 architectures; unlimited-routing baseline \\
 Resume duplicates changed sample size & Rejected & 4,269 California duplicate keys removed deterministically \\
 Routing-policy and packet-size effects & Supported & Paired within each eligible analysis population \\
 Random and targeted failure robustness & Supported & Time-aware replay with declared seeds \\
 Combined-stress fifth-percentile generalization & Not supported & Ten replicates support descriptive means only \\
-Exact Pareto membership and rank acceptability & Supported conditionally & Separate confirmatory and exploratory feasible sets \\
+Exact Pareto membership and rank acceptability & Supported conditionally & Separate cross-window and India 180 feasible sets \\
 Fresh V2 first-reception result & Not supported & Separate field absent from the canonical case table \\
 Observation-radius stability & Not supported & Radius fixed at \SI{700}{\kilo\metre} \\
 Routing-package component effects & Not supported & Principal sweep changes bundled components together \\
@@ -98,7 +98,7 @@ End-to-end wildfire alert latency & Not supported & Chain ends at follow-up obse
 
 \section{Output-to-Claim Traceability}
 
-Every quantitative claim is tied to a compact CSV/Parquet table, an explicit population filter, and the frozen analysis configuration. Regional contrasts use the printed India-minus-California convention. The decision text records objective directions, normalization population, reference weights, random-weight seed, number of draws, and eligibility rules. The two evidence layers have separate output prefixes, preventing accidental replacement or pooling.
+For every quantitative claim, the release retains a compact CSV or Parquet table, the population filter, and the frozen analysis settings. Regional differences always use India minus California. The decision record also states the objective directions, normalization population, reference weights, random-weight seed, draw count, and eligibility rules. Distinct output prefixes identify the regional and 180-satellite blocks of the same Fresh V2 campaign so that an unsupported comparison cannot be formed accidentally.
 
 \begin{table}[H]
 \centering
@@ -114,21 +114,22 @@ Output & Use \\
 \path{priority_stratified_event_time_summary.csv} & Confirmatory priority/deadline evidence \\
 \path{uniform_60_120_robustness_summary.csv} & Confirmatory failure response and retention \\
 \path{uniform_60_120_exact_pareto.csv} and rank tables & Confirmatory non-dominated set and shortlist \\
-\path{exploratory_180_scope_gate.csv} & 282-case exploratory integrity and declared population \\
-\path{exploratory_180_cn_fraction_intervals.csv} & Balanced 180-satellite central-node response \\
-\path{exploratory_180_paired_scenario_effects_summary.csv} & Exploratory policy and packet-size effects \\
-\path{exploratory_180_robustness_summary.csv} & Exploratory failure and retention evidence \\
-\path{exploratory_180_priority_event_summary.csv} & Exploratory priority/deadline evidence \\
-\path{exploratory_180_exact_pareto.csv} and rank tables & Exploratory Pareto and acceptability results \\
-\path{option2_manifest.json} & Exploratory inputs, settings, outputs, and fingerprints \\
+\path{corrected_180_scope_gate.csv} & Corrected 282-case integrity and task-population gate \\
+\path{corrected_180_cn_fraction_intervals.csv} & Balanced 180-satellite Central Node response \\
+\path{corrected_180_matched_120_180_summary.csv} & Matched India fleet-size effects and stability intervals \\
+\path{corrected_180_paired_scenario_effects_summary.csv} & Corrected policy and packet-size effects \\
+\path{corrected_180_robustness_summary.csv} & Corrected failure and retention evidence \\
+\path{corrected_180_priority_event_summary.csv} & Corrected priority/deadline evidence \\
+\path{corrected_180_exact_pareto.csv} and rank tables & Corrected Pareto and acceptability results \\
+\path{corrected_180_postprocessing_manifest.json} & Inputs, settings, verification, and inference boundary \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{AI-Reviewer Cross-Check}
+\section{Independent Review Cross-Check}
 
-The final revision was checked against the consolidated external AI-review ledger. The evidence scope is frozen rather than presented as unfinished; the study is consistently described as dissemination and follow-up opportunity rather than scheduling; the central-node variable is treated as a bundled package; priority-specific censoring is retained; robustness claims are based on replayed failure scenarios; the Munich result is stated as single-station vulnerability; the task model, placement, observation radius, and analyst-defined weights remain explicit conditional assumptions; and the mission chain ends at follow-up opportunity rather than image delivery or emergency response. Low-tail stochastic claims based on ten combined-stress replicates remain descriptive.
+The final cross-check compared the manuscript with the consolidated review ledger. It confirmed the following boundaries throughout the text: the completed study concerns dissemination and a follow-up opportunity, not scheduling; the Central Node treatment is a package; priority-specific censoring is retained; robustness comes from replayed failures; and the Munich result concerns the tested single-station baseline. The task model, placement, observation radius, and analyst-defined weights remain explicit assumptions. The mission chain stops before image delivery or emergency response, and results from the ten-trial combined-stress cells remain descriptive.
 
 \section{Automated Checks and Reproducibility Boundary}
 
-The package checker verifies referenced figures, citations, stale placeholders, unexpectedly large files, secret-like assignments, and manifest hashes. The complete multi-gigabyte Parquet campaign remains outside the portable report package. Compact validated tables, figures, analysis manifests, and the LaTeX manuscript are included. A full external scientific release should additionally provide the raw archive, immutable SHA-256 manifests, environment lock, simulator commit, and a small public fixture. No literal data-service credentials belong in the public repository.
+The release checker tests figure and citation references, placeholders, unexpectedly large files, secret-like assignments, and manifest hashes. The portable report package contains the validated compact tables, figures, analysis manifests, and LaTeX source, but not the multi-gigabyte Parquet campaign. A complete external scientific archive would also need the raw data, immutable SHA-256 manifests, an environment lock, the simulator commit, and a small public test fixture. Data-service credentials are not included in the repository.

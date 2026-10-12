@@ -1,5 +1,5 @@
 \section{Method Objective and Overview}
-The method evaluates a simple operational question: when a wildfire task is released, can it reach useful satellites early enough for at least one of them to observe the target before the deadline? The simulation separates task data, orbital geometry, communication opportunities, routing, and evaluation so that a policy or failure can be changed without changing the fire sample or orbit.
+The method evaluates a simple operational question: when a wildfire task is released, can it reach useful satellites early enough for at least one of them to observe the target before the deadline? The simulation separates task data, orbital geometry, communication opportunities, routing, and evaluation so that a policy or failure can be changed without changing the fire sample or orbit. Figure~\ref{fig:method_flow} shows this separation and, importantly, the validation gate between raw simulation output and the evidence used for statistical comparison. Consequently, an architecture is not ranked merely because its run produced files; its inventory, schema, provenance, and completeness must first pass the stated checks.
 
 \begin{figure}[htbp]
 \centering
@@ -7,11 +7,11 @@ The method evaluates a simple operational question: when a wildfire task is rele
 \caption{Simulation and post-processing workflow. Architectures and scenarios produce checkpointed outputs; only outputs that pass the completion and integrity gate enter the canonical analysis table, paired comparisons, robustness analysis, and Pareto evaluation.}
 \label{fig:method_flow}
 \end{figure}
-The event order is enforced explicitly:
+The experiment follows the sequence below so that later scenario changes do not alter the input tasks or geometry:
 
 \begin{enumerate}
-\item Freeze the regional task table and generate a Walker architecture.
-\item Assign the declared fraction of central nodes with one balanced rule.
+\item Freeze one regional task table, then generate the Walker architecture.
+\item Select the requested Central Node fraction using the same balanced placement rule in every case.
 \item Propagate spacecraft states and create observation and communication windows.
 \item Apply the routing-policy or failure transformation.
 \item Replay transfers chronologically with packet and capacity checks.
@@ -42,7 +42,7 @@ Central-node fraction, C & 0, 10, ..., 100 percent \\
 \end{table}
 Walker phasing is fixed at F = 1. The first four factors create 81 base architectures. Eleven central-node fractions per base create 891 cases per region. A case identifier such as \path{T060_P10_H0800_I0986_CN040_F1} means 60 satellites, 10 planes, 800 km altitude, 98.6 deg inclination, 40 percent central nodes, and Walker phasing 1.
 
-The absolute number of central nodes is \texttt{N\_CN = T * C / 100}. The fraction and absolute count are both retained because CN40 represents 24 Central Nodes in a 60-satellite fleet, 48 in a 120-satellite fleet, and 72 in a 180-satellite fleet.
+The absolute number of central nodes is \texttt{N\_CN = T * C / 100}. The fraction and absolute count are both retained because CN40 represents 24 Central Nodes in a 60-satellite fleet, 48 in a 120-satellite fleet, and 72 in a 180-satellite fleet. Figure~\ref{fig:walker_cn} illustrates the balanced assignment rule: the highlighted spacecraft are distributed across planes and along-track positions instead of being concentrated in one part of the constellation. The figure also emphasizes that the treatment changes the routing role, not the orbit or sensing capability of those spacecraft.
 
 \begin{figure}[htbp]
 \centering
@@ -91,7 +91,7 @@ The bounded nominal policy prioritizes deadline-relevant useful recipients and l
 Routing is greedy and causal. It uses only information available at the current simulated time and does not solve a global temporal multicommodity-flow optimization. This distinction defines what conclusions can be drawn from a difference between bounded and unlimited forwarding.
 
 \section{Scenario and Failure Transformations}
-Every case is evaluated under 539 declared scenarios. The nominal case is complemented by policy, packet-size, failure, outage, degradation, and combined-stress replays. Each transformation changes one declared part of the baseline and then reruns routing and observation evaluation.
+Every case is evaluated under 539 declared scenarios. The nominal case is complemented by policy, packet-size, failure, outage, degradation, and combined-stress replays. Each transformation changes one declared part of the baseline and then reruns routing and observation evaluation. Figure~\ref{fig:scenario_flow} makes the comparison logic explicit: every branch begins from the same architecture and baseline opportunities, applies a declared transformation, and is paired back to that baseline. Differences are therefore interpreted as within-case scenario effects rather than comparisons between unrelated architectures.
 
 \begin{figure}[htbp]
 \centering
@@ -133,20 +133,20 @@ The metrics are grouped by the question they answer.
 Figure~\ref{fig:temporal_route} provides one concrete interpretation. A task can be received by Satellite A and still fail if A has no access before the deadline. It can be forwarded to Satellite B and succeed if B receives the complete packet before its later access. A figure or metric that omits this event order would answer a different question.
 
 \section{Validation and Provenance}
-No ranking is produced before the post-processing verifies inventory, schema, task provenance, declared scenario counts, duplicate keys, reconstructable metrics, and balanced comparison populations. A success marker proves structural completion only. The task hash, regional task count, and priority counts are separate scientific checks.
+A case is not ranked merely because its output directory contains a success marker. Before a row enters the analysis, the post-processing checks the inventory, schema, task provenance, scenario count, duplicate keys, reconstructable metrics, and eligibility for a balanced comparison. The success marker answers only whether the programmed run finished. Separate checks of the task hash, regional count, and priority counts establish whether it finished with the intended scientific input.
 
-The audit identified an index-alignment defect in the 180-satellite India preparation. Filtering India from the combined table retained row labels 32-804. A new normalized table used labels 0-772, and pandas aligned assigned series by label rather than row position. This produced 32 invalid leading rows and excluded the final 32 Low-priority tasks from 16 April 2026. The resulting 741-task runs are internally consistent, but they are not the intended 773-task experiment.
+The first India 180-satellite preparation failed this input audit. After India was filtered from the combined table, its rows still carried labels 32--804. The normalization table had new labels 0--772. When one labelled series was assigned to the other, pandas matched the labels instead of the row positions. The result was 32 invalid rows at the beginning and the loss of the final 32 Low-priority tasks from 16 April 2026. That execution is excluded from every final numerical claim. In the verified package, the regional index is reset before normalization. Execution is also tied to task and run-contract hashes, and all 282 selected cases are checked against the intended 773 tasks.
 
-The evidence is therefore separated:
+This correction determines which comparisons the final evidence can support:
 
 \begin{itemize}
 \item the 60- and 120-satellite California-India comparison uses the intended and matched regional inputs;
-\item the 180-satellite India results are interpreted only as a within-741-task sensitivity layer; and
-\item no cross-region 180-satellite effect or clean 120-to-180 scaling coefficient is claimed.
+\item the 180-satellite India extension uses the same 773-task population and supports a matched 120-to-180 comparison on the balanced CN30--CN100 block; and
+\item no California--India 180-satellite effect is claimed because no matched corrected California layer is available.
 \end{itemize}
-Future execution resets the regional index before normalization and binds completion records to the task-file hash, regional count, and priority distribution. This explanation preserves the usable computation without hiding the provenance limit.
+A completed list of scenario identifiers would not have exposed the mismatched task rows. For this reason, the corrected run contract also records the task-file hash, regional count, priority distribution, case allow-list, and positional normalization.
 
 \section{Reproducibility and Method Boundary}
-The campaign stores scenario metrics, task metrics, selected transfer traces, central-node placement, constellation nodes, manifests, and validation records in typed Parquet files. Checkpoints make the campaign resumable, but resume behaviour is an execution feature rather than a scientific treatment. Changing worker count can change wall-clock time; it does not change the task rows, architecture identifiers, or deterministic seeds.
+The stored evidence includes scenario and task metrics, selected transfer traces, Central Node placement, constellation nodes, manifests, and validation records in typed Parquet files. Checkpointing allows an interrupted campaign to continue. It changes execution time and recovery behaviour, not the experiment: changing the worker count leaves task rows, architecture identifiers, and deterministic seeds unchanged.
 
-The method evaluates task-message dissemination and follow-up opportunity under simplified orbit, sensing, and communication assumptions. It does not model final image downlink, emergency-response action, weather, cloud, detailed pointing, energy scheduling, storage competition, lifecycle cost, or a hardware-qualified relay spacecraft. The conclusions apply to the implemented central-node routing role and the tested task populations.
+The model stops at the follow-up opportunity. It does not simulate the final image downlink, an emergency-service action, weather or cloud, detailed pointing, power and storage scheduling, lifecycle cost, or a flight-qualified relay design. The conclusions must therefore be read as results for the implemented Central Node routing role and for the two stated task populations.

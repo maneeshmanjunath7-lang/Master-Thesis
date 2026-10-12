@@ -164,11 +164,11 @@ The normalized retention area is calculated by trapezoidal integration after add
 A_{F,c}=\frac{1}{g_{\max}}\int_0^{g_{\max}}\rho_{F,c}(g)\,\mathrm{d}g.
 \end{equation}
 
-Absolute stressed performance, paired change, retention, fifth percentile, and $A_{F,c}$ answer different questions and are not substituted for one another. Cases with a zero baseline have undefined retention and remain visible through their absolute and difference measures.
+These quantities are not interchangeable. Absolute stressed performance shows the remaining capability, paired change gives the loss or gain, retention scales that change by the baseline, the fifth percentile describes a low trial outcome, and $A_{F,c}$ summarizes the severity curve. When the baseline is zero, retention is undefined; the case remains in the absolute and difference tables instead of being deleted.
 
 \section{Redundancy Gate and Final Decision Families}
 
-The redundancy audit calculates Pearson $r$ and Spearman $\rho_s$ between performance metrics in the unlimited useful-deadline scenario. A pair is flagged when $\max(|r|,|\rho_s|)\ge0.95$ and marked severe at 0.98. The audit is descriptive; it does not by itself establish that two physical constructs are identical.
+For the unlimited useful-deadline scenario, the redundancy check calculates both Pearson $r$ and Spearman $\rho_s$ between candidate performance metrics. A pair is flagged at $\max(|r|,|\rho_s|)\ge0.95$ and classified as severe at 0.98. This is a practical screen against double weighting. It does not prove that the two metrics represent the same physical quantity.
 
 After exact Pareto filtering, non-redundant normalized components are organized into the five final families
 

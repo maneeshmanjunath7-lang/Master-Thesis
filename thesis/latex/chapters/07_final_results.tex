@@ -1,7 +1,7 @@
 \section{Final Evidence Structure and Integrity}
 \label{sec:final_results}
 
-The final post-processing uses the Option 2 evidence policy defined in the front matter. It does not force the 180-satellite output into the confirmatory grid. Table~\ref{tab:final_analysis_populations} records the two populations used in this chapter. The confirmatory layer supports matched California--India conclusions and the main decision shortlist. The exploratory layer supports a separate India-only 180-satellite sensitivity analysis conditional on 741 tasks.
+The final post-processing treats the 60/120-satellite regional cases and the verified India 180-satellite cases as parts of one Fresh V2 campaign. Table~\ref{tab:final_analysis_populations} records the comparison blocks used for each claim. The matched regional block supports California--India conclusions, while the balanced CN30--CN100 portion of the 180-satellite extension supports the paired India 120-to-180 comparison under the common 773-task contract. Both blocks contribute to the final architecture portfolio.
 
 \begin{table}[htbp]
 \centering
@@ -12,25 +12,25 @@ The final post-processing uses the Option 2 evidence policy defined in the front
 \toprule
 Population & Bases & Cases & Scenarios/case & Rows & Scientific use \\
 \midrule
-Confirmatory California 60/120 & 54 & 594 & 539 & 320,166 & Matched event-window effects and main decision analysis \\
-Confirmatory India 60/120 & 54 & 594 & 539 & 320,166 & Matched event-window effects and main decision analysis \\
-Exploratory India 180, all completed & 27 & 282 & 539 & 151,998 & Input-qualified within-layer description \\
-Exploratory India 180, balanced & 27 & 216 & 539 & 116,424 & CN30--CN100 architecture, robustness, timing, and decision analysis \\
+California 60/120 block & 54 & 594 & 539 & 320,166 & Matched event-window effects and portfolio analysis \\
+India 60/120 block & 54 & 594 & 539 & 320,166 & Matched event-window effects and portfolio analysis \\
+India 180, all verified & 27 & 282 & 539 & 151,998 & Complete selected-case inventory on 773 tasks \\
+India 180, balanced & 27 & 216 & 539 & 116,424 & CN30--CN100 architecture, matched fleet, robustness, timing, and portfolio extension \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Every exploratory case has a success marker, 539 unique scenario identifiers, no failed retained row, and a consistent metric task count of 741. It therefore passes the computational gate. It does not pass the intended 773-task scientific contract. The two statuses are reported separately rather than allowing a success marker to conceal the input difference.
+Every verified 180-satellite case has a success marker, 539 unique scenario identifiers, no failed retained row, and a consistent metric task count of 773. The supplied verifier reports 282 complete cases, zero missing or invalid cases, and matching task, case-allow-list, and run-contract hashes. The population therefore passes both the computational and scientific input gates.
 
-\subsection{Task-population inconsistency and balanced exploratory block}
+\subsection{Task-population consistency and balanced block}
 
-The intended India source contains 773 tasks. After regional filtering, the India table retained labels 32--804. The normalization routine created a new table indexed 0--772 and then assigned the filtered series without resetting its labels. Pandas aligned the values by label. The first 32 output rows therefore lacked valid coordinates, and the final 32 source rows were excluded. All omitted tasks are Low priority. This index-alignment defect produced the consistent 741-task population used by the completed 282-case run.
+The intended India input has 773 tasks. The earlier preparation kept row labels 32--804 after filtering India from the combined table, but normalization created a table labelled 0--772. Pandas matched the assigned series by label rather than by row order. This left 32 invalid rows at the start and removed the final 32 Low-priority tasks. In the verified package, the index is reset before normalization and output is accepted only if the task-file, normalized-task, allow-list, and run-contract hashes agree. The earlier 741-task values are excluded; every final 180-satellite number comes from the verified 773-task execution.
 
-The completed 180-satellite selection does not contain all 27 base architectures at CN0--CN20. It contains 20 cases at CN0, 22 at CN10, and 24 at CN20. All 27 bases are present at each fraction from CN30 through CN100, creating the balanced 216-case block used for aggregate exploratory inference. The lower-CN results remain in the canonical table, but they are not used for rank or marginal-mean comparisons that require equal base coverage.
+The 180-satellite selection does not contain all 27 base architectures at CN0--CN20. It contains 20 cases at CN0, 22 at CN10, and 24 at CN20. All 27 bases are present at each fraction from CN30 through CN100, creating the balanced 216-case block used for aggregate inference. The lower-CN results remain in the canonical table, but they are not used for rank or marginal-mean comparisons that require equal base coverage.
 
 \begin{table}[htbp]
 \centering
-\caption{Exploratory India 180-satellite case availability by Central Node fraction.}
+\caption{India 180-satellite case availability by Central Node fraction in the final Fresh V2 campaign.}
 \label{tab:t180_availability}
 \begin{tabular}{lrrrrrrrrrrr}
 \toprule
@@ -42,7 +42,7 @@ Missing from 27-base block & 7 & 5 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
 \end{tabular}
 \end{table}
 
-\section{Confirmatory 60/120-Satellite Results}
+\section{Matched 60/120-Satellite Results}
 
 \subsection{Matched event-window contrast}
 
@@ -61,12 +61,12 @@ Strict useful completion & 594 & $-2.98$ pp & $[-5.39,-0.33]$ pp \\
 Mean useful coverage & 594 & $-5.95$ pp & $[-7.64,-4.41]$ pp \\
 P100 $T_{100}$ & 541 & $+175.07$ min & $[+166.94,+182.97]$ min \\
 Transferred data & 594 & $+27,957$ Mbit & $[+25,193,+30,779]$ Mbit \\
-Robustness retention AUC & 541 & $-0.041$ & $[-0.047,-0.035]$ \\
+Robustness retention AUC & 541 & $-0.04$ & $[-0.05,-0.04]$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-India therefore achieves slightly higher follow-up observation fulfilment but weaker and later complete dissemination. The result is not contradictory: observation requires that at least one informed spacecraft later reaches the target, whereas \Suseful\ requires all declared useful recipients to receive the task before the deadline. Architecture rank agreement is 0.729 for observation, 0.771 for strict completion, 0.718 for coverage, 0.780 for $T_{100}$, and 0.609 for robustness. A design chosen on one event-window workload does not retain a guaranteed rank on the other.
+India therefore achieves slightly higher follow-up observation fulfilment but weaker and later complete dissemination. The result is not contradictory: observation requires that at least one informed spacecraft later reaches the target, whereas \Suseful\ requires all declared useful recipients to receive the task before the deadline. Architecture rank agreement is 0.73 for observation, 0.77 for strict completion, 0.72 for coverage, 0.78 for $T_{100}$, and 0.61 for robustness. A design chosen on one event-window workload does not retain a guaranteed rank on the other.
 
 \subsection{Central Node fraction and forwarding policy}
 
@@ -74,8 +74,8 @@ Figure~\ref{fig:final_cn_response} shows that the central-node response depends 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{01_cn_fraction_response_clustered_intervals.png}
-\caption{Confirmatory Central Node response for the uniform 60/120-satellite population. Bands are base-clustered stability intervals.}
+\includegraphics[width=\textwidth]{part2_revision/11_matched_cn_response.pdf}
+\caption{Central Node response in the Fresh V2 matched regional block. Solid lines show unlimited routing; dashed lines show bounded routing. Bands are base-clustered stability intervals.}
 \label{fig:final_cn_response}
 \end{figure}
 
@@ -85,20 +85,20 @@ For the bounded policy, the CN90-to-CN100 observation change is $-21.93$ percent
 
 Packet growth has a much larger effect in the dense India workload. Doubling packet size reduces strict completion by 3.18 points in California and 15.36 in India. Quadrupling packet size reduces it by 14.94 and 37.02 points. These are paired within-case contrasts and therefore isolate scenario changes within the declared architecture and task population.
 
-The censor-aware analysis keeps missed events as right-censored observations and reports results by the fixed priority horizons of 30, 60, 180, and 360 minutes. At CN40 under the unlimited diagnostic, equal weighting of the shared High, Medium, and Low classes gives observation attainment/speed of 0.810/0.504 for California and 0.767/0.434 for India. For strict completion, the corresponding values are 0.819/0.514 and 0.708/0.323. Stratification prevents the much larger Low-priority population from silently defining the event-window comparison.
+The censor-aware analysis keeps missed events as right-censored observations and reports results by the fixed priority horizons of 30, 60, 180, and 360 minutes. At CN40 under the unlimited diagnostic, equal weighting of the shared High, Medium, and Low classes gives observation attainment/speed of 0.81/0.50 for California and 0.77/0.43 for India. For strict completion, the corresponding values are 0.82/0.51 and 0.71/0.32. Stratification prevents the much larger Low-priority population from silently defining the event-window comparison.
 
-At 30\% severity, outage of the sole Munich ground station causes the largest individual mean strict-completion loss: $-20.35$ points in California and $-17.50$ in India. This identifies a vulnerability of the tested single-station baseline; it does not quantify the benefit of an alternative ground network. Fourfold packets combined with 20\% satellite failure reduce strict completion by 17.86 points in California and 42.01 in India, showing that isolated failure tests understate risk when communication load is also increased.
+At 30\% severity, outage of the sole Munich ground station causes the largest individual mean strict-completion loss: $-20.35$ points in California and $-17.50$ in India. This is operationally important because removing a ground-contact interval blocks injection of new tasks for all spacecraft, whereas a random satellite or link loss removes only part of the available temporal graph. Figure~\ref{fig:final_robustness} shows this separation: the ground-station curve declines most strongly, while the node, link, and capacity disturbances retain a larger share of their matched baselines over the evaluated range. The result identifies a single-point vulnerability in the tested network, but it does not quantify the benefit, location, or cost of an additional station. Fourfold packets combined with 20\% satellite failure reduce strict completion by 17.86 points in California and 42.01 in India. The India loss is more than a minor perturbation: the denser workload consumes the remaining transfer opportunities after nodes are removed, so isolated failure tests understate the risk of simultaneous load growth and component loss.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{03_robustness_retention.png}
-\caption{Confirmatory robustness response across the tested failure families.}
+\includegraphics[width=\textwidth]{part2_revision/06_confirmatory_robustness.pdf}
+\caption{Strict-completion retention in the Fresh V2 matched regional block. Colour, marker, and line style identify the failure family; the black line is the matched no-failure baseline.}
 \label{fig:final_robustness}
 \end{figure}
 
 \subsection{Metric redundancy, Pareto efficiency, and main shortlist}
 
-Transferred data and transfer-event count are nearly redundant (Pearson $r=0.999$, Spearman $\rho=0.998$). They remain separate diagnostics but are not given independent full family weight. Exact Pareto filtering leaves 137 of 548 eligible California cases and 140 of 561 eligible India cases. Ten thousand reproducible Dirichlet weight draws quantify rank acceptability; they represent preference sensitivity, not stakeholder observations.
+Transferred data and transfer-event count carry almost the same ordering; both correlation coefficients round to 1.00 at the precision used in the report. Both remain in the diagnostic output, but they do not contribute two full metric-family weights. Their unrounded Pearson and Spearman values are available in the machine-readable audit table. After exact Pareto filtering, 137 of 548 eligible California cases and 140 of 561 eligible India cases remain. The 10,000 reproducible Dirichlet draws show how rankings react to different weights. They do not represent 10,000 stakeholder opinions.
 
 \begin{table}[htbp]
 \centering
@@ -119,129 +119,153 @@ Architecture & CA Obs. & CA \Suseful & India Obs. & India \Suseful & India $T_{1
 \end{tabular}}
 \end{table}
 
-The shortlist exposes a decision rather than hiding it in one score. The CN40 architecture has strong California rank stability and relatively low India traffic. The CN90/CN100 cases emphasize India completion. The 120-satellite CN100 alternative is faster but approximately doubles India traffic relative to the comparable 60-satellite CN100 case.
+The five rows are kept as a shortlist because they make the choice visible. The CN40 design combines strong California rank stability with comparatively low India traffic. CN90 and CN100 favour India completion instead. Moving from the comparable 60-satellite CN100 case to the 120-satellite CN100 case reduces completion time, but approximately doubles the India task traffic.
 
-\section{Exploratory India 180-Satellite Results}
+\section{India 180-Satellite Results and Fleet-Scale Extension}
 
 \subsection{Central-node response in the balanced block}
 
-Figure~\ref{fig:t180_cn_response} shows the response across the balanced CN30--CN100 block. Under the bounded nominal policy, mean observation falls from 87.73\% at CN30 to 42.47\% at CN100; strict completion changes from 0.26\% to zero and useful coverage from 11.35\% to 2.02\%. The high-CN decline is therefore stronger than a simple saturation effect under the bounded package.
+Figure~\ref{fig:t180_cn_response} covers the balanced CN30--CN100 block. With bounded routing, mean observation decreases from 88.15\% at CN30 to 43.52\% at CN100. Strict completion moves from 0.25\% to zero, and useful coverage from 11.20\% to 2.04\%. This is more than a flat, saturated response: the implemented package performs worse when nearly every spacecraft receives the Central Node role. The curve cannot identify one congestion mechanism because placement, preference, link eligibility, link budget, hop limit, and copy limit are changed together. It does establish that the role cannot be assigned to the whole fleet without changing the routing behaviour.
 
-Under the unlimited diagnostic, observation rises from 89.64\% at CN30 to 92.03\% at CN100. Strict completion rises from 88.50\% to 97.04\%, useful coverage from 95.55\% to 99.13\%, and mean P100 $T_{100}$ falls from 257.08 to 142.03 minutes. These gains require a strong resource increase: mean transferred data rises from 43,976 to 102,880 Mbit per case.
+The unlimited diagnostic moves in the opposite direction. From CN30 to CN100, observation rises from 90.07\% to 92.36\%, strict completion from 88.98\% to 97.16\%, and useful coverage from 95.74\% to 99.17\%. Mean P100 $T_{100}$ falls from 257.08 to 142.03 minutes. The contacts created at high participation are therefore useful, but the bounded forwarding rules do not exploit them effectively. This gain also requires traffic: mean transferred data increases from 45,476 to 105,760 Mbit per case. A 133\% traffic increase buys 2.29 points of observation and 8.18 points of strict completion. CN100 is attractive only if that faster, broader completion is worth the added communication burden.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{01_exploratory_180_cn_response.png}
-\caption{Exploratory India 180-satellite CN response for 741 tasks and the balanced 216-case block.}
+\includegraphics[width=\textwidth]{part2_revision/07_exploratory_180_cn_response.pdf}
+\caption{India 180-satellite Central Node response for 773 tasks and the balanced 216-case block of the final campaign. Bounded routing is the implemented copy/hop-limited package; unlimited routing removes those forwarding limits as a diagnostic. Shading shows base-clustered stability intervals.}
 \label{fig:t180_cn_response}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
 \scriptsize
-\caption{Selected exploratory India 180-satellite marginal means.}
+\caption{Selected India 180-satellite marginal means from the final campaign.}
 \label{tab:t180_cn_levels}
 \begin{tabular}{llrrrrr}
 \toprule
 Policy & CN (\%) & Obs. (\%) & \Suseful\ (\%) & Coverage (\%) & $T_{100}$ (min) & Data (Mbit) \\
 \midrule
-Bounded & 30 & 87.73 & 0.26 & 11.35 & 81.16 & 4,543 \\
-Bounded & 50 & 87.19 & 0.06 & 10.93 & 78.18 & 4,527 \\
-Bounded & 100 & 42.47 & 0.00 & 2.02 & -- & 2,890 \\
-Unlimited & 30 & 89.64 & 88.50 & 95.55 & 257.08 & 43,976 \\
-Unlimited & 50 & 91.47 & 94.62 & 98.38 & 199.74 & 61,331 \\
-Unlimited & 100 & 92.03 & 97.04 & 99.13 & 142.03 & 102,880 \\
+Bounded & 30 & 88.15 & 0.25 & 11.20 & 81.16 & 4,671 \\
+Bounded & 50 & 87.67 & 0.06 & 10.81 & 78.18 & 4,655 \\
+Bounded & 100 & 43.52 & 0.00 & 2.04 & -- & 2,970 \\
+Unlimited & 30 & 90.07 & 88.98 & 95.74 & 257.08 & 45,476 \\
+Unlimited & 50 & 91.82 & 94.84 & 98.45 & 199.74 & 63,225 \\
+Unlimited & 100 & 92.36 & 97.16 & 99.17 & 142.03 & 105,760 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Policy and packet-size effects}
+\subsection{Matched India 120-to-180 fleet-size effect}
 
-Peer and hybrid policies are again nearly identical. Relative to central-only routing, each improves observation by 0.29 points and strict completion by approximately 0.98 points, but adds about 28,610 Mbit per case. The smaller marginal mission change at 180 satellites does not mean the policies are free: the traffic difference is substantial.
+Because both fleet sizes use the same 773 tasks, each 180-satellite case in the balanced block can be paired with the corresponding 120-satellite case by plane count, altitude, inclination, and Central Node fraction. Table~\ref{tab:t120_t180_matched} reports 180 minus 120 satellites under the unlimited useful-deadline scenario. The 95\% stability intervals resample the 27 base-geometry clusters while retaining their eight Central Node fractions.
 
-Halving packet size improves observation by 1.10 points and strict completion by 2.70 points. Doubling packet size reduces them by 6.39 and 10.93 points. Quadrupling packet size reduces observation by 23.04 points and strict completion by 34.70 points while adding about 127,203 Mbit per case. Removing the bounded forwarding and copy limits changes observation by $+12.26$ points and strict completion by $+94.70$ points, with about 69,479 Mbit additional traffic. Figure~\ref{fig:t180_scenario_effects} summarizes these paired effects.
+\begin{table}[htbp]
+\centering
+\small
+\caption{Matched India 180-minus-120-satellite effects for 216 CN30--CN100 architectures under unlimited routing.}
+\label{tab:t120_t180_matched}
+\begin{tabularx}{\textwidth}{YrrL{0.25\textwidth}}
+\toprule
+Metric & T120 mean & T180 mean & Mean change with 95\% stability interval \\
+\midrule
+Observation fulfilment (\%) & 90.57 & 91.80 & $+1.23$ pp $[+0.75,+1.82]$ \\
+Strict useful completion (\%) & 91.01 & 94.99 & $+3.99$ pp $[+2.74,+5.31]$ \\
+Useful-recipient coverage (\%) & 96.80 & 98.34 & $+1.55$ pp $[+1.07,+2.03]$ \\
+P100 $T_{100}$ (min) & 231.23 & 186.55 & $-44.68$ min $[-52.09,-37.89]$ \\
+Transferred data (Mbit/case) & 50,060 & 75,887 & $+25,827$ $[+25,318,+26,193]$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Figure~\ref{fig:t120_t180_response} shows that the larger fleet improves the three mission measures and shortens complete dissemination across the balanced Central Node range, but the improvement requires substantially more traffic. The controlled comparison therefore supports a qualified scale benefit, not a claim that the larger fleet dominates after resource burden is included.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{03_exploratory_180_scenario_effects.png}
-\caption{Exploratory India 180-satellite paired policy, packet-size, and routing-bound effects.}
+\includegraphics[width=\textwidth]{part2_revision/14_matched_india_120_180_response.pdf}
+\caption{Matched India 120- and 180-satellite response under unlimited routing for the 216 common CN30--CN100 architectures.}
+\label{fig:t120_t180_response}
+\end{figure}
+
+\subsection{Policy and packet-size effects}
+
+Peer and hybrid policies are again nearly identical. Relative to central-only routing, each improves observation by 0.28 points and strict completion by approximately 0.94 points, but adds about 29,300 Mbit per case. The smaller marginal mission change at 180 satellites does not mean the policies are free: the traffic difference is substantial.
+
+Halving packet size improves observation by 1.05 points and strict completion by 2.59 points. Doubling packet size reduces them by 6.13 and 10.49 points. Quadrupling packet size reduces observation by 22.32 points and strict completion by 33.67 points while adding about 133,628 Mbit per case. Removing the bounded forwarding and copy limits changes observation by $+11.98$ points and strict completion by $+94.92$ points, with about 71,546 Mbit additional traffic. Figure~\ref{fig:t180_scenario_effects} summarizes these paired effects.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{part2_revision/08_exploratory_180_scenario_effects.pdf}
+\caption{Paired India 180-satellite effects relative to the corresponding reference scenario. Bars to the right denote an increase; bars to the left denote a decrease. Mission metrics are in percentage points and traffic is in Mbit per case.}
 \label{fig:t180_scenario_effects}
 \end{figure}
 
 \subsection{Failure robustness and combined stress}
 
-At each family's maximum evaluated severity of 30\%, mean strict-completion retention is 76.34\% for ground-station outage, 93.74\% for targeted central-node failure, 95.07\% for random central-node failure, 95.21\% for capacity degradation, 95.25\% for link-window outage, and 95.48\% for random satellite failure. Ground access is therefore the dominant tested single vulnerability in the exploratory layer as well. The finding remains specific to a one-ground-station baseline.
+At each family's maximum evaluated severity of 30\%, mean strict-completion retention is 76.26\% for ground-station outage, 93.99\% for targeted Central Node failure, 95.28\% for random Central Node failure, 95.43\% for capacity degradation, 95.47\% for link-window outage, and 95.67\% for random satellite failure. Figure~\ref{fig:t180_robustness} shows that the ground-station series separates progressively from the other failure families as severity increases; the result is therefore a pattern across the tested levels rather than a conclusion based only on the 30\% endpoint. Ground access is the dominant tested single vulnerability in the sensitivity experiment as well. Targeted Central Node loss is worse than random Central Node loss, as expected when the removed nodes are selected for structural importance, but the difference is small compared with the ground-station effect. The evidence supports prioritizing a ground-network trade study before fine optimization of failure-aware Central Node placement. It does not yet support a specific number or location of additional stations.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{04_exploratory_180_robustness.png}
-\caption{Exploratory India 180-satellite strict-completion retention across failure families.}
+\includegraphics[width=0.98\textwidth]{part2_revision/09_exploratory_180_robustness.pdf}
+\caption{India 180-satellite strict-completion retention across failure families. Colour, marker, and line style distinguish the disturbance; the black line is the matched no-failure baseline.}
 \label{fig:t180_robustness}
 \end{figure}
 
-Under combined stress, twofold packets with 10\% and 20\% satellite failure retain 85.82\% and 83.10\% of baseline strict completion. Fourfold packets reduce retention to 59.79\% and 56.33\%. Figure~\ref{fig:t180_combined} makes the interaction visible. The retained ten combined-stress replicates support descriptive clustered means; they do not justify fine-grained low-tail ordering.
+Under combined stress, twofold packets with 10\% and 20\% satellite failure retain 86.44\% and 83.81\% of baseline strict completion. Fourfold packets reduce retention to 60.97\% and 57.49\%. Figure~\ref{fig:t180_combined} makes the interaction visible. The retained ten combined-stress replicates support descriptive clustered means; they do not justify fine-grained low-tail ordering.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{05_exploratory_180_combined_stress.png}
-\caption{Exploratory India 180-satellite strict-completion retention under combined packet and satellite-failure stress.}
+\includegraphics[width=0.82\textwidth]{part2_revision/10_exploratory_180_combined_stress.pdf}
+\caption{India 180-satellite strict-completion retention under combined packet and satellite-failure stress.}
 \label{fig:t180_combined}
 \end{figure}
 
 \subsection{Priority-stratified timing}
 
-The priority analysis uses task deadlines as censoring limits and reports High, Medium, and Low classes separately; the realized India population contains no Critical task. From CN30 to CN100 under the unlimited diagnostic, High-priority strict-completion probability rises from 50.95\% to 65.66\% within 60 minutes. Medium-priority probability rises from 80.87\% to 95.90\% within 180 minutes, and Low-priority probability from 99.14\% to 100\% within 360 minutes. The corresponding standardized speed increases from 0.155 to 0.309 for High, 0.378 to 0.652 for Medium, and 0.558 to 0.760 for Low.
+The priority analysis uses task deadlines as censoring limits and reports High, Medium, and Low classes separately; the India population contains no Critical task. From CN30 to CN100 under the unlimited diagnostic, High-priority strict-completion probability rises from 50.95\% to 65.66\% within 60 minutes. Medium-priority probability rises from 80.87\% to 95.90\% within 180 minutes, and Low-priority probability from 99.23\% to 100\% within 360 minutes. The corresponding standardized speed increases from 0.16 to 0.31 for High, 0.38 to 0.65 for Medium, and 0.57 to 0.77 for Low. Figure~\ref{fig:t180_priority_attainment} displays both quantities because higher deadline attainment and faster conditional completion answer different questions: the former counts how often the deadline is met, whereas the latter distinguishes earlier from later completion among the available time horizons.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.98\textwidth]{07_exploratory_180_priority_deadline_attainment.png}
-\caption{Exploratory India 180-satellite priority-stratified deadline attainment.}
+\includegraphics[width=0.98\textwidth]{part2_revision/13_exploratory_180_priority.pdf}
+\caption{India 180-satellite priority-stratified deadline attainment and standardized speed under unlimited routing. Each class uses its fixed deadline as the time horizon.}
 \label{fig:t180_priority_attainment}
 \end{figure}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.98\textwidth]{08_exploratory_180_priority_standardized_speed.png}
-\caption{Exploratory India 180-satellite priority-stratified standardized speed based on RMST.}
-\label{fig:t180_priority_speed}
-\end{figure}
+These results show improvement with higher CN participation under the unlimited diagnostic. They now cover the complete intended population of 11 High-, 395 Medium-, and 367 Low-priority India tasks.
 
-These results show improvement with higher CN participation under the unlimited diagnostic. Low-priority conclusions remain conditional on the reduced population because all 32 omitted tasks are Low priority.
+\subsection{Pareto set and rank acceptability}
 
-\subsection{Exploratory Pareto set and rank acceptability}
-
-The exploratory redundancy audit again identifies transferred data and transfer-event count as severe duplicates. Exact Pareto filtering leaves 60 of the 216 balanced cases. The large frontier and the distribution of winner frequencies show that no 180-satellite architecture is preference-free.
+The redundancy audit again identifies transferred data and transfer-event count as severe duplicates. Exact Pareto filtering leaves 61 of the 216 balanced cases. Figure~\ref{fig:t180_pareto} shows why a single two-variable ranking is insufficient: architectures with similar mission performance can require markedly different traffic, and some points outlined as Pareto efficient in the full objective set do not appear optimal in either two-dimensional projection alone. The large frontier and the distribution of winner frequencies show that no 180-satellite architecture is preference-free.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{06_exploratory_180_pareto_trade_space.png}
-\caption{Exploratory India 180-satellite multi-objective trade space. Exact Pareto status uses the full declared objective vector, not only the two displayed axes.}
+\includegraphics[width=0.96\textwidth]{part2_revision/12_exploratory_180_pareto.pdf}
+\caption{India 180-satellite trade space shown in two two-variable projections. Colour denotes Central Node fraction and black outlines denote exact Pareto members computed from the full objective vector.}
 \label{fig:t180_pareto}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
 \scriptsize
-\caption{Highest exploratory rank-1 acceptability cases across 10,000 random family-weight vectors.}
+\caption{Highest India 180-satellite rank-1 acceptability cases across 10,000 random family-weight vectors.}
 \label{tab:t180_acceptability}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
 Architecture & CN (\%) & Obs. (\%) & \Suseful\ (\%) & $T_{100}$ (min) & Data (Mbit) & Rank-1 / top-5 (\%) \\
 \midrule
-\texttt{T180\_P10\_H0500\_I0986\_CN050\_F1} & 50 & 100 & 100 & 138.39 & 62,955 & 27.02 / 46.94 \\
-\texttt{T180\_P10\_H0800\_I0986\_CN040\_F1} & 40 & 100 & 100 & 166.22 & 53,986 & 20.30 / 29.99 \\
-\texttt{T180\_P10\_H0500\_I0800\_CN090\_F1} & 90 & 100 & 100 & 86.56 & 96,004 & 15.01 / 37.21 \\
-\texttt{T180\_P05\_H0800\_I0800\_CN100\_F1} & 100 & 100 & 100 & 78.43 & 104,220 & 9.45 / 22.74 \\
-\texttt{T180\_P10\_H0800\_I0800\_CN100\_F1} & 100 & 100 & 100 & 80.69 & 104,220 & 8.06 / 32.98 \\
+\texttt{T180\_P10\_H0500\_I0986\_CN050\_F1} & 50 & 100 & 100 & 138.39 & 64,862 & 26.55 / 46.38 \\
+\texttt{T180\_P10\_H0800\_I0986\_CN040\_F1} & 40 & 100 & 100 & 166.22 & 55,659 & 19.70 / 29.28 \\
+\texttt{T180\_P10\_H0500\_I0800\_CN090\_F1} & 90 & 100 & 100 & 86.56 & 98,692 & 14.31 / 37.73 \\
+\texttt{T180\_P05\_H0800\_I0800\_CN100\_F1} & 100 & 100 & 100 & 78.43 & 107,100 & 9.62 / 23.57 \\
+\texttt{T180\_P10\_H0800\_I0800\_CN100\_F1} & 100 & 100 & 100 & 80.69 & 107,100 & 8.85 / 33.34 \\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-The top two cases use CN50 and CN40 and trade slower dissemination for lower traffic. The faster CN90/CN100 alternatives require approximately 96,000--104,220 Mbit per case. These are exploratory India-only decision points and are not appended to the confirmatory cross-window shortlist.
+The top two cases use CN50 and CN40 and trade slower dissemination for lower traffic. The faster CN90/CN100 alternatives require approximately 98,700--107,100 Mbit per case. These candidates extend the final architecture portfolio for an India workload; their scope is marked explicitly because a matched California 180-satellite population was not executed.
 
 \section{Integrated Result Synthesis}
 
-The confirmatory and exploratory layers support a consistent system-level interpretation without being pooled. Central Nodes create useful temporal paths, but their value depends on forwarding constraints and workload. Mission gains can saturate while traffic continues to grow. Packet size is a strong design driver, especially for the India load case. Ground access is the largest tested single vulnerability in both evidence layers, while combined load and failure produce losses that isolated disturbances do not reveal. Exact Pareto and rank-acceptability results support portfolios rather than universal winners.
+The regional and 180-satellite blocks of the final campaign support a consistent system-level interpretation. Central Nodes create useful temporal paths, but their value depends on forwarding constraints and workload. Mission gains can saturate while traffic continues to grow. Packet size is a strong design driver, especially for the India load case. Ground access is the largest tested single vulnerability across the campaign, while combined load and failure produce losses that isolated disturbances do not reveal. Exact Pareto and rank-acceptability results support portfolios rather than universal winners.
 
-The layers also establish a limit. The exploratory run cannot identify a controlled 120-to-180 fleet-size effect because its task population differs from the confirmatory India population and its low-CN case coverage is incomplete. Its value is instead to show that the same trade-offs persist at a larger fleet scale under a clearly declared 741-task workload. This separation resolves the final evidence question without hiding completed output or overstating comparability.
+The final campaign identifies a controlled India 120-to-180 effect for the 216 matched CN30--CN100 cells: the larger fleet improves mission completion and timing, but requires about 25.8~Gbit more task-message traffic per case. Low-CN 180-satellite coverage is incomplete, and no California 180-satellite grid exists. The result is therefore a qualified India scale comparison, not a universal three-fleet or cross-region law.

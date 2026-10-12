@@ -1,31 +1,29 @@
 # Master Thesis Reproducibility Repository
 
-This repository accompanies the thesis **Effect of Central Nodes on Task Dissemination in Distributed Satellite Systems** by Maneesh Manjunath, Technical University of Munich, 2026.
+This repository accompanies the thesis **Effect of Central Nodes on Task Dissemination in Distributed Satellite Systems** by Maneesh Manjunath, Technical University of Munich, submitted on 14 October 2026.
 
-The study evaluates deadline-constrained wildfire follow-up tasks in distributed satellite systems. It connects Sentinel-3-derived task generation, Walker-constellation simulation, temporal routing, task reception, later observation opportunities, failure replay, and multi-objective post-processing.
+The study evaluates deadline-constrained wildfire follow-up tasks in distributed satellite systems. It connects Sentinel-3-derived task generation, Walker-constellation simulation, temporal routing, observation opportunities, failure replay, and multi-objective post-processing.
 
 ## Repository contents
 
 | Directory | Contents |
 |---|---|
-| `simulation/` | Full891 simulation source, frozen campaign configuration, task input, tests, and VM run scripts |
-| `postprocessing/` | Complete regional and cross-region analysis, task-level processing, validation, Pareto, robustness, timing, and rank-acceptability code |
-| `figure_generation/` | Deterministic Python/Matplotlib code for the 22 thesis figures and published map sources |
-| `results/` | Compact machine-readable evidence tables, manifests, and the consolidated Excel workbook |
-| `figures/` | Final PNG and PDF thesis figures, figure manifest, captions, and companion tables |
-| `thesis/` | Final thesis PDF and complete LaTeX source |
+| `simulation/` | Full891 simulation source plus the independently runnable, contract-verified 282-case India rerun package |
+| `postprocessing/` | Regional, cross-region, robustness, timing, Pareto, rank-acceptability, and corrected 180-satellite analysis code |
+| `figure_generation/` | Deterministic Python/Matplotlib figure code and published map sources |
+| `results/` | Canonical evidence tables, manifests, historical audit material, and the consolidated Excel workbook |
+| `figures/` | Final thesis figures and companion tables |
+| `thesis/` | Final thesis PDF and complete compilable LaTeX source |
 | `checks/` | Release verification and checksum tools |
 
-## Evidence populations
+## Final evidence populations
 
-The repository preserves the evidence boundary used in the thesis.
+- The matched regional block contains 594 California and 594 India cases for the validated 60- and 120-satellite population.
+- The verified India 180-satellite block contains all 282 audited cases on the corrected 773-task population.
+- The matched 120-to-180 analysis uses 216 balanced CN30-CN100 comparisons across 27 architecture clusters.
+- A superseded 741-task exploratory run is retained only under `results/historical/` to document the corrected task-index alignment defect. It is excluded from all final findings.
 
-- The confirmatory layer contains matched California and India results for the validated 60- and 120-satellite population.
-- The exploratory layer contains 282 completed India 180-satellite cases evaluated on an internally consistent 741-task population.
-- The 180-satellite layer is reported separately because its task population is not interchangeable with the 773-task confirmatory India input.
-- No cross-population fleet-size coefficient is claimed.
-
-See `results/final_results/case_task_population_contract.csv`, `results/final_results/data_contract_audit_summary.json`, and Appendix C of the thesis for the validation record and root-cause explanation.
+The principal 120-to-180 effects are +1.23 percentage points in observation success, +3.99 points in strict completion, 44.68 minutes lower worst-case dissemination time, and 25,827 Mbit more transferred data per case. These effects describe the evaluated India workload and architecture grid, not a universal fleet-scaling law.
 
 ## Quick start
 
@@ -42,23 +40,24 @@ python -m pip install -e postprocessing/library
 
 On Windows, activate the environment with `.venv\Scripts\activate`.
 
+Run the release checks:
+
+```bash
+python checks/verify_release.py
+```
+
 Run the unit tests:
 
 ```bash
 python -m pytest simulation/tests postprocessing/library/tests postprocessing/california_results_analysis/tests postprocessing/complete/tests
+python -m pytest simulation/india_282_verified_rerun/tests
 ```
 
-Validate the Full891 campaign definition:
+## Simulation and post-processing
 
-```bash
-full891 validate --config simulation/config/full_campaign.json
-```
+The original campaign remains under `simulation/`. The corrected 282-case India package is under `simulation/india_282_verified_rerun/`; its `README_VM.md` gives the preflight, canary, background-run, resume, verification, and export commands.
 
-The complete campaign is computationally expensive. Read `simulation/README.md` and `REPRODUCIBILITY.md` before starting it.
-
-## Post-processing
-
-The complete post-processor accepts extracted regional result folders or regional ZIP archives:
+The general post-processing entry point is:
 
 ```bash
 python postprocessing/complete/postprocess_complete.py \
@@ -71,32 +70,27 @@ python postprocessing/complete/postprocess_complete.py \
   --collinearity-threshold 0.95
 ```
 
-The final compact tables used in the report are already provided under `results/`.
-
-## Figures
-
-Recreate the report figures from the canonical post-processing table:
+The corrected India 180-satellite outputs are processed with:
 
 ```bash
-python figure_generation/generate_thesis_figures.py \
-  --analysis-root /path/to/postprocessing_output \
-  --tasks-csv simulation/input_tasks/all_sentinel3_tasks_with_priority_score_deduplicated.csv \
-  --output regenerated_figures
+python postprocessing/corrected_180/postprocess_corrected_180.py \
+  --simulation-root /path/to/corrected_180_simulation \
+  --report-root /path/to/final_report_source
 ```
 
-The California outline is from the US Census Bureau 2025 cartographic boundary files. The India outline is from Natural Earth 1:50 million cultural vectors. Source and version details are in `figure_generation/map_data/SOURCES.md`.
+## Result tables and figures
 
-## Result tables
+`results/Thesis_Result_Tables.xlsx` is the reader-oriented workbook. Its summary and analysis sheets point to the canonical CSV sources. The CSV, JSON, and Parquet files remain the authoritative machine-readable evidence.
 
-`results/Thesis_Result_Tables.xlsx` is the reader-oriented workbook. The CSV, JSON, and Parquet files remain the authoritative machine-readable evidence. The workbook does not replace them.
+Final plot files are under `figures/`. Reusable generators are under `figure_generation/`; user-facing figure terminology consistently uses **Central Node**.
 
 ## Raw campaign archive
 
-The multi-gigabyte raw VM campaign archive is not committed to GitHub. It contains millions of Parquet partitions and temporary execution records. The repository instead includes the frozen inputs, exact source code, configuration, compact evidence tables, validation manifests, and checksums needed to trace every reported claim. Raw archives can be supplied separately for examination.
+The multi-gigabyte raw VM campaign archive is not committed to GitHub because it contains millions of Parquet partitions and temporary execution records. This release instead contains the frozen inputs, exact software, corrected rerun package, compact evidence tables, validation manifests, report source, and checksums needed to trace the reported claims. Raw archives can be supplied separately for examination.
 
 ## Citation
 
-Use the citation metadata in `CITATION.cff` and cite release `v1.0-thesis`.
+Use the metadata in `CITATION.cff` and cite release `v1.1-thesis-final`.
 
 ## License and data sources
 

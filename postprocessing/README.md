@@ -4,6 +4,8 @@
 
 `library/` contains the reusable ZIP-native post-processing package and inspection utilities.
 
+`corrected_180/` contains the audited India 180-satellite post-processor, consistency checks, priority-event analysis, and the workbook builder used for the final 773-task release.
+
 Run the complete pipeline from the repository root:
 
 ```bash
@@ -18,3 +20,13 @@ python postprocessing/complete/postprocess_complete.py \
 ```
 
 The output tables used in the thesis are published in `results/`.
+
+Process the corrected India 180-satellite output with:
+
+```bash
+python postprocessing/corrected_180/postprocess_corrected_180.py \
+  --simulation-root /path/to/corrected_180_simulation \
+  --report-root /path/to/final_report_source
+```
+
+The accepted canonical output is published in `results/final_corrected_180/`.

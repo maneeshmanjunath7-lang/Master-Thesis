@@ -38,7 +38,9 @@
 \usepackage{listings}
 \usepackage{url}
 \usepackage{csquotes}
-\usepackage{natbib}
+% Numbered bibliography entries make the reference list easier to scan while
+% \citet still retains author names in narrative citations.
+\usepackage[numbers,sort&compress]{natbib}
 \usepackage{tikz}
 \IfFileExists{tracklang.sty}{%
   \usepackage[acronym,toc,nonumberlist]{glossaries}
@@ -96,7 +98,7 @@
   afterskip=1.2\baselineskip
 ]{chapter}
 
-\graphicspath{{figures/}{figures/nominal/}{figures/california_v2/}{figures/objective_weights/}{figures/final_results/}{figures/option2_exploratory_180/}}
+\graphicspath{{figures/}{figures/nominal/}{figures/california_v2/}{figures/objective_weights/}{figures/final_results/}{figures/option2_exploratory_180/}{figures/part2_revision/}}
 \hypersetup{
   colorlinks=true,
   linkcolor=TUMBlue,

@@ -6,8 +6,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "checks" / "SHA256SUMS.txt"
-INCLUDED = ("results", "figures", "simulation/config", "simulation/input_tasks", "thesis")
+INCLUDED = (
+    "README.md",
+    "REPRODUCIBILITY.md",
+    "CITATION.cff",
+    "results",
+    "figures",
+    "figure_generation",
+    "postprocessing/corrected_180",
+    "simulation/config",
+    "simulation/input_tasks",
+    "simulation/india_282_verified_rerun",
+    "thesis",
+)
 EXCLUDED_NAMES = {"SHA256SUMS.txt"}
+EXCLUDED_PREFIXES = (
+    "figures/option2_exploratory_180/",
+    "thesis/latex/figures/option2_exploratory_180/",
+)
 TEXT_SUFFIXES = {
     ".bib", ".cff", ".cls", ".cmd", ".cpg", ".csv", ".html", ".json",
     ".md", ".prj", ".ps1", ".py", ".sh", ".sty", ".tex", ".toml",
@@ -38,7 +54,13 @@ def main() -> None:
             files.append(target)
         elif target.exists():
             files.extend(path for path in target.rglob("*") if path.is_file())
-    files = sorted(path for path in files if path.name not in EXCLUDED_NAMES)
+    files = sorted(
+        path
+        for path in files
+        if path.name not in EXCLUDED_NAMES
+        and path.suffix.lower() != ".zip"
+        and not path.relative_to(ROOT).as_posix().startswith(EXCLUDED_PREFIXES)
+    )
     lines = [f"{digest(path)}  {path.relative_to(ROOT).as_posix()}" for path in files]
     OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {len(lines)} checksums to {OUTPUT.relative_to(ROOT)}")
