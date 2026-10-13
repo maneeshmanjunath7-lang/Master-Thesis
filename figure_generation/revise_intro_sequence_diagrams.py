@@ -141,7 +141,57 @@ def method_sequence():
     plt.close(fig)
 
 
+def temporal_route():
+    # Match the aspect ratio of the thesis figure slot to avoid stretching at inclusion time.
+    fig, ax = setup(12.0, 5.535)
+    rows = [
+        ("Ground station", 0.82, DARK, "normal"),
+        ("Satellite A", 0.62, DARK, "normal"),
+        ("Central Node", 0.42, ORANGE, "semibold"),
+        ("Satellite B", 0.22, DARK, "normal"),
+    ]
+
+    for label, y, colour, weight in rows:
+        ax.text(0.025, y, label, ha="left", va="center", fontsize=12.0, color=colour, fontweight=weight)
+        ax.plot([0.205, 0.975], [y, y], color=RULE, linewidth=1.05, zorder=1)
+
+    def route_arrow(start, end, colour):
+        ax.add_patch(
+            FancyArrowPatch(
+                start,
+                end,
+                arrowstyle="-|>",
+                mutation_scale=17,
+                linewidth=2.0,
+                color=colour,
+                zorder=3,
+            )
+        )
+
+    route_arrow((0.275, 0.82), (0.360, 0.62), BLUE)
+    route_arrow((0.460, 0.62), (0.555, 0.42), BLUE)
+    route_arrow((0.755, 0.42), (0.835, 0.22), ORANGE)
+    route_arrow((0.895, 0.22), (0.955, 0.82), BLUE)
+
+    # Labels are intentionally offset from the arrows so the text never crosses a line.
+    label_box = {"facecolor": "white", "edgecolor": "none", "pad": 1.5, "alpha": 0.92}
+    ax.text(0.283, 0.700, "Upload", ha="right", va="center", fontsize=11.2, color=BLUE, bbox=label_box)
+    ax.text(0.535, 0.555, "Relay", ha="left", va="center", fontsize=11.2, color=BLUE, bbox=label_box)
+    ax.text(0.800, 0.365, "Relay", ha="left", va="center", fontsize=11.2, color=ORANGE, bbox=label_box)
+    ax.text(0.875, 0.545, "Delivery", ha="right", va="center", fontsize=11.2, color=BLUE, bbox=label_box)
+
+    ax.plot([0.575, 0.690], [0.42, 0.42], color=ORANGE, linewidth=4.2, solid_capstyle="butt", zorder=4)
+    ax.text(0.6325, 0.468, "Store", ha="center", va="bottom", fontsize=11.2, color=ORANGE)
+
+    route_arrow((0.215, 0.095), (0.965, 0.095), DARK)
+    ax.text(0.590, 0.045, "Time", ha="center", va="center", fontsize=11.5, color=DARK)
+
+    fig.savefig(OUT / "temporal_route.png", dpi=300, facecolor="white")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     mission_chain()
     method_sequence()
+    temporal_route()
