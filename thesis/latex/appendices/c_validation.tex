@@ -1,5 +1,7 @@
 \section{Evidence Hierarchy}
 
+Table~\ref{tab:evidence_hierarchy} defines the precedence rule used when a summary file, a configuration file, and the validated case evidence disagree.
+
 \begin{table}[htbp]
 \centering
 \caption{Evidence hierarchy used to resolve conflicting artefacts.}
@@ -20,10 +22,12 @@ Rank & Source & Permitted use \\
 
 \section{Final Structural Validation Ledger}
 
+Table~\ref{tab:v2_validation_ledger} reports the expected and observed regional inventory, including scenario-key completeness and task-population checks.
+
 \begin{table}[htbp]
 \centering
 \small
-\caption{Fresh V2 full-region structural inventory.}
+\caption{Full-region structural inventory of the final verified campaign.}
 \label{tab:v2_validation_ledger}
 \begin{tabularx}{\textwidth}{YrrY}
 \toprule
@@ -44,7 +48,7 @@ Resume duplicates removed & 4,269 & 0 & California keys were scientifically iden
 
 The combined inventory contains 960,498 unique status rows, 940,410 completed scientific rows, 20,088 explicit \texttt{NOT\_APPLICABLE} rows, and 38,358 passed architecture checks. Structural completion is necessary but does not by itself establish comparability; task population and the balance of the analysis block are separate gates.
 
-The final evidence release therefore uses two explicit Fresh V2 populations:
+The final evidence release therefore uses two explicit campaign populations:
 
 \begin{itemize}
 \item a confirmatory California--India population with 594 matched 60/120-satellite cases per event window; and
@@ -66,10 +70,12 @@ The corrected execution resets the regional index and freezes the task populatio
 
 \section{Final Claim Ledger}
 
+Table~\ref{tab:claim_ledger} links each final claim to the population that supports it and records the boundary beyond which it is not asserted.
+
 \begin{table}[H]
 \centering
 \small
-\caption{Supported and bounded Fresh V2 claims in the final analysis.}
+\caption{Supported and bounded claims in the final verified analysis.}
 \label{tab:claim_ledger}
 \begin{tabularx}{\textwidth}{Y L{0.18\textwidth}Y}
 \toprule
@@ -85,7 +91,7 @@ Routing-policy and packet-size effects & Supported & Paired within each eligible
 Random and targeted failure robustness & Supported & Time-aware replay with declared seeds \\
 Combined-stress fifth-percentile generalization & Not supported & Ten replicates support descriptive means only \\
 Exact Pareto membership and rank acceptability & Supported conditionally & Separate cross-window and India 180 feasible sets \\
-Fresh V2 first-reception result & Not supported & Separate field absent from the canonical case table \\
+Final-campaign first-reception result & Not supported & Separate field absent from the canonical case table \\
 Observation-radius stability & Not supported & Radius fixed at \SI{700}{\kilo\metre} \\
 Routing-package component effects & Not supported & Principal sweep changes bundled components together \\
 Placement robustness & Not supported & One deterministic balanced placement tested \\
@@ -98,7 +104,9 @@ End-to-end wildfire alert latency & Not supported & Chain ends at follow-up obse
 
 \section{Output-to-Claim Traceability}
 
-For every quantitative claim, the release retains a compact CSV or Parquet table, the population filter, and the frozen analysis settings. Regional differences always use India minus California. The decision record also states the objective directions, normalization population, reference weights, random-weight seed, draw count, and eligibility rules. Distinct output prefixes identify the regional and 180-satellite blocks of the same Fresh V2 campaign so that an unsupported comparison cannot be formed accidentally.
+Table~\ref{tab:final_release_gate} maps the primary machine-readable outputs to their use in the thesis, providing a direct audit route from claim to evidence file.
+
+For every quantitative claim, the release retains a compact CSV or Parquet table, the population filter, and the frozen analysis settings. Regional differences always use India minus California. The decision record also states the objective directions, normalization population, reference weights, random-weight seed, draw count, and eligibility rules. Distinct output prefixes identify the regional and 180-satellite blocks of the same final campaign so that an unsupported comparison cannot be formed accidentally.
 
 \begin{table}[H]
 \centering

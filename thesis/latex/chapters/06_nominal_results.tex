@@ -2,11 +2,11 @@ This chapter uses the Reference Campaign to establish the behaviour of the froze
 
 \section{Reference-Campaign Boundary}
 
-The earlier nominal campaign is retained as the historical like-for-like two-event-window architecture sweep. It contains 891 California cases and the same 891 identifiers for India, preserving the baseline comparison under that frozen model. These values are kept separate from Fresh Full891 V2 and are not averaged with the final scenario results in Chapter~7. The contrast is a case-study comparison, not an estimate of a California, India, seasonal, or global population effect.
+The earlier nominal campaign is retained as the historical like-for-like two-event-window architecture sweep. It contains 891 California cases and the same 891 identifiers for India, preserving the baseline comparison under that frozen model. These values are kept separate from the final verified campaign and are not averaged with the scenario results in Chapter~7. The contrast is a case-study comparison, not an estimate of a California, India, seasonal, or global population effect.
 
 \section{Validation Status}
 
-All case rows used in this chapter passed the validation procedure in Chapter~5. Specifically, all 1,782 expected case identifiers were present, every case had the expected task population and completed status, and 17,820 independently recomputed metric comparisons agreed with the stored values within $10^{-6}$. Appendix~C records the checks and their evidence. This chapter preserves the Reference Campaign as the frozen nominal baseline. Chapter~7 then presents the unified final Fresh V2 campaign, including the matched regional analysis and the verified 180-satellite evidence.
+All case rows used in this chapter passed the validation procedure in Chapter~5. Specifically, all 1,782 expected case identifiers were present, every case had the expected task population and completed status, and 17,820 independently recomputed metric comparisons agreed with the stored values within $10^{-6}$. Appendix~C records the checks and their evidence. This chapter preserves the Reference Campaign as the frozen nominal baseline. Chapter~7 then presents the final verified campaign, including the matched regional analysis and the verified 180-satellite evidence.
 
 The analytical population contains 891 cases for California and 891 for India. Every case has the expected task count, and every required case status is completed. Core summary metrics were recomputed from lower-level outputs in 17,820 comparisons with zero failures at a tolerance of $10^{-6}$. The numerical evidence is therefore internally consistent even though external model-validity limitations remain.
 
@@ -146,7 +146,7 @@ Spearman $\rho$ asks whether the rank of one variable tends to rise or fall with
 
 \section{Exploratory Regression of Central-Node Marginal Means}
 
-Figure~\ref{fig:regression_models} compares the best leave-one-level-out model for each event-window response. An exponential-with-offset model describes the steep latency fall better than the polynomial candidates, with leave-one-level-out RMSE of 23.57 minutes for California and 6.29 minutes for India. Quadratic models are preferred for receiver fraction in both event windows, capturing the intermediate peak and later decrease.
+Figure~\ref{fig:regression_models} compares the best leave-one-level-out model for each event-window response. An exponential-with-offset model describes the steep latency fall better than the polynomial candidates, with leave-one-level-out RMSE of 23.57 minutes for California and 6.29 minutes for India. Quadratic models are preferred for receiver fraction in both event windows, capturing the intermediate peak and later decrease. In Table~\ref{tab:regression_best}, $x$ is the Central Node fraction in percentage points. Observation and coverage equations return percentages, while the latency equations return minutes.
 
 \begin{figure}[htbp]
 \centering
@@ -161,21 +161,22 @@ Table~\ref{tab:regression_best} gives the selected models. California observatio
 \centering
 \caption{Best exploratory regression model by leave-one-central-node-level-out error.}
 \label{tab:regression_best}
-\begin{tabularx}{\textwidth}{L{0.17\textwidth}Y L{0.25\textwidth}rr}
+\scriptsize
+\begin{tabularx}{\textwidth}{L{0.13\textwidth}L{0.19\textwidth}Yrr}
 \toprule
-Region & Response & Selected model & $R^2$ & LOOCV RMSE \\
+Region & Response & Fitted equation $y=f(x)$ & $R^2$ & LOOCV RMSE \\
 \midrule
-California & Observation fulfilment & Exponential + offset & 0.83 & 14.51 \\
-California & Useful-receiver fraction & Quadratic & 0.91 & 2.61 \\
-California & P90 first reception & Exponential + offset & 1.00 & 23.57 min \\
-India & Observation fulfilment & Quadratic & 0.78 & 14.21 \\
-India & Useful-receiver fraction & Quadratic & 0.85 & 2.31 \\
-India & P90 first reception & Exponential + offset & 1.00 & 6.29 min \\
+California & Observation fulfilment & $-48.8869e^{-0.253451x}+52.2948$ & 0.83 & 16.33 pp \\
+California & Useful-recipient coverage & $-0.00414501x^2+0.318226x+12.4641$ & 0.91 & 2.61 pp \\
+California & P90 first reception & $124.746e^{-0.151333x}+24.7261$ & 1.00 & 23.57 min \\
+India & Observation fulfilment & $-0.0133479x^2+1.64310x+19.6284$ & 0.78 & 14.21 pp \\
+India & Useful-recipient coverage & $-0.00335199x^2+0.294200x+9.08151$ & 0.85 & 2.31 pp \\
+India & P90 first reception & $211.946e^{-0.0474877x}+33.9073$ & 1.00 & 6.29 min \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-The fit statistics are not uniformly ``good''. The latency curves have excellent in-sample $R^2$, but California's 23.57-minute leave-one-level-out error is still operationally large. Observation has lower $R^2$ and approximately 14-percentage-point prediction error because the abrupt CN100 decline is difficult to reconstruct when that level is omitted. Coverage is better behaved, with 2.31--2.61 percentage-point error. Thus the curves summarize saturation and hump-shaped response; they are not reliable laws for interpolation or extrapolation, and they cannot define an optimum without the competing completion and resource objectives.
+The fit statistics are not uniformly ``good''. The latency curves have excellent in-sample $R^2$, but California's 23.57-minute leave-one-level-out error is still operationally large. Observation has lower $R^2$ and 14.21--16.33-percentage-point prediction error because abrupt end-of-range changes are difficult to reconstruct when a Central Node level is omitted. Coverage is better behaved, with 2.31--2.61-percentage-point error. Thus the equations summarize saturation and hump-shaped response; they are not physical laws, they should not be extrapolated beyond the tested 0--100\% range, and they cannot define an optimum without the competing completion and resource objectives.
 
 \section{Paired Event-Window Comparison}
 
@@ -242,4 +243,4 @@ India & 180 & 19 & 70 & 72.70 \\
 
 The nominal campaign shows a clear separation between early task delivery and broad dissemination. Adding a small central-node population greatly improves observation and first reception relative to CN0 under the central-only topology. Beyond that first step, latency continues to improve, but observation, useful-recipient coverage, and \Suseful\ do not follow a monotonic trend. The bounded copy count and three-hop limit are therefore part of the observed architecture response rather than incidental implementation details.
 
-The paired event-window results add a second constraint: the same architecture does not retain the same rank for California and India. This chapter answers the nominal routing-package and case-study workload questions under the earlier frozen model. It does not establish a population-level regional effect or tolerance to explicit failures; those experiments belong to the Fresh V2 replay in Chapter~7.
+The paired event-window results add a second constraint: the same architecture does not retain the same rank for California and India. This chapter answers the nominal routing-package and case-study workload questions under the earlier frozen model. It does not establish a population-level regional effect or tolerance to explicit failures; those experiments belong to the final verified campaign in Chapter~7.

@@ -1,7 +1,9 @@
 \section{Notation and Denominators}
 
+Table~\ref{tab:notation} defines the symbols, units, and denominators used by the reported mission, timing, traffic, and robustness measures.
+
 \begin{longtable}{p{0.20\textwidth}p{0.17\textwidth}p{0.53\textwidth}}
-\caption{Metric notation used in the Fresh V2 analysis.}\label{tab:notation}\\
+\caption{Metric notation used in the final verified analysis.}\label{tab:notation}\\
 \toprule
 Symbol & Unit/type & Definition \\
 \midrule
@@ -58,7 +60,7 @@ When all useful recipients are reached,
 T_{100,i} = \max_{s\in E_i}(a_{is}-r_i).
 \end{equation}
 
-P100 $T_{100}$ is the largest completed $T_{100,i}$ within a case. Missing completion is censored; it is not set to zero. Fresh V2 does not expose a separate first-reception field in the canonical case table. Earlier nominal first-reception results therefore remain a separate evidence layer.
+P100 $T_{100}$ is the largest completed $T_{100,i}$ within a case. Missing completion is censored; it is not set to zero. The final campaign does not expose a separate first-reception field in the canonical case table. Earlier nominal first-reception results therefore remain a separate evidence layer.
 
 \section{Communication and Network Metrics}
 

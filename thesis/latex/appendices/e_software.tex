@@ -6,7 +6,7 @@ The corrected thesis draft and its evidence are maintained in the project reposi
 \url{https://github.com/maneeshmanjunath7-lang/Master-Thesis}
 \end{center}
 
-The immutable archival release for this thesis is \texttt{v1.1-thesis-final}. It contains the simulator, post-processing and figure-generation code, compact validated result tables, the final LaTeX source, the furnished PDF, checksums, and environment metadata. The tag resolves to the exact release commit and provides the reproducible evidence boundary for the reported results. The earlier \texttt{v1.0-thesis} tag predates the verified 282-case execution and is retained only as development provenance; it is not the evidence source for the final 180-satellite findings.
+The immutable simulation-evidence release for this thesis is \texttt{v1.1-thesis-final}. It contains the simulator, campaign post-processing code, compact validated result tables, checksums, and environment metadata for the verified 282-case execution. The tag resolves to the exact evidence commit and provides the reproducible boundary for the numerical inputs used in this report. The final signed submission PDF and its presentation-level tables and figures are distributed in the submission package rather than retroactively changing that immutable tag. The earlier \texttt{v1.0-thesis} tag predates the verified execution and is retained only as development provenance; it is not the evidence source for the final 180-satellite findings.
 
 \section{Repository Layout}
 
@@ -26,6 +26,12 @@ Master-Thesis/
 +-- CITATION.cff
 \end{lstlisting}
 
+\section{Software Needed for Reproduction}
+
+The scientific results do not depend on the editor or operating system used to prepare the thesis. Reproducing the post-processing, tables, and figures requires Python and the version-pinned packages in \path{environment/requirements.txt}; these include the data-frame and Parquet readers, numerical and statistical routines, and plotting libraries called by the published scripts. Re-running the underlying event campaign additionally requires the Full891 simulator, its TAT-C-based orbit and access layer, the frozen task files, and the campaign configuration. A LaTeX distribution is needed only to rebuild the report from its source.
+
+Git and GitHub provide version control and release distribution, but they do not affect the numerical method. Visual Studio Code, the VM desktop, archive utilities, and ChatGPT/Codex are likewise not reproduction dependencies. The role of ChatGPT/Codex is disclosed in the acknowledgements; all scientific evidence needed to reproduce or audit the reported results is contained in the tagged code, configuration, environment, and result artefacts described here.
+
 \section{Reproducing the Analyses}
 
 After creating a Python environment and installing \path{environment/requirements.txt}, the main post-processing command is:
@@ -37,7 +43,7 @@ python postprocessing/complete/postprocess_complete.py \
   --output reproduced_results
 \end{lstlisting}
 
-The simulator and each post-processing package include focused tests. The repository workflow repeats the release checks and tests on pushes and pull requests. \path{REPRODUCIBILITY.md} gives the Windows and Linux command sequences, expected inputs, evidence boundaries, and verification procedure. The \texttt{v1.1-thesis-final} verification report confirms that \path{results/final_corrected_180}, the final LaTeX source, and the final PDF are present and checksummed.
+The simulator and each post-processing package include focused tests. The repository workflow repeats the release checks and tests on pushes and pull requests. \path{REPRODUCIBILITY.md} gives the Windows and Linux command sequences, expected inputs, evidence boundaries, and verification procedure. The \texttt{v1.1-thesis-final} verification report confirms that \path{results/final_corrected_180} and the associated campaign evidence are present and checksummed. The separate submission package contains the final LaTeX source, the additional reviewer-requested fit, uncertainty, risk-screen, and pairwise-Pareto outputs, and the signed PDF.
 
 \section{Evidence Included}
 

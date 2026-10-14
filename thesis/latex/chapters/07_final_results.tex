@@ -1,7 +1,7 @@
 \section{Final Evidence Structure and Integrity}
 \label{sec:final_results}
 
-The final post-processing treats the 60/120-satellite regional cases and the verified India 180-satellite cases as parts of one Fresh V2 campaign. Table~\ref{tab:final_analysis_populations} records the comparison blocks used for each claim. The matched regional block supports California--India conclusions, while the balanced CN30--CN100 portion of the 180-satellite extension supports the paired India 120-to-180 comparison under the common 773-task contract. Both blocks contribute to the final architecture portfolio.
+The final post-processing treats the 60/120-satellite regional cases and the verified India 180-satellite cases as parts of one final campaign. Table~\ref{tab:final_analysis_populations} records the comparison blocks used for each claim. The matched regional block supports California--India conclusions, while the balanced CN30--CN100 portion of the 180-satellite extension supports the paired India 120-to-180 comparison under the common 773-task contract. Both blocks contribute to the final architecture portfolio.
 
 \begin{table}[htbp]
 \centering
@@ -26,11 +26,11 @@ Every verified 180-satellite case has a success marker, 539 unique scenario iden
 
 The intended India input has 773 tasks. The earlier preparation kept row labels 32--804 after filtering India from the combined table, but normalization created a table labelled 0--772. Pandas matched the assigned series by label rather than by row order. This left 32 invalid rows at the start and removed the final 32 Low-priority tasks. In the verified package, the index is reset before normalization and output is accepted only if the task-file, normalized-task, allow-list, and run-contract hashes agree. The earlier 741-task values are excluded; every final 180-satellite number comes from the verified 773-task execution.
 
-The 180-satellite selection does not contain all 27 base architectures at CN0--CN20. It contains 20 cases at CN0, 22 at CN10, and 24 at CN20. All 27 bases are present at each fraction from CN30 through CN100, creating the balanced 216-case block used for aggregate inference. The lower-CN results remain in the canonical table, but they are not used for rank or marginal-mean comparisons that require equal base coverage.
+The 180-satellite selection does not contain all 27 base architectures at CN0--CN20. It contains 20 cases at CN0, 22 at CN10, and 24 at CN20. All 27 bases are present at each fraction from CN30 through CN100, creating the balanced 216-case block used for aggregate inference. Table~\ref{tab:t180_availability} records the exact availability by Central Node fraction. The lower-CN results remain in the canonical table, but they are not used for rank or marginal-mean comparisons that require equal base coverage.
 
 \begin{table}[htbp]
 \centering
-\caption{India 180-satellite case availability by Central Node fraction in the final Fresh V2 campaign.}
+\caption{India 180-satellite case availability by Central Node fraction in the final verified campaign.}
 \label{tab:t180_availability}
 \begin{tabular}{lrrrrrrrrrrr}
 \toprule
@@ -75,7 +75,7 @@ Figure~\ref{fig:final_cn_response} shows that the central-node response depends 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{part2_revision/11_matched_cn_response.pdf}
-\caption{Central Node response in the Fresh V2 matched regional block. Solid lines show unlimited routing; dashed lines show bounded routing. Bands are base-clustered stability intervals.}
+\caption{Central Node response in the final matched regional block. Solid lines show unlimited routing; dashed lines show bounded routing. Bands are base-clustered stability intervals.}
 \label{fig:final_cn_response}
 \end{figure}
 
@@ -92,7 +92,7 @@ At 30\% severity, outage of the sole Munich ground station causes the largest in
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{part2_revision/06_confirmatory_robustness.pdf}
-\caption{Strict-completion retention in the Fresh V2 matched regional block. Colour, marker, and line style identify the failure family; the black line is the matched no-failure baseline.}
+\caption{Strict-completion retention in the final matched regional block. Lines are means of matched base-architecture means; shaded bands show $\pm1$ standard deviation across those base means. Colour, marker, and line style identify the failure family; the black line is the matched no-failure baseline.}
 \label{fig:final_robustness}
 \end{figure}
 
@@ -119,7 +119,7 @@ Architecture & CA Obs. & CA \Suseful & India Obs. & India \Suseful & India $T_{1
 \end{tabular}}
 \end{table}
 
-The five rows are kept as a shortlist because they make the choice visible. The CN40 design combines strong California rank stability with comparatively low India traffic. CN90 and CN100 favour India completion instead. Moving from the comparable 60-satellite CN100 case to the 120-satellite CN100 case reduces completion time, but approximately doubles the India task traffic.
+Table~\ref{tab:final_shortlist} keeps five rows as a shortlist because they make the choice visible. The CN40 design combines strong California rank stability with comparatively low India traffic. CN90 and CN100 favour India completion instead. Moving from the comparable 60-satellite CN100 case to the 120-satellite CN100 case reduces completion time, but approximately doubles the India task traffic.
 
 \section{India 180-Satellite Results and Fleet-Scale Extension}
 
@@ -127,7 +127,7 @@ The five rows are kept as a shortlist because they make the choice visible. The 
 
 Figure~\ref{fig:t180_cn_response} covers the balanced CN30--CN100 block. With bounded routing, mean observation decreases from 88.15\% at CN30 to 43.52\% at CN100. Strict completion moves from 0.25\% to zero, and useful coverage from 11.20\% to 2.04\%. This is more than a flat, saturated response: the implemented package performs worse when nearly every spacecraft receives the Central Node role. The curve cannot identify one congestion mechanism because placement, preference, link eligibility, link budget, hop limit, and copy limit are changed together. It does establish that the role cannot be assigned to the whole fleet without changing the routing behaviour.
 
-The unlimited diagnostic moves in the opposite direction. From CN30 to CN100, observation rises from 90.07\% to 92.36\%, strict completion from 88.98\% to 97.16\%, and useful coverage from 95.74\% to 99.17\%. Mean P100 $T_{100}$ falls from 257.08 to 142.03 minutes. The contacts created at high participation are therefore useful, but the bounded forwarding rules do not exploit them effectively. This gain also requires traffic: mean transferred data increases from 45,476 to 105,760 Mbit per case. A 133\% traffic increase buys 2.29 points of observation and 8.18 points of strict completion. CN100 is attractive only if that faster, broader completion is worth the added communication burden.
+The unlimited diagnostic moves in the opposite direction. From CN30 to CN100, observation rises from 90.07\% to 92.36\%, strict completion from 88.98\% to 97.16\%, and useful coverage from 95.74\% to 99.17\%. Mean P100 $T_{100}$ falls from 257.08 to 142.03 minutes. The contacts created at high participation are therefore useful, but the bounded forwarding rules do not exploit them effectively. This gain also requires traffic: mean transferred data increases from 45,476 to 105,760 Mbit per case. A 133\% traffic increase buys 2.29 points of observation and 8.18 points of strict completion. Table~\ref{tab:t180_cn_levels} reports the selected marginal means underlying this comparison. CN100 is attractive only if that faster, broader completion is worth the added communication burden.
 
 \begin{figure}[htbp]
 \centering
@@ -206,7 +206,7 @@ At each family's maximum evaluated severity of 30\%, mean strict-completion rete
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth]{part2_revision/09_exploratory_180_robustness.pdf}
-\caption{India 180-satellite strict-completion retention across failure families. Colour, marker, and line style distinguish the disturbance; the black line is the matched no-failure baseline.}
+\caption{India 180-satellite strict-completion retention across failure families. Lines are means of matched base-architecture means; shaded bands show $\pm1$ standard deviation across those base means. Colour, marker, and line style distinguish the disturbance; the black line is the matched no-failure baseline.}
 \label{fig:t180_robustness}
 \end{figure}
 
@@ -217,6 +217,17 @@ Under combined stress, twofold packets with 10\% and 20\% satellite failure reta
 \includegraphics[width=0.82\textwidth]{part2_revision/10_exploratory_180_combined_stress.pdf}
 \caption{India 180-satellite strict-completion retention under combined packet and satellite-failure stress.}
 \label{fig:t180_combined}
+\end{figure}
+
+\subsection{Likelihood--consequence screening}
+
+Figure~\ref{fig:failure_risk_screening} combines the measured 30\%-severity consequence with the declared likelihood categories defined in Section~\ref{sec:statistical_workflow}. Under those assumptions, link-window outage and ground-station outage enter the High screening class. Capacity degradation, random satellite loss, and random Central Node loss are Moderate; targeted Central Node loss is Low because the declared occurrence category is Rare even though its measured consequence is substantial. This ranking is conditional on the likelihood assumptions. The simulation supplies the consequence values but does not estimate event probabilities, so the matrix must not be interpreted as a reliability prediction.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{part2_revision/15_failure_risk_screening.pdf}
+\caption{Likelihood--consequence screening of the six individual disturbance families. The horizontal category is based on the worst mean strict-completion loss at 30\% severity across the eligible final-campaign blocks. Vertical categories are declared engineering assumptions, not observed failure probabilities.}
+\label{fig:failure_risk_screening}
 \end{figure}
 
 \subsection{Priority-stratified timing}
@@ -243,6 +254,15 @@ The redundancy audit again identifies transferred data and transfer-event count 
 \label{fig:t180_pareto}
 \end{figure}
 
+Figure~\ref{fig:t180_pairwise_pareto} answers a different question from Figure~\ref{fig:t180_pareto}: each orange set is recomputed using only the two displayed objectives. Of the 216 eligible architectures, 10 are non-dominated for completion versus traffic, 6 for observation versus traffic, 1 for completion versus time, and 6 for observation versus Central Node count. The one-member completion--time front occurs because one architecture is at least as good in both displayed objectives as every other candidate. These pairwise fronts help explain individual trades, but the 61-member full Pareto set remains the correct feasible set for the six-objective decision problem.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{part2_revision/16_pairwise_pareto_fronts.pdf}
+\caption{Recomputed two-objective Pareto fronts for the balanced India 180-satellite block. Pale points are all eligible architectures; orange points and connecting lines are the non-dominated set for the two objectives shown in that panel.}
+\label{fig:t180_pairwise_pareto}
+\end{figure}
+
 \begin{table}[htbp]
 \centering
 \scriptsize
@@ -262,7 +282,7 @@ Architecture & CN (\%) & Obs. (\%) & \Suseful\ (\%) & $T_{100}$ (min) & Data (Mb
 \end{tabular}}
 \end{table}
 
-The top two cases use CN50 and CN40 and trade slower dissemination for lower traffic. The faster CN90/CN100 alternatives require approximately 98,700--107,100 Mbit per case. These candidates extend the final architecture portfolio for an India workload; their scope is marked explicitly because a matched California 180-satellite population was not executed.
+Table~\ref{tab:t180_acceptability} shows that the top two cases use CN50 and CN40 and trade slower dissemination for lower traffic. The faster CN90/CN100 alternatives require approximately 98,700--107,100 Mbit per case. These candidates extend the final architecture portfolio for an India workload; their scope is marked explicitly because a matched California 180-satellite population was not executed.
 
 \section{Integrated Result Synthesis}
 

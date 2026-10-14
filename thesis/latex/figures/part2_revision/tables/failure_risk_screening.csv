@@ -1,0 +1,7 @@
+evidence_block,region,family,base_architectures,mean_loss_percentage_points,mean_retention_percent,sd_across_base_means_percent,consequence_score,consequence_category,likelihood_score,likelihood_category,screening_score,screening_class
+Regional 60/120,India,capacity_degradation,54,7.232088021221268,87.44971179531868,4.541001292400212,3,Moderate,3,Possible,9,Moderate
+India 180,India,ground_station_outage,27,22.461529554565338,76.26073630292089,1.4777586253459867,5,Severe,2,Unlikely,10,High
+Regional 60/120,India,link_window_outage,54,10.331589576953956,77.87891754678368,7.7751768721203,4,Major,3,Possible,12,High
+Regional 60/120,India,random_cn_failure,54,11.787496206857998,79.7822253790678,6.920445167647136,4,Major,2,Unlikely,8,Moderate
+Regional 60/120,India,random_satellite_failure,54,8.62761581605911,87.06157054582738,4.842338094241444,3,Moderate,2,Unlikely,6,Moderate
+Regional 60/120,India,targeted_cn_failure,54,13.20947726510469,78.1770413990481,7.6600027673349285,4,Major,1,Rare,4,Low

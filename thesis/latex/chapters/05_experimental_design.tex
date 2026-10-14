@@ -3,7 +3,7 @@ This chapter sets the rules used to turn simulator output into thesis evidence. 
 \section{Analysis Datasets and Permitted Inference}
 \label{sec:analysis_datasets}
 
-The report uses one final Fresh V2 campaign together with the earlier Reference Campaign. Within Fresh V2, comparison blocks are selected according to the claim being tested rather than pooled without regard to task population or fleet coverage.
+The report uses one final verified simulation campaign together with the earlier Reference Campaign. Within the final campaign, comparison blocks are selected according to the claim being tested rather than pooled without regard to task population or fleet coverage. Table~\ref{tab:evidence_layers} states the permitted use of each dataset before any result is interpreted.
 
 \begin{table}[htbp]
 \centering
@@ -14,13 +14,13 @@ The report uses one final Fresh V2 campaign together with the earlier Reference 
 Dataset & Coverage & Permitted use \\
 \midrule
 Reference Campaign & 891 California and 891 India architecture cases & Historical matched event-window baseline under the frozen nominal model \\
-Fresh V2 regional block & 594 California and 594 India cases at 60/120 satellites; 539 scenarios per case & Paired event-window effects, failure sensitivity, exact Pareto analysis, and cross-window candidates \\
-Fresh V2 India 180-satellite extension & 282 verified cases on 773 tasks; balanced 216-case CN30--CN100 block & Large-fleet response, matched India 120-to-180 effects, robustness, priority timing, and portfolio extension \\
+Final regional block & 594 California and 594 India cases at 60/120 satellites; 539 scenarios per case & Paired event-window effects, failure sensitivity, exact Pareto analysis, and cross-window candidates \\
+Final India 180-satellite extension & 282 verified cases on 773 tasks; balanced 216-case CN30--CN100 block & Large-fleet response, matched India 120-to-180 effects, robustness, priority timing, and portfolio extension \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-The Reference Campaign predates the Fresh V2 scenario contract. It is retained because it provides a complete like-for-like sweep under one frozen model, but its values are not averaged with Fresh V2. The final Fresh V2 campaign contains a matched regional block and an India 180-satellite extension. California and India share 594 architecture identifiers in the 60/120-satellite block, while the 180-satellite cases use the same 773-task India contract. The complete CN30--CN100 part can therefore be paired with the corresponding 120-satellite architectures for a fleet-size contrast. California--India conclusions remain limited to 60/120 satellites because no California 180-satellite population was executed.
+The Reference Campaign predates the final scenario contract. It is retained because it provides a complete like-for-like sweep under one frozen model, but its values are not averaged with the final campaign. The final verified campaign contains a matched regional block and an India 180-satellite extension. California and India share 594 architecture identifiers in the 60/120-satellite block, while the 180-satellite cases use the same 773-task India contract. The complete CN30--CN100 part can therefore be paired with the corresponding 120-satellite architectures for a fleet-size contrast. California--India conclusions remain limited to 60/120 satellites because no California 180-satellite population was executed.
 
 \section{Architecture Design}
 \label{sec:architecture_design}
@@ -50,12 +50,12 @@ The factorial grid makes matched contrasts possible: a Central Node fraction can
 \section{Scenario Design}
 \label{sec:scenario_design}
 
-Fresh V2 declares 539 scenario identifiers for every architecture (Table~\ref{tab:v2_scenario_matrix}). Deterministic settings are evaluated once. Random failure families use 30 seeded trials at each severity; combined-stress cells use 10. A replicate changes only the seeded failed nodes, removed windows, or outage interval while retaining architecture, task set, family, and severity.
+The final scenario contract declares 539 scenario identifiers for every architecture (Table~\ref{tab:v2_scenario_matrix}). Deterministic settings are evaluated once. Random failure families use 30 seeded trials at each severity; combined-stress cells use 10. A replicate changes only the seeded failed nodes, removed windows, or outage interval while retaining architecture, task set, family, and severity.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{Fresh V2 scenario contract for each architecture case.}
+\caption{Final verified scenario contract for each architecture case.}
 \label{tab:v2_scenario_matrix}
 \begin{tabularx}{\textwidth}{L{0.30\textwidth}L{0.45\textwidth}r}
 \toprule
@@ -95,7 +95,7 @@ Only an eligible population proceeds to the statistical and decision stages. Thi
 \section{Integrity Gate and Task Provenance}
 \label{sec:integrity_gate}
 
-Fresh V2 was inventoried before any mean or contrast was calculated. A complete regional inventory should contain $891\times539=480{,}249$ case--scenario status keys, and both regional archives meet that count after validation. Restarting the California campaign had created 4,269 duplicate intermediate keys. The de-duplication rule retains the final scientifically identical record, and no retained row has a failed status. This gate follows the model-credibility principle that an input, assumption, verification result, and intended claim must be traceable; a single global ``validated'' label is not enough \citep{NASA2016SEHandbook,NASAStd7009}. Table~\ref{tab:validation_gate} lists the actual checks and their evidence.
+The final campaign was inventoried before any mean or contrast was calculated. A complete regional inventory should contain $891\times539=480{,}249$ case--scenario status keys, and both regional archives meet that count after validation. Restarting the California campaign had created 4,269 duplicate intermediate keys. The de-duplication rule retains the final scientifically identical record, and no retained row has a failed status. This gate follows the model-credibility principle that an input, assumption, verification result, and intended claim must be traceable; a single global ``validated'' label is not enough \citep{NASA2016SEHandbook,NASAStd7009}. Table~\ref{tab:validation_gate} lists the actual checks and their evidence.
 
 \begin{table}[htbp]
 \centering
@@ -150,7 +150,7 @@ The 180-satellite selection contains 20 cases at CN0, 22 at CN10, 24 at CN20, an
 \section{Metrics Used in the Main Analysis}
 \label{sec:main_metrics}
 
-The principal measures are defined here because their denominators determine the scientific interpretation. Appendix~A provides complete formulas and edge-case handling.
+The principal measures are defined here because their denominators determine the scientific interpretation. Table~\ref{tab:principal_metrics} gives their meaning and main boundary; Appendix~A provides complete formulas and edge-case handling.
 
 \begin{table}[htbp]
 \centering
@@ -187,6 +187,10 @@ After the population and metric definitions are fixed, the following steps are a
 \item \textbf{Apply exact Pareto filtering.} A case is removed if another eligible case is at least as good in every declared objective and better in one. Raw objective directions are used before any preference weights, as in Pareto-robust space-system trade studies \citep{Ridolfi2013}.
 \item \textbf{Test preference sensitivity.} Dirichlet weight draws record how often a remaining case ranks first or in the top five. This is a stochastic multi-criteria acceptability analysis of the chosen preference range \citep{LahdelmaSalminen2001}; it is not a survey of stakeholder opinion. The broader principle is that a simulation conclusion should be checked against declared factor and preference changes \citep{Kleijnen2005}.
 \end{enumerate}
+
+For the robustness curves, the line at each severity is the mean of the matched base-architecture means. The shaded band is one standard deviation across those base means. It therefore shows architecture-to-architecture dispersion within the enumerated grid, not uncertainty for a wider geographic population and not variability from an unexecuted reliability model.
+
+The measured robustness results are also placed in a likelihood--consequence screening matrix. Following the risk-matrix convention described in the NASA risk-management handbook \citep{NASA2024RiskManagement}, the two dimensions are kept explicit. Consequence is evidence-based: it is the worst mean strict-completion loss at 30\% severity across the three eligible final-campaign blocks, scored as 1 for $<2$ percentage points, 2 for 2--$<5$, 3 for 5--$<10$, 4 for 10--$<20$, and 5 for $\geq20$. Likelihood is not estimated by the simulation. It is a declared engineering screening assumption---Rare for targeted Central Node loss; Unlikely for ground-station outage, random Central Node loss, and random satellite loss; and Possible for capacity degradation and link-window outage. The product is classified Low at 1--4, Moderate at 5--9, and High at 10--25. The matrix supports prioritization and communication only; it is not a probabilistic safety assessment and should be recalculated when mission reliability data become available.
 
 The workflow produces a portfolio rather than a universal winner. Weighted utility is used only inside the feasible Pareto set and never substitutes for raw mission, timing, traffic, and fleet values.
 

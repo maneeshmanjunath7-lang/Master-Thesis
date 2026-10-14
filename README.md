@@ -4,6 +4,10 @@ This repository accompanies the thesis **Effect of Central Nodes on Task Dissemi
 
 The study evaluates deadline-constrained wildfire follow-up tasks in distributed satellite systems. It connects Sentinel-3-derived task generation, Walker-constellation simulation, temporal routing, observation opportunities, failure replay, and multi-objective post-processing.
 
+## Final submission copy
+
+The authoritative signed report is [`thesis/Master_Thesis_Maneesh_Manjunath_2026.pdf`](thesis/Master_Thesis_Maneesh_Manjunath_2026.pdf). The report and its matching LaTeX source were synchronized on 14 October 2026 after the final terminology, metadata, figure-reference, and reviewer cross-check. The PDF SHA-256 checksum is `2F48827F5E7ECC0E271C65E2CA320A0A6E99BF1924A81189C38CE57CA6BF398C`.
+
 ## Repository contents
 
 | Directory | Contents |

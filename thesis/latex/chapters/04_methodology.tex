@@ -23,7 +23,7 @@ This sequence is the core method. Checkpoint file names, compression, worker mem
 \section{Inputs and Architecture Grid}
 The simulator reads a fixed CSV rather than a live service. The task release epochs remain in UTC. Each regional run lasts at least 72 hours and extends to six hours after the latest task deadline when necessary. This produces approximately 73.1 hours for California and 73.7 hours for India.
 
-The Walker grid varies five factors:
+The Walker grid varies the five factors and discrete levels listed in Table~\ref{tab:architecture_grid}:
 
 \begin{table}[htbp]\centering\small
 \caption{Full-factorial Walker-constellation and central-node design grid.}
@@ -68,7 +68,7 @@ The central-node factor is applied as a distance multiplier for each central end
 For a window with effective rate R, usable duration delta\_t, and utilization factor eta, available capacity is:
 
 \begin{quote}\texttt{B\_window = R * delta\_t * eta / 1e6  [Mbit].}\end{quote}
-Fresh V2 uses eta = 1. A contact window records possible capacity. A transfer record proves that routing used part of that capacity. The analysis keeps the two quantities separate.
+The final verified campaign uses $\eta=1$. A contact window records possible capacity. A transfer record proves that routing used part of that capacity. The analysis keeps the two quantities separate.
 
 \section{Temporal Routing and Topology Policies}
 \begin{figure}[htbp]
@@ -117,6 +117,8 @@ Combined stress & Increase packet size and remove satellites & Do load and topol
 \bottomrule
 \end{tabularx}
 \end{table}
+
+Table~\ref{tab:scenario_families} separates routing and traffic interventions from component and contact disturbances, which prevents a policy sensitivity from being interpreted as a hardware-failure result.
 Random scenarios use deterministic seeds derived from the campaign seed, case identifier, scenario identifier, and replicate number. This makes a row reproducible and independent of worker count or completion order. Because the case identifier is part of the seed, two different architectures are not described as common-random-number pairs unless a dedicated paired-draw contract is added.
 
 \section{Outcomes and Interpretation}

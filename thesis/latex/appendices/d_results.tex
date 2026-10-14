@@ -1,5 +1,7 @@
 \section{Confirmatory Numerical Reference}
 
+Tables~\ref{tab:appendix_matched_effects}, \ref{tab:appendix_rank_agreement}, and \ref{tab:appendix_shortlist} preserve the confirmatory regional effect estimates, cross-window rank agreement, and the resulting conditional shortlist in a compact numerical form.
+
 \begin{table}[H]
 \centering
 \caption{Matched India-minus-California results for the validated 60/120-satellite population.}
@@ -56,6 +58,8 @@ Architecture & CA Obs. & CA \Suseful & India Obs. & India \Suseful & India $T_{1
 \end{table}
 
 \section{India 180-Satellite Campaign Extension}
+
+Tables~\ref{tab:appendix_t180_cn} and \ref{tab:appendix_t120_t180} report the balanced Central Node response and the matched fleet-size effect. Tables~\ref{tab:appendix_t180_policy}, \ref{tab:appendix_t180_robustness}, \ref{tab:appendix_t180_combined}, and \ref{tab:appendix_t180_priority} summarize policy, packet-size, disturbance, combined-stress, and deadline-sensitive results. The engineering risk screen and the recomputed two-objective fronts are documented in Tables~\ref{tab:appendix_risk_screening} and \ref{tab:appendix_pairwise_pareto}, respectively.
 
 \begin{table}[H]
 \centering
@@ -129,6 +133,76 @@ Random satellite failure & 95.67 \\
 \end{tabularx}
 \end{table}
 
+\begin{longtable}{L{0.16\textwidth}L{0.13\textwidth}L{0.31\textwidth}rr}
+\caption{Strict-completion retention at 30\% severity, reported as mean $\pm$ standard deviation across matched base-architecture means.}\label{tab:appendix_robustness_mean_sd}\\
+\toprule
+Block & Region & Disturbance & Retention (\%) & Loss (pp) \\
+\midrule
+\endfirsthead
+\toprule
+Block & Region & Disturbance & Retention (\%) & Loss (pp) \\
+\midrule
+\endhead
+Regional 60/120 & California & Capacity degradation & $97.96\pm2.49$ & 1.22 \\
+Regional 60/120 & California & Ground-station outage & $71.86\pm1.63$ & 20.35 \\
+Regional 60/120 & California & Link-window outage & $90.30\pm5.44$ & 4.77 \\
+Regional 60/120 & California & Random Central Node loss & $89.30\pm5.30$ & 6.87 \\
+Regional 60/120 & California & Random satellite loss & $94.08\pm4.65$ & 4.43 \\
+Regional 60/120 & California & Targeted Central Node loss & $88.91\pm6.41$ & 7.37 \\
+Regional 60/120 & India & Capacity degradation & $87.45\pm4.54$ & 7.23 \\
+Regional 60/120 & India & Ground-station outage & $74.05\pm1.73$ & 17.50 \\
+Regional 60/120 & India & Link-window outage & $77.88\pm7.78$ & 10.33 \\
+Regional 60/120 & India & Random Central Node loss & $79.78\pm6.92$ & 11.79 \\
+Regional 60/120 & India & Random satellite loss & $87.06\pm4.84$ & 8.63 \\
+Regional 60/120 & India & Targeted Central Node loss & $78.18\pm7.66$ & 13.21 \\
+India 180 & India & Capacity degradation & $95.43\pm4.55$ & 4.16 \\
+India 180 & India & Ground-station outage & $76.26\pm1.48$ & 22.46 \\
+India 180 & India & Link-window outage & $95.47\pm2.76$ & 4.14 \\
+India 180 & India & Random Central Node loss & $95.28\pm2.90$ & 4.33 \\
+India 180 & India & Random satellite loss & $95.67\pm2.66$ & 3.97 \\
+India 180 & India & Targeted Central Node loss & $93.99\pm4.21$ & 5.59 \\
+\bottomrule
+\end{longtable}
+
+The standard deviations in Table~\ref{tab:appendix_robustness_mean_sd} measure dispersion across the tested base architectures after the within-base scenario aggregation. They do not represent uncertainty across unobserved wildfire events or hardware populations.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Likelihood--consequence screening used in Figure~\ref{fig:failure_risk_screening}.}
+\label{tab:appendix_risk_screening}
+\begin{tabularx}{\textwidth}{YrrrrL{0.14\textwidth}}
+\toprule
+Disturbance & Worst loss (pp) & Consequence & Likelihood & Score & Class \\
+\midrule
+Capacity degradation & 7.23 & 3 & 3 & 9 & Moderate \\
+Ground-station outage & 22.46 & 5 & 2 & 10 & High \\
+Link-window outage & 10.33 & 4 & 3 & 12 & High \\
+Random Central Node loss & 11.79 & 4 & 2 & 8 & Moderate \\
+Random satellite loss & 8.63 & 3 & 2 & 6 & Moderate \\
+Targeted Central Node loss & 13.21 & 4 & 1 & 4 & Low \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Likelihood scores are declared screening assumptions (1 Rare, 2 Unlikely, 3 Possible), not frequencies estimated by the simulator. The consequence score uses the worst mean loss observed across the matched California 60/120, matched India 60/120, and balanced India 180 blocks.
+
+\begin{table}[H]
+\centering
+\caption{Recomputed pairwise Pareto fronts in the balanced India 180-satellite block.}
+\label{tab:appendix_pairwise_pareto}
+\begin{tabularx}{\textwidth}{Yrr}
+\toprule
+Objective pair & Eligible cases & Pairwise Pareto cases \\
+\midrule
+Strict completion vs transferred data & 216 & 10 \\
+Observation fulfilment vs transferred data & 216 & 6 \\
+Strict completion vs P100 $T_{100}$ & 216 & 1 \\
+Observation fulfilment vs Central Node count & 216 & 6 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \begin{table}[H]
 \centering
 \caption{India 180-satellite combined-stress strict-completion retention.}
@@ -168,3 +242,5 @@ The speed statistic is the standardized, censor-aware score defined in Chapter~4
 Confirmatory evidence is stored under \path{data/final_results}. Its principal files cover the completion gate, matched regional deltas, priority-stratified event times, robustness, exact Pareto membership, rank acceptability, and the conditional five-case shortlist.
 
 The 180-satellite campaign evidence is stored under \path{data/final_corrected_180}; the directory name records its provenance. It includes the verification and case-selection gates, canonical case metrics, Central Node intervals, matched 120-to-180 effects, paired scenario effects, robustness and combined-stress summaries, priority-event tables, exact Pareto membership, rank acceptability, the portfolio extension, and \path{corrected_180_postprocessing_manifest.json}. These compact artefacts are the numerical source of the final report; the multi-gigabyte raw Parquet campaign is retained separately.
+
+The additional fitted-equation, robustness-dispersion, likelihood--consequence, and pairwise-Pareto tables produced for the final review are stored under \path{figures/part2_revision/tables}. The folder includes the full pairwise membership table, not only the four counts printed above.

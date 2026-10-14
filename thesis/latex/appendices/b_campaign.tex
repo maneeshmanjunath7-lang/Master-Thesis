@@ -1,5 +1,7 @@
 \section{Case Identifier Grammar}
 
+Table~\ref{tab:id_examples} decodes representative identifiers so that fleet size, geometry, Central Node fraction, and phasing can be traced from a result row back to its architecture.
+
 \begin{lstlisting}
 T{satellites:03d}_P{planes:02d}_H{altitude_km:04d}_
 I{inclination_x10:04d}_CN{fraction:03d}_F1
@@ -20,19 +22,21 @@ Identifier & Interpretation \\
 \end{tabularx}
 \end{table}
 
-\section{Fresh V2 Frozen Controls}
+\section{Final Campaign Frozen Controls}
+
+Table~\ref{tab:final_controls_appendix} records the fixed physical and operational settings that are not part of the architecture sweep.
 
 \begin{table}[htbp]
 \centering
-\caption{Core Fresh V2 physical and operational controls.}
-\label{tab:fresh_controls_appendix}
+\caption{Core physical and operational controls of the final verified campaign.}
+\label{tab:final_controls_appendix}
 \begin{tabularx}{\textwidth}{L{0.38\textwidth}L{0.25\textwidth}Y}
 \toprule
 Control & Value & Note \\
 \midrule
 Campaign seed & 20260811 & Scenario seeds derived by SHA-256 \\
 Orbital time step & 60 s & Discrete opportunity evaluation \\
-Observation radius & 700 km & Fixed; no Fresh V2 radius sweep \\
+Observation radius & 700 km & Fixed; no radius sweep in the final campaign \\
 Ground station & Munich & 10-deg minimum elevation \\
 Sat--sat rate & V19 UHF calculation & Effective cap near 19.2 kbit/s \\
 Sat--ground rate & 100 kbit/s & Fixed window rate \\
@@ -45,9 +49,11 @@ Window utilization & 1.0 & Capacity multiplier before failure \\
 \end{tabularx}
 \end{table}
 
-The legacy field \path{sat_sat_data_rate_bps=250000} is present in configuration provenance but is not used by the active V19 link-budget calculation. It must not be reported as the Fresh V2 satellite-to-satellite rate.
+The legacy field \path{sat_sat_data_rate_bps=250000} is present in configuration provenance but is not used by the active V19 link-budget calculation. It must not be reported as the satellite-to-satellite rate of the final verified campaign.
 
 \section{Scenario Counts}
+
+Table~\ref{tab:scenario_counts_appendix} reconciles the deterministic and seeded scenario families with the 539 rows declared for every architecture.
 
 \begin{table}[htbp]
 \centering
@@ -73,6 +79,8 @@ Total & & & 539 \\
 \end{table}
 
 \section{Seed Derivation}
+
+Table~\ref{tab:seed_scope} states which factors share a random draw and which receive a new draw, preserving paired comparisons across architectures and regions.
 
 For every stochastic row, the seed material is the UTF-8 concatenation
 
@@ -111,6 +119,8 @@ A case is classified as complete only if \path{_SUCCESS.json} exists and every e
 \section{Representative Parquet Reading Commands}
 
 Python with pandas and PyArrow can inspect a partition without conversion:
+
+The literal directory name \path{full891_fresh_complete} in the following command is a legacy repository identifier for the clean, validated campaign restart. It does not denote a separate simulation method, scenario family, or evidence population.
 
 \begin{lstlisting}
 from pathlib import Path

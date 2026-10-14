@@ -1,6 +1,6 @@
 \section{Interpretation Strategy}
 
-The final interpretation treats Fresh V2 as one campaign while selecting valid comparison blocks for each claim. The matched 60/120-satellite block supports California--India event-window statements. The India 180-satellite extension uses the same 773-task contract, so its balanced CN30--CN100 cases can be paired with the corresponding 120-satellite block. This creates a controlled India scale comparison without implying that an unexecuted California 180-satellite population exists.
+The final interpretation treats the verified simulation evidence as one campaign while selecting valid comparison blocks for each claim. The matched 60/120-satellite block supports California--India event-window statements. The India 180-satellite extension uses the same 773-task contract, so its balanced CN30--CN100 cases can be paired with the corresponding 120-satellite block. This creates a controlled India scale comparison without implying that an unexecuted California 180-satellite population exists.
 
 The interpretation is therefore conditional but complete. The available evidence is sufficient to answer the research questions within the declared scope. The report identifies which statements are supported by matched regional evidence, which apply to the India large-fleet extension, and which require a new experiment.
 
@@ -32,13 +32,15 @@ The sensitivity results change both the metric values and the order of architect
 
 No constellation factor has one monotonic effect that can be separated from the rest of the grid. Satellite count, plane count, altitude, and inclination all change the temporal contact opportunities, and their effects differ with Central Node fraction and event window. The marginal plots average over those other factors. They show how the tested grid behaves, not an isolated causal coefficient. Geometry clearly changes the feasible routes and the ranking, but the preferred level still depends on the remaining design choices.
 
-Failures also alter the ranking. Across the Fresh V2 campaign, ground-station outage is the most damaging single family tested. This identifies the one-station Munich baseline as an important vulnerability, but it does not determine how many replacement stations are needed or where they should be located.
+Failures also alter the ranking. Across the final verified campaign, ground-station outage is the most damaging single family tested. This identifies the one-station Munich baseline as an important vulnerability, but it does not determine how many replacement stations are needed or where they should be located.
 
 Combined load and failure are also important: the worst 180-satellite cell retains only 57.49\% of its baseline strict completion. RQ2 is therefore answered for the workloads, packet multipliers, geometries, and disturbances that were executed. Observation radius, alternative placement, task construction, and package ablations remain outside the evidence.
 
 \section{RQ3: Architecture Trade-Offs and Decision Stability}
 
 No design dominates all objectives. The matched regional block yields large event-window Pareto sets and a five-case cross-window core. The 180-satellite extension contains 61 exact Pareto cases among 216 balanced candidates, and its highest rank-1 acceptability is only 26.55\%. These results show that the preferred design depends on how mission completion, observation, timing, fleet burden, Central Node count, traffic, and robustness are valued.
+
+The pairwise fronts make that dependence concrete. In the balanced 180-satellite block, completion versus traffic retains 10 non-dominated cases and observation versus traffic retains 6, while completion versus complete-dissemination time retains only 1. These smaller fronts are useful for explaining a single trade, but none replaces the 61-case frontier computed from the full objective vector. A point can be dominated in one two-objective view and still remain efficient when the other mission and resource objectives are restored.
 
 The final architecture product is a tiered portfolio. Its five-case core is supported in both event windows, while the 180-satellite candidates extend the portfolio for the India workload. Within that large-fleet tier, CN40/CN50 can offer lower traffic, whereas CN90/CN100 provides faster complete dissemination at substantially higher communication burden. The tiers are reported together, with the evidence scope stated for each candidate.
 
@@ -48,7 +50,9 @@ The preferred Central Node fraction moves when the forwarding policy, task size,
 
 Three findings are large enough to change an architecture choice.
 
-First, routing bounds reverse the high-CN trend: the bounded package becomes worse while the unlimited diagnostic becomes better. Second, larger packets cause double-digit losses in strict completion and large traffic increases. Message size is therefore a design variable, not a software detail. Third, ground-station outage causes the largest individual robustness loss tested across Fresh V2. For the implemented baseline, the single station is a more immediate weakness than randomly removing a comparable share of spacecraft.
+First, routing bounds reverse the high-CN trend: the bounded package becomes worse while the unlimited diagnostic becomes better. Second, larger packets cause double-digit losses in strict completion and large traffic increases. Message size is therefore a design variable, not a software detail. Third, ground-station outage causes the largest individual robustness loss tested across the final verified campaign. For the implemented baseline, the single station is a more immediate weakness than randomly removing a comparable share of spacecraft.
+
+The likelihood--consequence matrix adds prioritization without disguising its assumptions. Ground-station and link-window outage are High screening items under the declared likelihood categories; the remaining families are Moderate or Low. The consequence axis is measured, whereas the likelihood axis is not. A different reliability assessment can therefore move a disturbance vertically and change its class. The matrix supports the order of follow-up engineering work, but the measured loss and its across-architecture standard deviation remain the primary simulation evidence.
 
 Several smaller differences need restraint. Peer and hybrid routing are numerically almost identical at 180 satellites, so the two labels are not treated as evidence of separate mechanisms. The roughly one-point peer-routing gain in strict completion comes with another 29,300~Mbit per case.
 
@@ -65,6 +69,8 @@ The balanced block gives a direct India 120-to-180 comparison for 216 architectu
 The task inconsistency exposed a gap in the original restart checks. Scenario identifiers alone were not enough: the run also had to be tied to input hashes, regional and priority counts, the case allow-list, and a reset positional index. A success marker proves that a programmed job ended, but not that old and new partitions used identical scientific inputs. The verified package performs these checks and is the only source used for the final 180-satellite results.
 
 \section{Expected-Relationship and Objective Assessment}
+
+Table~\ref{tab:hypothesis_assessment} evaluates the three literature-motivated relationships against the verified results and makes the conditional nature of the Central Node finding explicit.
 
 \begin{table}[htbp]
 \centering
